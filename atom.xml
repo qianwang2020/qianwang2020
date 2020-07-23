@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.qianqian.fun</id>
     <title>Gridea</title>
-    <updated>2020-07-23T16:44:15.246Z</updated>
+    <updated>2020-07-23T16:47:57.748Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.qianqian.fun"/>
     <link rel="self" href="https://blog.qianqian.fun/atom.xml"/>
@@ -10,24 +10,4 @@
     <logo>https://blog.qianqian.fun/images/avatar.png</logo>
     <icon>https://blog.qianqian.fun/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
-    <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://blog.qianqian.fun/post/hello-gridea/</id>
-        <link href="https://blog.qianqian.fun/post/hello-gridea/">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">关于本站</h2>
-<p>这是我的个人博客，我在这里可以自由的说说话，写写文章。</p>
-<p>而文章的主题可很随意，可以是技术文章，也可以是生活文章，还可以是一些摄影的图片。和大家一起交流、分享我的生活，或者你的故事。虽然没有酒，但一定也会很香。</p>
-<h2 id="博主是谁">‍ 博主是谁</h2>
-<p>苏近之，一名普普通通的开发者。热衷于技术，也热爱我的生活。喜欢自由、喜欢阳光。</p>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<p>我觉得生活就是自己给自己找事情，所以尽可能地去开阔自己地眼界，寻找自己感兴趣地事物。</p>
-<h2 id="联系我呀">📬 联系我呀</h2>
-<p>我的邮箱: happy@hacking.icu</p>
-]]></content>
-    </entry>
 </feed>
