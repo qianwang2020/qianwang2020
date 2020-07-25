@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.qianqian.fun</id>
     <title>Gridea</title>
-    <updated>2020-07-23T17:18:28.314Z</updated>
+    <updated>2020-07-25T07:56:37.848Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.qianqian.fun"/>
     <link rel="self" href="https://blog.qianqian.fun/atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://blog.qianqian.fun/images/avatar.png</logo>
     <icon>https://blog.qianqian.fun/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[正义不会缺席]]></title>
+        <id>https://blog.qianqian.fun/post/zheng-yi-bu-hui-que-xi/</id>
+        <link href="https://blog.qianqian.fun/post/zheng-yi-bu-hui-que-xi/">
+        </link>
+        <updated>2020-07-25T06:59:54.000Z</updated>
+        <content type="html"><![CDATA[<p>最近关于来女士的案子在网上广为流传，虽然我们都希望她平安无事，但天不遂人愿。从出事到今天警方发布案子通告，真相虽然已经浮出水面，但是相信很多人都想不通，为什么枕边人竟就是那个凶手，当然我也没想明白，为什么好好的日子过成了这样。十年修得同船渡，百年修得共枕眠，原本应该相亲相爱携手渡百年的夫妻却以如今这段惨剧收场了，可怜他们那小女儿，这段经历在她心里也许永远都挥之不去。</p>
+<p>究其原因竟然只是因为家庭琐事意见不合，在此我真的想说，广大同胞们，凡事都是可以心平气和的讨论的，遇事要及时沟通，不要积在心里。不要走极端，走极端就容易出问题，以上就是活生生的例子啊。有什么事情过不去非要以这种方式来解决呢。最后发生这种事的原因只是一个导火线，也许就是因为没有及时沟通，有些事日积月累，就导致了这样的恶果。那个作为凶手的丈夫，他但凡想着点家庭，孩子，及时沟通的话，也不会生出犯罪的想法，更不会酿成这样的惨案。</p>
+<p>事已至此，我就希望来女士能安息，愿天堂没有恶魔。我希望凶手能诚心悔过，承担应有的责任，我更希望他们的小女儿能忘记这段过去，走出这个阴影，阳光快乐的生活。我还想说不要想着犯罪，无论你有多高明，我们的人民警察一定能抓住你，只不过事时间问题。要记住，天网恢恢，疏而不漏，正义也许会迟到，但是永远不会缺席！</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[测试文章]]></title>
         <id>https://blog.qianqian.fun/post/ce-shi-wen-zhang/</id>
