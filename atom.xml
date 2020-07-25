@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.qianqian.fun</id>
     <title>Gridea</title>
-    <updated>2020-07-25T08:11:58.418Z</updated>
+    <updated>2020-07-25T09:33:02.359Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.qianqian.fun"/>
     <link rel="self" href="https://blog.qianqian.fun/atom.xml"/>
@@ -10,6 +10,79 @@
     <logo>https://blog.qianqian.fun/images/avatar.png</logo>
     <icon>https://blog.qianqian.fun/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[近期学习的Linux命令]]></title>
+        <id>https://blog.qianqian.fun/post/jin-qi-xue-xi-de-linux-ming-ling/</id>
+        <link href="https://blog.qianqian.fun/post/jin-qi-xue-xi-de-linux-ming-ling/">
+        </link>
+        <updated>2020-07-25T08:18:36.000Z</updated>
+        <content type="html"><![CDATA[<ol>
+<li>mkdir 创建文件夹<br>
+<code>mkdir aa</code></li>
+<li>touch 创建文件<br>
+<code>touch a.txt</code></li>
+<li>cd 切换目录<br>
+<code>cd home</code><br>
+<code>cd /</code><br>
+<code>cd ~</code></li>
+<li>cat 查看文件内容<br>
+<code>cat a.txt</code></li>
+<li>登陆服务器<br>
+<code>ssh root@47.100.18.25</code></li>
+<li>tail 查看文件尾部内容<br>
+<code>tail -n1 /etc/passwd</code></li>
+<li>ls 显示指定工作目录下的内容及属性信息<br>
+<code>sudo ls -al /etc/skel</code><br>
+-a	显示所有文件及目录 (包括以“.”开头的隐藏文件)<br>
+-l	使用长格式列出文件及目录信息</li>
+<li>echo 输出字符串或提取Shell变量的值<br>
+<code>echo '' alias CD_TEST='cd ~/test' &quot; &gt;&gt; ~/.bashrc</code><br>
+追加内容  alias CD_TEST='cd ~/test'  到bashrc中</li>
+<li>alias 设置命令别名<br>
+<code>alias -p</code><br>
+查看系统已经设置的别名</li>
+<li>su 切换用户<br>
+<code>su - test</code><br>
+切换到 wq 用户，并改变 wq 用户的环境变量，- 表示切换用户的环境变量</li>
+<li>useradd 创建用户<br>
+<code>useradd -m test</code></li>
+<li><code>sudo passwd test</code><br>
+设置用户密码</li>
+<li>userdel 删除用户<br>
+<code>sudo userdel -r test</code><br>
+userdel 可删除etc/passwd 下的用户信息，但不会删除家目录<br>
+-r 可以删除相关的目录信息</li>
+<li>创建新用户并加入新创建的组<br>
+<code>sudo useradd test_user</code> 创建新用户<br>
+<code>sudo groupadd test_group</code> 创建新的用户组<br>
+<code>sudo usermod -G test_group test_user</code> 将新用户加入新的组<br>
+<code>sudo groupmod -n test_mod_group test_group</code>  将test_group 组名<br>
+改为test_mod_group</li>
+<li>查看文件权限<br>
+<code>ls -la test_file</code></li>
+<li>chmod 分配权限<br>
+<code>sudo chmod u-r test_file</code><br>
+u -文件所属者<br>
+g -文件的所属组<br>
+o -其他用户</li>
+<li>查看发行版的详细信息<br>
+<code>lsb_release -a</code></li>
+<li>查看系统发行版本<br>
+<code>less /etc/issue</code> q 退出<br>
+<code>cat /etc/issue</code></li>
+<li>查看软件版本信息<br>
+<code>python --version</code></li>
+<li>查看是否安装了某个软件包<br>
+<code>sudo rpm -qa python</code></li>
+<li>卸载已经安装的软件包<br>
+<code>sudo rpm -e python --nodeps</code>  --nodeps 避免去检查相关的依赖环境导致不能卸载</li>
+<li>安装软件<br>
+<code>sudo yum install python36 -y</code></li>
+<li>服务器重装后keys改了终端连接不上的方法<br>
+<code>ssh-keygen -R</code> 在本机执行此命令即可</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[正义不会缺席]]></title>
         <id>https://blog.qianqian.fun/post/zheng-yi-bu-hui-que-xi/</id>

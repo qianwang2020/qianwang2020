@@ -2,21 +2,29 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | Gridea</title>
+<title>近期学习的Linux命令 | Gridea</title>
 <link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1595669577945">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | Gridea - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="近期学习的Linux命令 | Gridea - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
     <meta name="description" content="
-欢迎来到我的小站呀，很高兴遇见你！🤝
-
-关于本站
-这是我的个人博客，我在这里可以自由的说说话，写写文章。
-而文章的主题可很随意，可以是技术文章，也可以是生活文章，还可以是一些摄影的图片。和大家一起交流、分享我的生活，或者你的故事。虽然没..." />
+mkdir 创建文件夹
+mkdir aa
+touch 创建文件
+touch a.txt
+cd 切换目录
+cd home
+cd /
+cd ~
+cat 查看文件内容
+cat a.txt
+登陆服务器
+ssh root@47.100.18.25
+..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -79,51 +87,103 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              近期学习的Linux命令
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2020-07-25
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">关于本站</h2>
-<p>这是我的个人博客，我在这里可以自由的说说话，写写文章。</p>
-<p>而文章的主题可很随意，可以是技术文章，也可以是生活文章，还可以是一些摄影的图片。和大家一起交流、分享我的生活，或者你的故事。虽然没有酒，但一定也会很香。</p>
-<h2 id="博主是谁">‍ 博主是谁</h2>
-<p>汪小白，一名普普通通的测试人员。热衷于工作，也热爱我的生活。喜欢自由、喜欢阳光。</p>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<p>我觉得生活就是自己给自己找事情，所以尽可能地去开阔自己地眼界，寻找自己感兴趣地事物。</p>
-<h2 id="联系我呀">📬 联系我呀</h2>
-<p>我的邮箱: happy@qianqian.fun</p>
+                <ol>
+<li>mkdir 创建文件夹<br>
+<code>mkdir aa</code></li>
+<li>touch 创建文件<br>
+<code>touch a.txt</code></li>
+<li>cd 切换目录<br>
+<code>cd home</code><br>
+<code>cd /</code><br>
+<code>cd ~</code></li>
+<li>cat 查看文件内容<br>
+<code>cat a.txt</code></li>
+<li>登陆服务器<br>
+<code>ssh root@47.100.18.25</code></li>
+<li>tail 查看文件尾部内容<br>
+<code>tail -n1 /etc/passwd</code></li>
+<li>ls 显示指定工作目录下的内容及属性信息<br>
+<code>sudo ls -al /etc/skel</code><br>
+-a	显示所有文件及目录 (包括以“.”开头的隐藏文件)<br>
+-l	使用长格式列出文件及目录信息</li>
+<li>echo 输出字符串或提取Shell变量的值<br>
+<code>echo '' alias CD_TEST='cd ~/test' &quot; &gt;&gt; ~/.bashrc</code><br>
+追加内容  alias CD_TEST='cd ~/test'  到bashrc中</li>
+<li>alias 设置命令别名<br>
+<code>alias -p</code><br>
+查看系统已经设置的别名</li>
+<li>su 切换用户<br>
+<code>su - test</code><br>
+切换到 wq 用户，并改变 wq 用户的环境变量，- 表示切换用户的环境变量</li>
+<li>useradd 创建用户<br>
+<code>useradd -m test</code></li>
+<li><code>sudo passwd test</code><br>
+设置用户密码</li>
+<li>userdel 删除用户<br>
+<code>sudo userdel -r test</code><br>
+userdel 可删除etc/passwd 下的用户信息，但不会删除家目录<br>
+-r 可以删除相关的目录信息</li>
+<li>创建新用户并加入新创建的组<br>
+<code>sudo useradd test_user</code> 创建新用户<br>
+<code>sudo groupadd test_group</code> 创建新的用户组<br>
+<code>sudo usermod -G test_group test_user</code> 将新用户加入新的组<br>
+<code>sudo groupmod -n test_mod_group test_group</code>  将test_group 组名<br>
+改为test_mod_group</li>
+<li>查看文件权限<br>
+<code>ls -la test_file</code></li>
+<li>chmod 分配权限<br>
+<code>sudo chmod u-r test_file</code><br>
+u -文件所属者<br>
+g -文件的所属组<br>
+o -其他用户</li>
+<li>查看发行版的详细信息<br>
+<code>lsb_release -a</code></li>
+<li>查看系统发行版本<br>
+<code>less /etc/issue</code> q 退出<br>
+<code>cat /etc/issue</code></li>
+<li>查看软件版本信息<br>
+<code>python --version</code></li>
+<li>查看是否安装了某个软件包<br>
+<code>sudo rpm -qa python</code></li>
+<li>卸载已经安装的软件包<br>
+<code>sudo rpm -e python --nodeps</code>  --nodeps 避免去检查相关的依赖环境导致不能卸载</li>
+<li>安装软件<br>
+<code>sudo yum install python36 -y</code></li>
+<li>服务器重装后keys改了终端连接不上的方法<br>
+<code>ssh-keygen -R</code> 在本机执行此命令即可</li>
+</ol>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">‍ 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/zheng-yi-bu-hui-que-xi/">
+              <h3 class="post-title">
+                正义不会缺席
+              </h3>
+            </a>
+          </div>
         
 
         
