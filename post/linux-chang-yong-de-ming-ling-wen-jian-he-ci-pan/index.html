@@ -1,0 +1,320 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>linux常用的命令-文件和磁盘 | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599553098962">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="linux常用的命令-文件和磁盘 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="这一篇文档记录了一些有关于文件和磁盘的命令。
+Linux 文件系统
+在了解这些命令之前，我们需要先了解 Linux 文件系统。在 Windows 中，我们的磁盘会被划分为多个逻辑磁盘:
+
+但是在 Linux 上，和 Windows 是完全不..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599553098962" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              linux常用的命令-文件和磁盘
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-20
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>这一篇文档记录了一些有关于文件和磁盘的命令。</p>
+<h2 id="linux-文件系统">Linux 文件系统</h2>
+<p>在了解这些命令之前，我们需要先了解 Linux 文件系统。在 Windows 中，我们的磁盘会被划分为多个逻辑磁盘:<br>
+<img src="https://blog.qianqian.fun/post-images/1599553062832.png" alt="" loading="lazy"><br>
+但是在 Linux 上，和 Windows 是完全不一样，没有 A盘、B盘、C盘的概念，有的只是一棵目录树。<br>
+<img src="https://blog.qianqian.fun/post-images/1599553021390.jpg" alt="" loading="lazy"><br>
+那么这么多的目录他们都是干什么用的呢？下面这张表格可以回答这个问题:</p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bin</td>
+<td>重要的可执行文件、shell 命令</td>
+</tr>
+<tr>
+<td>boot</td>
+<td>引导器配置文件、内核等</td>
+</tr>
+<tr>
+<td>dev</td>
+<td>设备文件</td>
+</tr>
+<tr>
+<td>etc</td>
+<td>系统专有的配置文件</td>
+</tr>
+<tr>
+<td>lib</td>
+<td>重要的共享库和内核模块</td>
+</tr>
+<tr>
+<td>media</td>
+<td>可移动设备挂载点</td>
+</tr>
+<tr>
+<td>mnt</td>
+<td>其他文件系统的临时挂载点</td>
+</tr>
+<tr>
+<td>opt</td>
+<td>附加应用软件包</td>
+</tr>
+<tr>
+<td>sbin</td>
+<td>重要的系统可执行文件</td>
+</tr>
+<tr>
+<td>tmp</td>
+<td>临时文件</td>
+</tr>
+<tr>
+<td>usr</td>
+<td>文件系统的第三层</td>
+</tr>
+<tr>
+<td>var</td>
+<td>可变数据</td>
+</tr>
+</tbody>
+</table>
+<h2 id="find-查找文件">find-查找文件</h2>
+<p>比如我们需要查找名为 <code>passwd</code> 的文件:</p>
+<pre><code>$ sudo find / -name passwd   ## 对应的格式： find [path...] -name [pattern]
+</code></pre>
+<p>我们可以指定文件类型，比如说指定为目录:</p>
+<pre><code>$ sudo find / -type d -name etc
+/sys/firmware/qemu_fw_cfg/by_name/etc
+/etc
+...省略
+</code></pre>
+<p>文件的类型如下表所示:</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>d</td>
+<td>文件夹</td>
+</tr>
+<tr>
+<td>f</td>
+<td>普通文件</td>
+</tr>
+<tr>
+<td>l</td>
+<td>符号连接文件</td>
+</tr>
+<tr>
+<td>b</td>
+<td>块设备</td>
+</tr>
+<tr>
+<td>c</td>
+<td>字符设备</td>
+</tr>
+<tr>
+<td>p</td>
+<td>管道文件</td>
+</tr>
+<tr>
+<td>s</td>
+<td>socket 套接字</td>
+</tr>
+</tbody>
+</table>
+<p>命令当中也可以指定通配符, 比如我要搜索 <code>.jpg</code> 结尾的文件:</p>
+<pre><code>$ sudo find / -name '*.jpg'
+/usr/share/backgrounds/morning.jpg
+/usr/share/backgrounds/night.jpg
+...省略
+</code></pre>
+<p>我们还可以按照文件的大小来搜索:</p>
+<pre><code>$ sudo find / -type f -size +40M
+/var/lib/rpm/Packages
+/usr/lib/locale/locale-archive
+/usr/local/sgd/ags/monitor/log/INFO.log
+...省略
+</code></pre>
+<h2 id="du和df-磁盘占用">du和df-磁盘占用</h2>
+<p>du 命令，全称是 disk usage, 用来展示磁盘使用量的统计信息。</p>
+<pre><code>## 统计当前目录下的磁盘占用
+## s 表示每一个给定的参数计算其磁盘使用量
+## h 表示使用人类可以阅读的单位显示，比如 KB\MB\GB
+$ du -sh .     
+</code></pre>
+<p>df 命令, 侧重在文件系统级别的磁盘占用，而 du 则是测试中在文件夹和文件的磁盘占用。</p>
+<pre><code>$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda1        40G  2.2G   38G   6% /
+devtmpfs        1.9G     0  1.9G   0% /dev
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+tmpfs           1.9G   33M  1.9G   2% /run
+...省略
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#linux-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F">Linux 文件系统</a></li>
+<li><a href="#find-%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6">find-查找文件</a></li>
+<li><a href="#du%E5%92%8Cdf-%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8">du和df-磁盘占用</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/mysql-cai-keng-ji/">
+              <h3 class="post-title">
+                MySQL踩坑记（一）
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
