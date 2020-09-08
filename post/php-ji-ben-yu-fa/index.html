@@ -2,17 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>初学前端React | 汪小白的博客</title>
+<title>PHP 基本语法 | 汪小白的博客</title>
 <link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599561446443">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="初学前端React | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="PHP 基本语法 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="目前前端的发展很快很快，相比之下，后端技术的发展很慢，各种工具技术，对于初学是由难度的。
-和后端不一样，前端可以选择的框架不多，后端的话，光 PHP 就有好多框架。前端框架国内常用的有两个，分别是阿里的 Vue 和 国外脸书的 React，..." />
+    <meta name="description" content="命名空间
+命名空间的目的是为了防止类或者函数重名，PHP 采用的方法就是使用 namespace 关键字给类名加上前缀。
+数组
+示例和说明如下:
+&lt;?php
+// 定义一个数组
+// 注意： 数组在 PHP 中的地位非常高，它包括了在..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -75,11 +80,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              初学前端React
+              PHP 基本语法
             </h2>
             <div class="post-info">
               <span>
-                2020-08-26
+                2020-09-08
               </span>
               <span>
                 2 min read
@@ -89,30 +94,75 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>目前前端的发展很快很快，相比之下，后端技术的发展很慢，各种工具技术，对于初学是由难度的。<br>
-和后端不一样，前端可以选择的框架不多，后端的话，光 PHP 就有好多框架。前端框架国内常用的有两个，分别是阿里的 Vue 和 国外脸书的 React，这次我们选择的是 React。umi 以及 后面安装的 antd 都是阿里出的，基于 React 框架的工具库。</p>
-<p><code>cd ~</code><br>
-<code>mkdir antd</code><br>
-<code>yarn create umi</code><br>
-<img src="https://blog.qianqian.fun/post-images/1598505584742.png" alt="" loading="lazy">预览一下效果<br>
-安装一直很慢的情况下，你也可以 <code>Ctrl + C</code>中止，执行下面这条<br>
-<code>yarn config set registry 'https://registry.npm.taobao.org'</code>命令，然后重新执行<code>yarn create umi</code>命令。<br>
-<img src="https://blog.qianqian.fun/post-images/1598505602415.png" alt="" loading="lazy"><br>
-在安装的过程中，会让你选，直接回车就好。然后要选择版本，我们选择 V4<br>
-<img src="https://blog.qianqian.fun/post-images/1598505639653.png" alt="" loading="lazy"></p>
-<p>选择使用的语言，我们选择 <code>TypeScript</code><br>
-然后选择需要的模块，我们选择 <code>complete</code> 就是全部的意思，然后就把这个后台项目拷贝下来了，然后你会看到有这些文件<br>
-<img src="https://blog.qianqian.fun/post-images/1598505689698.png" alt="" loading="lazy"><br>
-然后使用 <code>yarn install</code> 来安装依赖，这可能需要一些时间。在安装之前，先执行<code>yum install make -y</code>需要说明的是，前端的发展很快，很快指的是发展出一系列的工具链，没有人能完全掌握这些工具链，所以只要会使用这些工具就好了。</p>
+                <h2 id="命名空间">命名空间</h2>
+<p>命名空间的目的是为了防止类或者函数重名，PHP 采用的方法就是使用 namespace 关键字给类名加上前缀。</p>
+<h2 id="数组">数组</h2>
+<p>示例和说明如下:</p>
+<pre><code>&lt;?php
+// 定义一个数组
+// 注意： 数组在 PHP 中的地位非常高，它包括了在Python 中的元组、列表、字典等数据类型
+$arr = [1, 2, 3];
+// 你也可以看到这样的写法, 但已经很少有人这么写了
+$arr = array(1, 2, 3);
+// 可以通过 var_dump() 打印
+var_dump($arr);
+// 像 var_dump 这样的称谓函数，都是 PHP 定义的
+// 在 PHP中有几千个这样的函数，非常之多，比如我们用的　sha1 加密函数
+// 数组的形式多种多样，比如字典的形式
+$arr = ['a' =&gt; 'b', 'c' =&gt; 'd'];
+// 访问数组
+var_dump($arr['a']);  // 输出 b
+// 数组中可以嵌套数组
+$arr = [
+    'user' =&gt; [
+        'name' =&gt; 'bob',
+        'age' =&gt; 14
+    ]
+];
+var_dump($arr['user']['name']);  // 输出 bob
+// 有很多函数是为了数组服务的
+// implode 是将数组转为字符串，使用 分隔符分割
+echo implode('-', [1, 2, 3]);   // 输出 1-2-3
+var_dump(explode('-', '1-2-3')); // 和 implode 相反，是将字符串通过指定的分隔符转为数组
+// 在 PHP 中最方便的就是遍历数组
+foreach ([1, 2, 3] as $num) {
+    echo $num;    // 将会分别输出 1 2 3
+}
+// 数组的下标可以是数值索引，从0 开始，也可以是任意的字符串,称之为 key
+$arr = [
+  'name' =&gt; 'bob',
+  'age' =&gt; 23
+];
+foreach ($arr as $key =&gt; $value) {
+    echo $key . '/' . $value;   // 输出: name/bob 以及 age/23
+}
+</code></pre>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4">命名空间</a></li>
+<li><a href="#%E6%95%B0%E7%BB%84">数组</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/ji-chu-yu-fa/">
+              <h3 class="post-title">
+                Python基础语法
+              </h3>
+            </a>
+          </div>
         
 
         

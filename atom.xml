@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.qianqian.fun</id>
     <title>汪小白的博客</title>
-    <updated>2020-09-08T10:35:46.993Z</updated>
+    <updated>2020-09-08T10:37:29.839Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.qianqian.fun"/>
     <link rel="self" href="https://blog.qianqian.fun/atom.xml"/>
@@ -10,6 +10,57 @@
     <logo>https://blog.qianqian.fun/images/avatar.png</logo>
     <icon>https://blog.qianqian.fun/favicon.ico</icon>
     <rights>All rights reserved 2020, 汪小白的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[PHP 基本语法]]></title>
+        <id>https://blog.qianqian.fun/post/php-ji-ben-yu-fa/</id>
+        <link href="https://blog.qianqian.fun/post/php-ji-ben-yu-fa/">
+        </link>
+        <updated>2020-09-08T10:35:49.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="命名空间">命名空间</h2>
+<p>命名空间的目的是为了防止类或者函数重名，PHP 采用的方法就是使用 namespace 关键字给类名加上前缀。</p>
+<h2 id="数组">数组</h2>
+<p>示例和说明如下:</p>
+<pre><code>&lt;?php
+// 定义一个数组
+// 注意： 数组在 PHP 中的地位非常高，它包括了在Python 中的元组、列表、字典等数据类型
+$arr = [1, 2, 3];
+// 你也可以看到这样的写法, 但已经很少有人这么写了
+$arr = array(1, 2, 3);
+// 可以通过 var_dump() 打印
+var_dump($arr);
+// 像 var_dump 这样的称谓函数，都是 PHP 定义的
+// 在 PHP中有几千个这样的函数，非常之多，比如我们用的　sha1 加密函数
+// 数组的形式多种多样，比如字典的形式
+$arr = ['a' =&gt; 'b', 'c' =&gt; 'd'];
+// 访问数组
+var_dump($arr['a']);  // 输出 b
+// 数组中可以嵌套数组
+$arr = [
+    'user' =&gt; [
+        'name' =&gt; 'bob',
+        'age' =&gt; 14
+    ]
+];
+var_dump($arr['user']['name']);  // 输出 bob
+// 有很多函数是为了数组服务的
+// implode 是将数组转为字符串，使用 分隔符分割
+echo implode('-', [1, 2, 3]);   // 输出 1-2-3
+var_dump(explode('-', '1-2-3')); // 和 implode 相反，是将字符串通过指定的分隔符转为数组
+// 在 PHP 中最方便的就是遍历数组
+foreach ([1, 2, 3] as $num) {
+    echo $num;    // 将会分别输出 1 2 3
+}
+// 数组的下标可以是数值索引，从0 开始，也可以是任意的字符串,称之为 key
+$arr = [
+  'name' =&gt; 'bob',
+  'age' =&gt; 23
+];
+foreach ($arr as $key =&gt; $value) {
+    echo $key . '/' . $value;   // 输出: name/bob 以及 age/23
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Python基础语法]]></title>
         <id>https://blog.qianqian.fun/post/ji-chu-yu-fa/</id>
@@ -1107,34 +1158,6 @@ php -i &gt;&gt; /dev/null  0.06s user 0.01s system 95% cpu 0.074 total
 可以按下 <code>F1</code> 来查看帮助，可以使用 <code>q</code> 或者 <code>F10</code> 退出程序。可以使用 <code>F4</code> 过滤进程， 使用 <code>F5</code> 排序，按下 <code>t</code> 可以查看进程的父子层级。按下 <code>u</code> 可以显示所有进程的用户列表，并根据用户列表来过滤进程信息。<br>
 更多的用户可以参考帮助信息:<br>
 <img src="https://blog.qianqian.fun/post-images/1599550091813.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[压力测试工具ab]]></title>
-        <id>https://blog.qianqian.fun/post/ya-li-ce-shi-ab/</id>
-        <link href="https://blog.qianqian.fun/post/ya-li-ce-shi-ab/">
-        </link>
-        <updated>2020-06-27T05:45:57.000Z</updated>
-        <content type="html"><![CDATA[<p>首先，我找到一个人的 blog，网址是https://blog.codingnow.com/，我想对这个页面进行压力测试，怎么做？我们使用ab工具来进行测试，centos8 的发行版就自带了这个软件。</p>
-<pre><code>ab -n500 https://blog.codingnow.com/
-</code></pre>
-<p>返回比较慢，我们换一个网址：</p>
-<pre><code>ab -n3000 http://165.84.180.25/index.html
-</code></pre>
-<p><code>-n</code> 是指定我们的请求数，一共请求了 3000 次<br>
-<img src="https://blog.qianqian.fun/post-images/1598507506230.png" alt="" loading="lazy"><br>
-你看，结果中显示我们的服务器每秒大概可以处理 4961.70 个这样的请求，但是我们这个只是静态页面。<br>
-然后我们来测试一下我们之前写的 hello 接口：<br>
-<img src="https://blog.qianqian.fun/post-images/1598507943315.png" alt="" loading="lazy"></p>
-<pre><code>ab -n1000 http://165.84.180.25/WeChat.Message/hello
-</code></pre>
-<p><img src="https://blog.qianqian.fun/post-images/1598508112520.png" alt="" loading="lazy"><br>
-明显慢了很多<br>
-<img src="https://blog.qianqian.fun/post-images/1598508013114.png" alt="" loading="lazy"><br>
-每秒只能处理 15.96 个请求<br>
-<img src="https://blog.qianqian.fun/post-images/1598508370974.png" alt="" loading="lazy"><br>
-应该是这样的结果<br>
-<img src="https://blog.qianqian.fun/post-images/1599551466506.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
