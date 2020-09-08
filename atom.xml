@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.qianqian.fun</id>
     <title>汪小白的博客</title>
-    <updated>2020-09-08T09:14:38.684Z</updated>
+    <updated>2020-09-08T09:18:34.545Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.qianqian.fun"/>
     <link rel="self" href="https://blog.qianqian.fun/atom.xml"/>
@@ -289,24 +289,6 @@ tmpfs           1.9G   33M  1.9G   2% /run
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[MySQL踩坑记（一）]]></title>
-        <id>https://blog.qianqian.fun/post/mysql-cai-keng-ji/</id>
-        <link href="https://blog.qianqian.fun/post/mysql-cai-keng-ji/">
-        </link>
-        <updated>2020-08-17T07:53:02.000Z</updated>
-        <content type="html"><![CDATA[<p>错误：ERROR 1130: Host '140.143.11.127' is not allowed to connect to thisMySQL serve</p>
-<p>错误1130：主机140.143.11.127”不允许连接到thismysql服务</p>
-<p>原因：被连接的数据不允许使用 140.143.11.127访问，只允许是用 localhost</p>
-<p>启用终端<br>
-输入 ： mysql -u -root -p</p>
-<p>mysql&gt;use mysql;</p>
-<p>mysql&gt;select 'host' from user where user='root';</p>
-<p>mysql&gt;update user set host = '%' where user ='root';</p>
-<p>mysql&gt;flush privileges;</p>
-<p>mysql&gt;select 'host'   from user where user='root';</p>
-]]></content>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[近期学习的Linux命令]]></title>
         <id>https://blog.qianqian.fun/post/jin-qi-xue-xi-de-linux-ming-ling/</id>
         <link href="https://blog.qianqian.fun/post/jin-qi-xue-xi-de-linux-ming-ling/">
@@ -544,6 +526,24 @@ php -i &gt;&gt; /dev/null  0.06s user 0.01s system 95% cpu 0.074 total
 <img src="https://blog.qianqian.fun/post-images/1598508370974.png" alt="" loading="lazy"><br>
 应该是这样的结果<br>
 <img src="https://blog.qianqian.fun/post-images/1599551466506.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MySQL踩坑记（一）]]></title>
+        <id>https://blog.qianqian.fun/post/mysql-cai-keng-ji/</id>
+        <link href="https://blog.qianqian.fun/post/mysql-cai-keng-ji/">
+        </link>
+        <updated>2020-05-05T07:53:02.000Z</updated>
+        <content type="html"><![CDATA[<p>错误：ERROR 1130: Host '140.143.11.127' is not allowed to connect to thisMySQL serve</p>
+<p>错误1130：主机140.143.11.127”不允许连接到thismysql服务</p>
+<p>原因：被连接的数据不允许使用 140.143.11.127访问，只允许是用 localhost</p>
+<p>启用终端<br>
+输入 ： mysql -u -root -p</p>
+<p>mysql&gt;use mysql;</p>
+<p>mysql&gt;select 'host' from user where user='root';</p>
+<p>mysql&gt;update user set host = '%' where user ='root';</p>
+<p>mysql&gt;flush privileges;</p>
+<p>mysql&gt;select 'host'   from user where user='root';</p>
 ]]></content>
     </entry>
     <entry>
