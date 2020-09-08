@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.qianqian.fun</id>
     <title>汪小白的博客</title>
-    <updated>2020-09-08T08:29:08.362Z</updated>
+    <updated>2020-09-08T08:31:10.646Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.qianqian.fun"/>
     <link rel="self" href="https://blog.qianqian.fun/atom.xml"/>
@@ -305,44 +305,6 @@ o -其他用户</li>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[GitHub 使用语法]]></title>
-        <id>https://blog.qianqian.fun/post/ce-shi-wen-zhang/</id>
-        <link href="https://blog.qianqian.fun/post/ce-shi-wen-zhang/">
-        </link>
-        <updated>2020-07-23T16:51:07.000Z</updated>
-        <content type="html"><![CDATA[<p>一个 # 号表示一号标题，比如</p>
-<h1 id="一号标题">一号标题</h1>
-<p>‘Ctrl + P’可以预览效果</p>
-<p>很自然的，##二号标题，###三号标题，####四号标题......一直到六号标题</p>
-<h2 id="二号标题">二号标题</h2>
-<h3 id="三号标题">三号标题</h3>
-<h4 id="四号标题">四号标题</h4>
-<h5 id="五号标题">五号标题</h5>
-<h6 id="六号标题">六号标题</h6>
-<p>在文字的前后加上 两个 ‘ ** ’表示加粗，一个 ‘  * ’表示斜体。比如：<strong>加粗</strong>，<em>斜体</em></p>
-<p>如果你要插入代码，分为两种，一种是行内代码，代码前后使用*‘*符号包裹，。</p>
-<p><code>print 'Hello World'</code></p>
-<p>如果你要插入多行代码，可以使用 如下：</p>
-<pre><code>def index():
-    print 'Hello World'
-</code></pre>
-<p>如果是列表：</p>
-<ul>
-<li>列表项一</li>
-<li>列表项二</li>
-<li>列表项N</li>
-</ul>
-<p>上面的是无序列表，有序列表如下：</p>
-<ol>
-<li>列表项一</li>
-<li>列表项二</li>
-<li>列表项三</li>
-<li>列表项N</li>
-</ol>
-<p>掌握以上的这些基本就可以完成一篇比较漂亮的文章了。</p>
-]]></content>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[Linux常用的命令-基础]]></title>
         <id>https://blog.qianqian.fun/post/linux-chang-yong-de-ming-ling-ji-chu/</id>
         <link href="https://blog.qianqian.fun/post/linux-chang-yong-de-ming-ling-ji-chu/">
@@ -496,6 +458,44 @@ php -i &gt;&gt; /dev/null  0.06s user 0.01s system 95% cpu 0.074 total
 <img src="https://blog.qianqian.fun/post-images/1598508370974.png" alt="" loading="lazy"><br>
 应该是这样的结果<br>
 <img src="https://blog.qianqian.fun/post-images/1599551466506.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[GitHub 使用语法]]></title>
+        <id>https://blog.qianqian.fun/post/ce-shi-wen-zhang/</id>
+        <link href="https://blog.qianqian.fun/post/ce-shi-wen-zhang/">
+        </link>
+        <updated>2020-01-30T16:51:07.000Z</updated>
+        <content type="html"><![CDATA[<p>一个 # 号表示一号标题，比如</p>
+<h1 id="一号标题">一号标题</h1>
+<p>‘Ctrl + P’可以预览效果</p>
+<p>很自然的，##二号标题，###三号标题，####四号标题......一直到六号标题</p>
+<h2 id="二号标题">二号标题</h2>
+<h3 id="三号标题">三号标题</h3>
+<h4 id="四号标题">四号标题</h4>
+<h5 id="五号标题">五号标题</h5>
+<h6 id="六号标题">六号标题</h6>
+<p>在文字的前后加上 两个 ‘ ** ’表示加粗，一个 ‘  * ’表示斜体。比如：<strong>加粗</strong>，<em>斜体</em></p>
+<p>如果你要插入代码，分为两种，一种是行内代码，代码前后使用*‘*符号包裹，。</p>
+<p><code>print 'Hello World'</code></p>
+<p>如果你要插入多行代码，可以使用 如下：</p>
+<pre><code>def index():
+    print 'Hello World'
+</code></pre>
+<p>如果是列表：</p>
+<ul>
+<li>列表项一</li>
+<li>列表项二</li>
+<li>列表项N</li>
+</ul>
+<p>上面的是无序列表，有序列表如下：</p>
+<ol>
+<li>列表项一</li>
+<li>列表项二</li>
+<li>列表项三</li>
+<li>列表项N</li>
+</ol>
+<p>掌握以上的这些基本就可以完成一篇比较漂亮的文章了。</p>
 ]]></content>
     </entry>
 </feed>
