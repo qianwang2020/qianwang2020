@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.qianqian.fun</id>
     <title>汪小白的博客</title>
-    <updated>2020-09-08T08:18:25.084Z</updated>
+    <updated>2020-09-08T08:29:08.362Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.qianqian.fun"/>
     <link rel="self" href="https://blog.qianqian.fun/atom.xml"/>
@@ -10,6 +10,47 @@
     <logo>https://blog.qianqian.fun/images/avatar.png</logo>
     <icon>https://blog.qianqian.fun/favicon.ico</icon>
     <rights>All rights reserved 2020, 汪小白的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[终端复用器：tmux]]></title>
+        <id>https://blog.qianqian.fun/post/zhong-duan-fu-yong-qi-tmux/</id>
+        <link href="https://blog.qianqian.fun/post/zhong-duan-fu-yong-qi-tmux/">
+        </link>
+        <updated>2020-09-08T08:20:38.000Z</updated>
+        <content type="html"><![CDATA[<p>使用 Linux，我们绝大多数的时候看到的都是黑漆漆的画面，是有一些枯燥的。但是，能不能在枯燥的画面中，玩些花样呢？<br>
+比如说，我们模拟一个多窗口的环境，可以在多个窗口之间切换。再比如说，模拟一个多桌面的环境，不同的桌面包含不同的窗口。<br>
+要实现上面这些功能，我们就需要清楚这篇文章的主角了 —— tmux。</p>
+<h2 id="安装-tmux">安装 tmux</h2>
+<p>如果是 CentOS：</p>
+<pre><code>$ sudo yum install tmux
+</code></pre>
+<p>如果是 macOS:</p>
+<pre><code>$ brew install tmux
+</code></pre>
+<h2 id="创建和销毁会话">创建和销毁会话</h2>
+<p>在 tmux 中，有一个 Session 的概念，和桌面是一样的意思。一个 Session 可以包含多个窗口( Window ）。如何创建 Session 呢？</p>
+<pre><code>$ tmux new -s &lt;Session Name&gt;
+</code></pre>
+<p>查看已经创建的 Session：</p>
+<pre><code>$ tmux ls
+</code></pre>
+<p>进入已经创建的 Session：</p>
+<pre><code>$ tmux a -t &lt;Session Name&gt;
+</code></pre>
+<p>如果要临时退出会话, 使用 <code>ctrl+b</code> ，然后按下 <code>d</code> 。<br>
+如果要销毁会话，使用 <code>ctrl+b</code> ，然后按下 <code>:</code> 进入命令模式，输入命令: <code>kill-session</code> 。</p>
+<h2 id="模拟多窗口的环境">模拟多窗口的环境</h2>
+<p>窗口是基于 Session 的，所以需要先进入一个 Session。然后创建窗口，需要使用 <code>Ctrl + b</code> , 然后按下  <code>c</code> 键:<br>
+<img src="https://blog.qianqian.fun/post-images/1599553600554.png" alt="" loading="lazy"><br>
+我们看到下面显示着一行绿色的状态栏，内容如下:<br>
+<img src="https://blog.qianqian.fun/post-images/1599553606953.png" alt="" loading="lazy"><br>
+你看到上面切换的窗口序号了吗？我们可以根据这个切换窗口，比如要切换到第一个窗口，就可以按下组合键: <code>Ctrl + b</code> , 然后按下 <code>1</code> ，这里的 <code>1</code> 就是窗口的序号。<br>
+我们看到，起 Window 的默认命令规则是采用了命令提示符，如果要重命名呢？ <code>Ctrl+B</code> ,然后按下 <code>,</code> 。<br>
+如果我们要暂停这个会话，回到最初的界面呢？ <code>Ctrl + B</code> ，然后按下 <code>d</code> 。</p>
+<h2 id="分割窗口">分割窗口</h2>
+<p>一个窗口可以切换成多个 Pane(面板)。使用 <code>Ctrl+B</code> ，然后按下 <code>&quot;</code> 可以创建水平面板，按下 <code>%</code> 可以创建垂直面板。<br>
+如果需要切换全屏，可以使用 <code>Ctrl+B</code> ,然后按下 <code>z</code> 。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[linux常用的命令-文件和磁盘]]></title>
         <id>https://blog.qianqian.fun/post/linux-chang-yong-de-ming-ling-wen-jian-he-ci-pan/</id>
