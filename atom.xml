@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.qianqian.fun</id>
     <title>汪小白的博客</title>
-    <updated>2020-09-08T09:02:13.897Z</updated>
+    <updated>2020-09-08T09:14:38.684Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.qianqian.fun"/>
     <link rel="self" href="https://blog.qianqian.fun/atom.xml"/>
@@ -10,6 +10,92 @@
     <logo>https://blog.qianqian.fun/images/avatar.png</logo>
     <icon>https://blog.qianqian.fun/favicon.ico</icon>
     <rights>All rights reserved 2020, 汪小白的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[Python环境的搭建]]></title>
+        <id>https://blog.qianqian.fun/post/python-huan-jing-de-da-jian/</id>
+        <link href="https://blog.qianqian.fun/post/python-huan-jing-de-da-jian/">
+        </link>
+        <updated>2020-09-03T09:03:59.000Z</updated>
+        <content type="html"><![CDATA[<p>本文就 python 开发环境的安装配置做一些说明。</p>
+<h2 id="python-版本的选择">Python 版本的选择</h2>
+<p>Python 采用了两段式的版本号 <code>&lt;Main&gt;.&lt;Subject&gt;</code> , 比如当前最新版本是 3.8。大的版本号分为 2.X 和 3.X。没有例外，应该全部选择 3.X 版本，2.X 已经走入了历史。</p>
+<p>在 3.X 的众多版本中，其增加了如下的特性:</p>
+<h2 id="python-30">Python 3.0</h2>
+<p>• 函数注解（ Function Annotations ），可以对函数的参数和返回值进行注解。除了可以通过 <code>__annotations__</code>来访问这些注解外，没有其他更多的语义；<br>
+• 仅限关键字形参（ Keyword-only arguments ），在函数形参中使用 <code>*</code> 来表示对应的形参必须使用关键字进行传递；<br>
+• <code>nonlocal</code> 语句允许嵌套函数中的内部函数对外层函数作用域中的变量进行赋值；<br>
+• 扩展的 Iterable 解包，比如 <code>(a, *rest, b) = range(5)；</code>；<br>
+• 集合字面量，字典推导，新的八进制字面量，以 <code>b</code> 或 <code>B</code> 开头的字节串等等；</p>
+<h2 id="python-31">Python 3.1</h2>
+<p>• 有序字典 <code>collections.OrderedDict</code>；<br>
+• 千位分隔符的格式说明符，比如 <code>'{0:,d}'.format(1234567) —&gt; '1,234,567'</code>；</p>
+<h2 id="python-32">Python 3.2</h2>
+<p>• Argparse 命令行解析模块；<br>
+• 基于字典的日志配置 <code>logging.config.dictConfig()</code> 可以支持更灵活的配置方式；<br>
+• concurrent.futures 模块 ；<br>
+• 将字节码文件单独存储在 <code>__pycache__</code> 目录；</p>
+<h2 id="python-33">Python 3.3</h2>
+<p>• 虚拟环境工具 venv 和 pyvenv，后者 pyvenv 在 Python 3.6 中已弃用；<br>
+• 隐式命名空间包；<br>
+• OS 和 IO 异常的层次结构优化；<br>
+• 委托给子生成器 <code>yield from</code>；<br>
+• 允许禁用链式异常上下文的显示从而获取更干净的错误消息，比如 <code>raise AttributeError(attr) from None</code>；</p>
+<h2 id="python-34">Python 3.4</h2>
+<p>• pip 默认包含在 Python 的二进制安装程序中；<br>
+• 异步 I/O 库 asyncio；<br>
+• 支持枚举的模块 enum；<br>
+• 面向对象的文件系统路径模块 pathlib；<br>
+• 高级 I/O 复用模块 selectors；<br>
+• 用于数学统计的模块 statistics；</p>
+<h2 id="python-35">Python 3.5</h2>
+<p>• 使用 async 和 await 语法实现原生协程 ；<br>
+• 矩阵乘法运算符 <code>a @ b</code> ；<br>
+• 类型标注支持的模块 <code>typing</code>；<br>
+• 进一步扩展带有 <code>*</code> 的可迭代对象解包操作和带有 <code>**</code> 的字典解包操作；</p>
+<h2 id="python-36">Python 3.6</h2>
+<p>• 文字字符串插值，比如 <code>f&quot;He said his name is {name}.</code>&quot;；<br>
+• 用于进一步增强类型标注的变量注释语法，比如 <code>names: List[str] = []</code>；<br>
+• 异步生成器，允许在 <code>async / await</code> 中使用 <code>yield</code>；<br>
+• 使用 <code>async for</code> 进行异步推导；<br>
+• 用于生成高加密强度的随机数、密码、安全凭证的模块 <code>secrets</code>；</p>
+<h2 id="python-37">Python 3.7</h2>
+<p>• 延迟的类型标注求值；<br>
+• 用于 Python 调试的内置 <code>breakpoint()</code> 函数；<br>
+• 用于支持上下文变量的 <code>contextvars</code> 模块；<br>
+• 声明数据类的 <code>dataclass()</code>，比如：</p>
+<pre><code>@dataclass
+class Person:
+    name: str
+    height: float
+    weight: float = 130.0
+p = Point('Bob', 175.5)
+print(p)   # 输出 &quot;Person(name=Bob, y=175.5, z=130.0)&quot;
+</code></pre>
+<h2 id="python-38">Python 3.8</h2>
+<p>• 赋值表达式语法 <code>:=</code>；<br>
+• 仅限位置形参（ Positional-only parameters ），在函数形参中使用 <code>/</code> 来表示对应的形参必须使用位置进行传递。</p>
+<h2 id="pip-的使用">Pip 的使用</h2>
+<p>pip 是 Python 自带的一个包管理的工具，可以使用对项目中的依赖进行管理。就其基础的使用，如下实例:</p>
+<pre><code>pip install &lt;package&gt; [package...]    ## 安装一个多多个包
+pip install &lt;package&gt;==2.21.0         ## 安装指定版本的包
+pip install --upgrade &lt;package&gt;       ## 升级指定的包
+pip uninstall &lt;package&gt;               ## 卸载指定的包
+pip list                              ## 打印已经安装的包的列表
+pip freeze &gt; requirements.txt         ## 生成已经安装的软件包的列表，并重定向到 requirements.txt 文件中
+pip install -r requirements.txt       ## 根据 requirements.txt 文件中的内容安装项目所需依赖
+</code></pre>
+<p>如果在使用 pip 的过程中出现安装超时的现象，可能是因为国外服务器在国内不稳定的缘故，可以换成豆瓣的镜像服务器下载资源，这样会快很多。编辑配置文件 <code>~/.pip/pip.conf</code> ， 内容如下:</p>
+<pre><code>[global]
+index-url = https://pypi.doubanio.com/simple
+trusted-host = pypi.doubanio.com
+</code></pre>
+<h2 id="jupyter-notebooks">Jupyter Notebooks</h2>
+<p>首先安装 Anaconda， 在其官方页面上下载安装包安装即可。安装的过程中，建议勾选，将可执行文件加入 PATH 的选项。</p>
+<p>在 Anaconda 中已经包含了 Jupyter Notebooks ，直接在命令行下运行即可:</p>
+<pre><code>jupyter notebook
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[终端复用器：tmux]]></title>
         <id>https://blog.qianqian.fun/post/zhong-duan-fu-yong-qi-tmux/</id>
