@@ -2,30 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>近期学习的Linux命令 | 汪小白的博客</title>
+<title>初学前端React | 汪小白的博客</title>
 <link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599551533762">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="近期学习的Linux命令 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="初学前端React | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-mkdir 创建文件夹
-mkdir aa
-touch 创建文件
-touch a.txt
-cd 切换目录
-cd home
-cd /
-cd ~
-cat 查看文件内容
-cat a.txt
-登陆服务器
-ssh root@47.100.18.25
-..." />
-    <meta name="keywords" content="学习" />
+    <meta name="description" content="目前前端的发展很快很快，相比之下，后端技术的发展很慢，各种工具技术，对于初学是由难度的。
+和后端不一样，前端可以选择的框架不多，后端的话，光 PHP 就有好多框架。前端框架国内常用的有两个，分别是阿里的 Vue 和 国外脸书的 React，..." />
+    <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -87,89 +75,35 @@ ssh root@47.100.18.25
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              近期学习的Linux命令
+              初学前端React
             </h2>
             <div class="post-info">
               <span>
-                2020-07-25
+                2020-08-26
               </span>
               <span>
-                3 min read
+                2 min read
               </span>
-              
-                <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
-                  # 学习
-                </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <ol>
-<li>mkdir 创建文件夹<br>
-<code>mkdir aa</code></li>
-<li>touch 创建文件<br>
-<code>touch a.txt</code></li>
-<li>cd 切换目录<br>
-<code>cd home</code><br>
-<code>cd /</code><br>
-<code>cd ~</code></li>
-<li>cat 查看文件内容<br>
-<code>cat a.txt</code></li>
-<li>登陆服务器<br>
-<code>ssh root@47.100.18.25</code></li>
-<li>tail 查看文件尾部内容<br>
-<code>tail -n1 /etc/passwd</code></li>
-<li>ls 显示指定工作目录下的内容及属性信息<br>
-<code>sudo ls -al /etc/skel</code><br>
--a	显示所有文件及目录 (包括以“.”开头的隐藏文件)<br>
--l	使用长格式列出文件及目录信息</li>
-<li>echo 输出字符串或提取Shell变量的值<br>
-<code>echo '' alias CD_TEST='cd ~/test' &quot; &gt;&gt; ~/.bashrc</code><br>
-追加内容  alias CD_TEST='cd ~/test'  到bashrc中</li>
-<li>alias 设置命令别名<br>
-<code>alias -p</code><br>
-查看系统已经设置的别名</li>
-<li>su 切换用户<br>
-<code>su - test</code><br>
-切换到 wq 用户，并改变 wq 用户的环境变量，- 表示切换用户的环境变量</li>
-<li>useradd 创建用户<br>
-<code>useradd -m test</code></li>
-<li><code>sudo passwd test</code><br>
-设置用户密码</li>
-<li>userdel 删除用户<br>
-<code>sudo userdel -r test</code><br>
-userdel 可删除etc/passwd 下的用户信息，但不会删除家目录<br>
--r 可以删除相关的目录信息</li>
-<li>创建新用户并加入新创建的组<br>
-<code>sudo useradd test_user</code> 创建新用户<br>
-<code>sudo groupadd test_group</code> 创建新的用户组<br>
-<code>sudo usermod -G test_group test_user</code> 将新用户加入新的组<br>
-<code>sudo groupmod -n test_mod_group test_group</code>  将test_group 组名<br>
-改为test_mod_group</li>
-<li>查看文件权限<br>
-<code>ls -la test_file</code></li>
-<li>chmod 分配权限<br>
-<code>sudo chmod u-r test_file</code><br>
-u -文件所属者<br>
-g -文件的所属组<br>
-o -其他用户</li>
-<li>查看发行版的详细信息<br>
-<code>lsb_release -a</code></li>
-<li>查看系统发行版本<br>
-<code>less /etc/issue</code> q 退出<br>
-<code>cat /etc/issue</code></li>
-<li>查看软件版本信息<br>
-<code>python --version</code></li>
-<li>查看是否安装了某个软件包<br>
-<code>sudo rpm -qa python</code></li>
-<li>卸载已经安装的软件包<br>
-<code>sudo rpm -e python --nodeps</code>  --nodeps 避免去检查相关的依赖环境导致不能卸载</li>
-<li>安装软件<br>
-<code>sudo yum install python36 -y</code></li>
-<li>服务器重装后keys改了终端连接不上的方法<br>
-<code>ssh-keygen -R</code> 在本机执行此命令即可</li>
-</ol>
+                <p>目前前端的发展很快很快，相比之下，后端技术的发展很慢，各种工具技术，对于初学是由难度的。<br>
+和后端不一样，前端可以选择的框架不多，后端的话，光 PHP 就有好多框架。前端框架国内常用的有两个，分别是阿里的 Vue 和 国外脸书的 React，这次我们选择的是 React。umi 以及 后面安装的 antd 都是阿里出的，基于 React 框架的工具库。</p>
+<p><code>cd ~</code><br>
+<code>mkdir antd</code><br>
+<code>yarn create umi</code><br>
+<img src="https://blog.qianqian.fun/post-images/1598505584742.png" alt="" loading="lazy">预览一下效果<br>
+安装一直很慢的情况下，你也可以 <code>Ctrl + C</code>中止，执行下面这条<br>
+<code>yarn config set registry 'https://registry.npm.taobao.org'</code>命令，然后重新执行<code>yarn create umi</code>命令。<br>
+<img src="https://blog.qianqian.fun/post-images/1598505602415.png" alt="" loading="lazy"><br>
+在安装的过程中，会让你选，直接回车就好。然后要选择版本，我们选择 V4<br>
+<img src="https://blog.qianqian.fun/post-images/1598505639653.png" alt="" loading="lazy"></p>
+<p>选择使用的语言，我们选择 <code>TypeScript</code><br>
+然后选择需要的模块，我们选择 <code>complete</code> 就是全部的意思，然后就把这个后台项目拷贝下来了，然后你会看到有这些文件<br>
+<img src="https://blog.qianqian.fun/post-images/1598505689698.png" alt="" loading="lazy"><br>
+然后使用 <code>yarn install</code> 来安装依赖，这可能需要一些时间。在安装之前，先执行<code>yum install make -y</code>需要说明的是，前端的发展很快，很快指的是发展出一系列的工具链，没有人能完全掌握这些工具链，所以只要会使用这些工具就好了。</p>
 
               </div>
               <div class="toc-container">
@@ -179,15 +113,6 @@ o -其他用户</li>
           </article>
         </div>
 
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://blog.qianqian.fun/post/zheng-yi-bu-hui-que-xi/">
-              <h3 class="post-title">
-                正义不会缺席
-              </h3>
-            </a>
-          </div>
         
 
         

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.qianqian.fun</id>
     <title>汪小白的博客</title>
-    <updated>2020-08-20T15:21:58.591Z</updated>
+    <updated>2020-09-08T07:52:18.973Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.qianqian.fun"/>
     <link rel="self" href="https://blog.qianqian.fun/atom.xml"/>
@@ -161,6 +161,34 @@ o -其他用户</li>
 <li>列表项N</li>
 </ol>
 <p>掌握以上的这些基本就可以完成一篇比较漂亮的文章了。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[压力测试工具ab]]></title>
+        <id>https://blog.qianqian.fun/post/ya-li-ce-shi-ab/</id>
+        <link href="https://blog.qianqian.fun/post/ya-li-ce-shi-ab/">
+        </link>
+        <updated>2020-06-27T05:45:57.000Z</updated>
+        <content type="html"><![CDATA[<p>首先，我找到一个人的 blog，网址是https://blog.codingnow.com/，我想对这个页面进行压力测试，怎么做？我们使用ab工具来进行测试，centos8 的发行版就自带了这个软件。</p>
+<pre><code>ab -n500 https://blog.codingnow.com/
+</code></pre>
+<p>返回比较慢，我们换一个网址：</p>
+<pre><code>ab -n3000 http://165.84.180.25/index.html
+</code></pre>
+<p><code>-n</code> 是指定我们的请求数，一共请求了 3000 次<br>
+<img src="https://blog.qianqian.fun/post-images/1598507506230.png" alt="" loading="lazy"><br>
+你看，结果中显示我们的服务器每秒大概可以处理 4961.70 个这样的请求，但是我们这个只是静态页面。<br>
+然后我们来测试一下我们之前写的 hello 接口：<br>
+<img src="https://blog.qianqian.fun/post-images/1598507943315.png" alt="" loading="lazy"></p>
+<pre><code>ab -n1000 http://165.84.180.25/WeChat.Message/hello
+</code></pre>
+<p><img src="https://blog.qianqian.fun/post-images/1598508112520.png" alt="" loading="lazy"><br>
+明显慢了很多<br>
+<img src="https://blog.qianqian.fun/post-images/1598508013114.png" alt="" loading="lazy"><br>
+每秒只能处理 15.96 个请求<br>
+<img src="https://blog.qianqian.fun/post-images/1598508370974.png" alt="" loading="lazy"><br>
+应该是这样的结果<br>
+<img src="https://blog.qianqian.fun/post-images/1599551466506.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
