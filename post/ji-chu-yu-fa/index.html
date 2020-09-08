@@ -1,0 +1,491 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>基础语法 | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599558816447">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="基础语法 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="这一系列的文档使用 Python3, 采用 Linux 环境编程。
+Hello World
+我们先从 Hello World 开始:
+print(&quot;Hello World!&quot;)
+
+定义变量
+上面使用的 &quot;Hel..." />
+    <meta name="keywords" content="学习" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599558816447" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              基础语法
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-09-05
+              </span>
+              <span>
+                15 min read
+              </span>
+              
+                <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
+                  # 学习
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>这一系列的文档使用 Python3, 采用 Linux 环境编程。</p>
+<h2 id="hello-world">Hello World</h2>
+<p>我们先从 Hello World 开始:</p>
+<pre><code>print(&quot;Hello World!&quot;)
+</code></pre>
+<h2 id="定义变量">定义变量</h2>
+<p>上面使用的 <code>&quot;Hello World&quot;</code> 是一个字符串，我们可以将这个字符串赋值给一个变量:</p>
+<pre><code>message = &quot;Hello World&quot;
+print(message)
+</code></pre>
+<h2 id="变量的类型">变量的类型</h2>
+<p>我们的变量是有类型的？ 为什么需要有类型呢？因为这些变量的值都需要存储在内存中，不同类型的值在内存中的占用容量也不一样。所以我们定义了类型，以便在内存中提前为这些变量的值开辟空间 。</p>
+<p>Python 中支持的类型如下图所示:</p>
+<figure data-type="image" tabindex="1"><img src="https://blog.qianqian.fun/post-images/1599557260246.png" alt="" loading="lazy"></figure>
+<h2 id="字符串和数值">字符串和数值</h2>
+<p>最常见的类型莫过于字符串和数值了，在我们的生活中也无时不刻在用。比如我们去买菜，买了什么？白菜，白菜是一个名字，是一个字符串。这个白菜多少一斤呢？1块钱一斤，那么这个1块钱就是数值。</p>
+<p>我们之前定义的 message 的变量就是一个字符串类型。不同的类型，会有不同的方法？什么是方法啊？就是预定义的操作。比如我们可以将字符串全部转成小写输出:</p>
+<pre><code>message = &quot;Hello World&quot;
+print(message.lower())  ## Hi, Bob
+</code></pre>
+<p>此外，我们还可以将多个字符串通过 <code>+</code> 拼接起来，就拿打招呼为例:</p>
+<pre><code>name = &quot;Bob&quot;
+print(&quot;Hi,&quot; + &quot; &quot; + name)
+</code></pre>
+<p>接着，如果我去买菜，花了5.8，然后递给买菜的大妈一张 10 元人民币，按照道理她应该找我 3.2 元。但是呢？我想要这两毛钱也没什么用，我就说凑个整吧:</p>
+<pre><code>price = 5.8
+print(round(price))
+此外，我们还可以对数值进行运算:
+print(10 * 10)  ## 100
+print(20 - 10)  ## 10
+print(30 / 2)   ## 15
+print(15 + 16)
+</code></pre>
+<h2 id="列表和元组">列表和元组</h2>
+<p>在实际的生活中，我们经常会对事物按照不同的维度进行归类分组。而程序最大的目的就是为了模拟现实，解决现实中的一些问题。对于一组的数据，在程序中，我们可以通过 <code>列表</code> 这个概念来表示:</p>
+<pre><code>languages = [&quot;PHP&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;C&quot;]
+print(languages)   ## ['PHP', 'Python', 'Java', 'C']
+</code></pre>
+<p>我们可以访问这个列表中的每一个元素，通过下标, 即为列表中的每一个元素按顺序进行标号，从 0 开始:</p>
+<pre><code>languages = [&quot;PHP&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;C++&quot;]
+print(languages[0], languages[3])            ## PHP C++
+</code></pre>
+<p>既然可以访问，就可以修改:</p>
+<pre><code>languages = [&quot;PHP&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;C++&quot;]
+languages[2] = &quot;C&quot;
+print(languages[2])  ## C
+</code></pre>
+<p>可以追加，可以删除:</p>
+<pre><code>languages = [&quot;PHP&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;C++&quot;]
+# 在列表的末尾添加
+languages.append(&quot;Swift&quot;)
+# 在指定的位置添加
+languages.insert(1, &quot;Ruby&quot;)
+languages.pop(1)
+print(languages)        ## ['PHP', 'Python', 'Java', 'C++', 'Swift']
+可以对列表进行排序:
+languages = [&quot;PHP&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;C++&quot;]
+languages.sort()           ## ['C++', 'Java', 'PHP', 'Python']
+print(languages)
+languages.reverse()        ## ['Python', 'PHP', 'Java', 'C++']
+print(languages)
+</code></pre>
+<p>元组和列表十分相似，最大的区别在于元组中元素的地址是不可变的 。</p>
+<pre><code>## 定义并计算元组长度
+pers = (&quot;Bob&quot;, &quot;Foo&quot;, &quot;June&quot;)
+print(len(pers))  ## 3
+</code></pre>
+<p>如果你尝试对元组中的元素的值进行重写的话，会产生一个错误:</p>
+<pre><code>pers = (&quot;Bob&quot;, &quot;Foo&quot;, &quot;June&quot;)
+pers[0] = &quot;Wang&quot;
+</code></pre>
+<p>运行上面的程序，会输出如下错误:</p>
+<pre><code>C:\Users\admin\PycharmProjects\test\venv\Scripts\python.exe C:/Users/admin/PycharmProjects/test/test.py
+Traceback (most recent call last):
+  File &quot;C:/Users/admin/PycharmProjects/test/test.py&quot;, line 2, in &lt;module&gt;
+    pers[0] = &quot;Wang&quot;
+TypeError: 'tuple' object does not support item assignment
+Process finished with exit code 1
+</code></pre>
+<h2 id="字典">字典</h2>
+<p>在现实的生活中，总有一些人的名字会让我们感到尴尬，因为当中的某个字我不认识。这时候，我就需要去查字典, 比如这个名字：林茜。通过查字典我知道，这个茜字有两个含义两个读音:<br>
+• 茜(qian: 第四声)：茜草，多年生攀缘草本植物。茎方形，有倒刺。根黄红色，可提取染料，也可供药用。<br>
+• 茜(xi: 第一声): 音译用字。多用于外国女子名。<br>
+通过上面这个例子，大概能感觉到，字典是一种映射，为了方便查询。在 Python 中，也提供了字典类型，提供了从 key 到 value 的映射。</p>
+<pre><code>words = {&quot;qian&quot;: &quot;茜草，多年生攀缘草本植物。茎方形，有倒刺。根黄红色，可提取染料，也可供药用&quot;, &quot;xi&quot;: &quot;音译用字。多用于外国女子名&quot;}
+print(words[&quot;qian&quot;])  # 茜草，多年生攀缘草本植物。茎方形，有倒刺。根黄红色，可提取染料，也可供药用
+print(words[&quot;xi&quot;])  # 音译用字。多用于外国女子名
+</code></pre>
+<p>和列表一样，我们可以对字典中的键值对进行添加、修改以及删除操作:</p>
+<pre><code>user = {&quot;name&quot;: &quot;admin&quot;, &quot;age&quot;: 14, &quot;email&quot;: &quot;admin@end.wiki&quot;}
+# 修改年龄
+user['age'] += 1
+# 添加工作
+user['job'] = &quot;soft developer&quot;
+# 删除邮箱
+del user['email']
+print(user)   # {'name': 'admin', 'age': 15, 'job': 'soft developer'}
+</code></pre>
+<h2 id="分支以及循环">分支以及循环</h2>
+<p>编程语言中核心的概念并不多，其中最基本的是变量、分支、循环。我们的代码按照执行顺序可以分为三种结构，分别是顺序、分支以及循环。</p>
+<p>所谓顺序，就是上一行代码执行完成之后执行下一行代码。所谓分支，就是对条件进行判断，然后执行对应的代码块。而循环，则是对某一段代码进行多次执行，根据其是否满足条件决定执行的次数。</p>
+<h3 id="分支">分支</h3>
+<p>我们的生活中处处都存在着抉择，每一次抉择，都会或多或少改变我们人生的走向。比如晚上我是吃饭还是吃面:</p>
+<pre><code>food = &quot;noodles&quot;
+if food == &quot;noodles&quot;:
+    print(&quot;走去兰州拉面&quot;)    ## 还是吃面吧
+else:
+    print(&quot;走去地沟油菜馆&quot;)
+</code></pre>
+<p>但是生活的难并不仅仅是在于没有选择的余地，有时候也会出现有太多的选择:</p>
+<pre><code>needs = &quot;我想要钱，我想要房子，我想要名望，我想要...&quot;
+if needs == &quot;money&quot;:
+    print(&quot;奋斗或偷盗&quot;)
+elif needs == &quot;house&quot;:
+    print(&quot;租或者买&quot;)
+elif needs == &quot;popular&quot;:
+    print(&quot;选秀或者扑街&quot;)
+else:
+    print(&quot;做梦&quot;)
+</code></pre>
+<h3 id="循环">循环</h3>
+<p>使用 while 语句进行循环，并通过对数值变量的递增或递减控制循环的次数:</p>
+<pre><code>i = 1
+while i &lt;= 5:
+    print(i)
+    i += 1
+</code></pre>
+<p>在循环中，也可以通过 <code>continue</code> 跳过某次循环，或者通过 <code>break</code> 结束循环。<br>
+对列表或元组进行循环:</p>
+<pre><code>languages = [&quot;PHP&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;Swift&quot;]
+for language in languages:
+    print(language)
+</code></pre>
+<p>对字典进行循环:</p>
+<pre><code>user = {&quot;name&quot;: &quot;admin&quot;, &quot;email&quot;: &quot;admin@end.wiki&quot;, &quot;country&quot;: &quot;China&quot;, &quot;Job&quot;: &quot;soft developer&quot;}
+for k in user:
+    print(k + &quot;\t:&quot; + user[k])
+</code></pre>
+<p>输出内容如下:</p>
+<pre><code>name    :admin
+email   :admin@end.wiki
+country :China
+Job :soft developer
+</code></pre>
+<h2 id="函数">函数</h2>
+<p>函数是对一段代码的分装，一个函数是一个动作、操作。比如一个函数是一声问候:</p>
+<pre><code>def greet():
+    print(&quot;Hello&quot;)
+greet()    # Hello
+</code></pre>
+<p>也可以指定一个人问候:</p>
+<pre><code>def greet(name):
+    print(&quot;Hello, &quot; + name)
+greet(&quot;Bob&quot;)   # Hello, Bob
+</code></pre>
+<p>为函数的传参指定一个默认值:</p>
+<pre><code>def greet(name = &quot;Bob&quot;):
+    print(&quot;Hello, &quot; + name)
+greet()    # Hello, Bob
+</code></pre>
+<p>调用函数的时候，也可以指定传参的名称，可以增加可读性:</p>
+<pre><code>def greet(name = &quot;Bob&quot;):
+   print(&quot;Hello, &quot; + name)
+greet(name = &quot;Foo&quot;)   # Foo
+</code></pre>
+<p>函数可以有返回值:</p>
+<pre><code>def sum(num1, num2):
+    return num1 + num2
+print(sum(1, 2))   # 3
+</code></pre>
+<p>也可以传递任意数量的参数:</p>
+<pre><code>def sum(*numbers):
+    total = 0
+    for number in numbers:
+        total += number
+    return total
+print(sum(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))  # 55
+</code></pre>
+<h2 id="模块module">模块(Module)</h2>
+<p>上面我们这些内容都是很基础的，三两行代码，所以放在一个文件里也是没什么问题。如果我们真得去写一个项目，代码量可能就不会是三两行，而是三四千行、万行、数十万行。这么多的代码，可不能放在一个文件里哦，不方便管理和维护。</p>
+<p>那么，我们就会将代码分割成不同的部分，放在不同的文件中。这时候，我们就可以使用模块了，一个模块其实就是一个以 <code>.py</code> 结尾的 Python 代码文件。这个文件中，声明了一些可能会被其他模块用到的变量、函数以及类。比如我们申明如下这个模块（文件命令为 database.py，当中有一个 Database 的类, 用来操作数据库:</p>
+<pre><code>class Database:
+    def query(self):
+        print('Query Database...')
+class Mysql:
+    def query(self):
+        print('MySQL query Database...')
+</code></pre>
+<p>模块有了，那么如何在其他的代码文件中引入这个模块中的这个 Database 类呢?</p>
+<pre><code>import database
+db = database.Database()
+database.query()  # Query Database...
+</code></pre>
+<p>如果我并不像引入这个 database 文件，只是向引入部分内容呢？</p>
+<pre><code>from database import Mysql
+mysql = Mysql()
+mysql.query()    # MySQL query Database...
+</code></pre>
+<p>虽然，我们也可以使用 <code>from databases import *</code> 来导入 database 模块中所有的内容(变量、函数以及类)。但是不可以这么做，因为这样做的话，你在阅读代码的时候，不知道这个变量、函数或者类来自哪里？因为你引入的时候使用了 <code>*</code> 号这个通配符，并没有说明从这个文件中引入了什么。</p>
+<h2 id="包package">包(Package)</h2>
+<p>如果说模块是对变量、函数以及类的封装，那么包就是对模块的封装。简单的说，包当中含有模块，而模块中包含类、函数以及变量。</p>
+<p>之所以会有模块、包这样的概念，就是因为随着代码量的增大，需要对代码进行拆分管理。这非常好理解，就像人多了之后，需要对人进行拆分管理，比如亚洲、中国、浙江、杭州、西湖区、XX街道、XX小区、3幢、一单元、201室......为什么需要分的那么细？因为人太多了，不分不方便管理。 分而治之是计算机中非常常见以及重要的思想 。</p>
+<p>那么怎么创建一个包呢？很简单，再一个目录中创建一个空的文件，命名为 <code>__init__.py</code> 即可。这么文件所在的目录就是一个包。</p>
+<pre><code>mkdir pack &amp;&amp; touch pack/__init__.py
+</code></pre>
+<p>然后我们再这个包当中加入一个模块,命名为 <code>pack/data.py</code> ，模块中包含一个方法:</p>
+<pre><code>def greet():
+    print('Hello')
+</code></pre>
+<p>然后，我们一个文件，名为 <code>app.py</code> , 文件内容如下:</p>
+<pre><code>import pack.data
+pack.data.greet()
+</code></pre>
+<p>也可以写成如下形式:</p>
+<pre><code>from pack.data import greet
+greet()
+</code></pre>
+<p>包当中还可以包含子包，和目录层级一致，比如包名是 <code>package.sub.module</code> ,那么路径名也应该是 <code>package/sub/module.py</code>。</p>
+<p>经过这样一个例子，你明白为什么 Python 可以将我们拆分开的代码重新组合再一起执行了吗？<strong>当我们执行 <code>python app.py</code> 的时候，python 的解释器会去逐行解释代码，当发现代码以 <code>import</code> 或者 <code>from</code> 开头的时候，会根据包名和模块名找寻对应的目录下的代码文件，然后将对应的文件内容插入 <code>app.py</code> 中逐行执行</strong>。</p>
+<figure data-type="image" tabindex="2"><img src="https://blog.qianqian.fun/post-images/1599558023140.png" alt="" loading="lazy"></figure>
+<h2 id="异常处理exception">异常处理(Exception)</h2>
+<p>我们总是希望生活是美好的，总是希望明天充满了希望，但现实生活也总是希望和失望相互交织。在程序中也是如此，我们希望程序可以从头到尾没有任何问题，但我们这么天真的想法本身就是问题。</p>
+<p>于是，在生活中，我们开始学着为自己找好退路。而在编程中，我们也会尽可能去假设会出现问题，提前<strong>捕获异常(Catch exception)</strong>。</p>
+<p>最简单的一个例子，除数不能为 0，但却写出了这样的代码:</p>
+<pre><code>$ python -c &quot;print(1/0)&quot;
+Traceback (most recent call last):
+  File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
+ZeroDivisionError: division by zero
+</code></pre>
+<p>然后程序给你一个无情的耳光，没办法再执行下去了。有的同学会说，我知道除数不能为 0，所以我不会写出这样的代码的。但是，程序是由万千的变量和分支组成的，很多数据也是来源于我们的用户或者第三方是我们不能掌控的。 所以，<strong>异常是不可能避免的，但是可以提前预防的</strong>。</p>
+<p>再比如说，当使用 Python3 去运行 Python2 的某些语法的时候:</p>
+<pre><code>$ python2 -c &quot;print 'Hello World'&quot;
+Hello World
+$ python3 -c &quot;print 'Hello World'&quot;
+  File &quot;&lt;string&gt;&quot;, line 1
+    print 'Hello World'
+                      ^
+SyntaxError: Missing parentheses in call to 'print'. Did you mean print('Hello World')?
+</code></pre>
+<p>Python3 是一个不能向下兼容的版本，所以比如 <code>print 'Hello World'</code> 这样的语句在 Python3 中是无法执行的。抛出了一个异常 —— SyntaxError 。</p>
+<p>当我们预感代码可能会抛出异常的时候，可以捕获异常进行处理，记录日志:</p>
+<pre><code>try:
+    fdajljfdjalfjdlkajfdasjfldsa
+except:
+    print('syntax error')
+print('continue')
+</code></pre>
+<p>另外，我们还可以对特定的异常进行捕获:</p>
+<pre><code>try:
+    1 / 0
+except (ZeroDivisionError):
+    print('Zero Division Error')
+except:
+    print('syntax error')
+print('continue')
+</code></pre>
+<p>通常，发生异常的时候，我们会希望能够提供更多的异常相关的信息, 我们可以使用 <code>as</code> 关键字来获取 <strong>异常对象（没错，异常也是对象)</strong> :</p>
+<pre><code>try:
+    1 / 0
+except ZeroDivisionError as e:
+    print('Zero Division Error:' + e.__class__.__name__) # Zero Division Error:ZeroDivisionError
+except:
+    print('syntax error')
+print('continue')
+</code></pre>
+<p>另外，Python 还提供了两个关键字, 分别是 <code>else</code> 和 <code>finally</code>：</p>
+<pre><code>try:
+    1 / 0
+except ZeroDivisionError as e:
+    print('Zero Division Error:' + e.__class__.__name__)
+except:
+    print('syntax error')
+else:
+    print('normal')
+finally:
+    print('exception')
+</code></pre>
+<p><code>else</code> 只有在没有发生异常的时候会执行，而 <code>finally</code> 是不管有没有发生异常，都会执行。</p>
+<p>上面看到的示例都是 Python 解释器抛出的异常，我们自己也可以抛出异常, 使用 <code>raise</code> 关键字:</p>
+<pre><code>python3 -c &quot;raise TypeError('Type Error')&quot;
+</code></pre>
+<p>上面的 TypeError 也是 Python 自带的，我们可以自定义异常类，继承 BaseException 类。</p>
+<pre><code>class UserNotFound(Exception):
+    def __init__(self, user_id):
+        super().__init__(&quot;User not found ${}&quot;.format(user_id))
+        self.user_id = user_id
+raise UserNotFound(10010)
+</code></pre>
+<p>执行这段代码，抛出自定义的异常如下:</p>
+<pre><code>$ python3 test.py
+Traceback (most recent call last):
+  File &quot;test.py&quot;, line 6, in &lt;module&gt;
+    raise UserNotFound(10010)
+__main__.UserNotFound: User not found 10010
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#hello-world">Hello World</a></li>
+<li><a href="#%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F">定义变量</a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E7%9A%84%E7%B1%BB%E5%9E%8B">变量的类型</a></li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E6%95%B0%E5%80%BC">字符串和数值</a></li>
+<li><a href="#%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84">列表和元组</a></li>
+<li><a href="#%E5%AD%97%E5%85%B8">字典</a></li>
+<li><a href="#%E5%88%86%E6%94%AF%E4%BB%A5%E5%8F%8A%E5%BE%AA%E7%8E%AF">分支以及循环</a>
+<ul>
+<li><a href="#%E5%88%86%E6%94%AF">分支</a></li>
+<li><a href="#%E5%BE%AA%E7%8E%AF">循环</a></li>
+</ul>
+</li>
+<li><a href="#%E5%87%BD%E6%95%B0">函数</a></li>
+<li><a href="#%E6%A8%A1%E5%9D%97module">模块(Module)</a></li>
+<li><a href="#%E5%8C%85package">包(Package)</a></li>
+<li><a href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86exception">异常处理(Exception)</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/python-huan-jing-de-da-jian/">
+              <h3 class="post-title">
+                Python环境的搭建
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
