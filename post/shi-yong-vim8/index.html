@@ -1,0 +1,296 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>使用 Vim8 | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599563200989">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="使用 Vim8 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="要问我为什么使用 vim, 因为我觉得敲击键盘比点击鼠标更快。
+更换配色方案
+更换配色方案是一件简单的事情，确实最能够吸引眼球的事情。我们可以从 GitHub 上找到对应的配置方法，多半只是一个以 .vim 结尾的文件而已，然后将这个文件放..." />
+    <meta name="keywords" content="学习" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599563200989" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              使用 Vim8
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-02-16
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
+                  # 学习
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>要问我为什么使用 vim, 因为我觉得敲击键盘比点击鼠标更快。</p>
+<h2 id="更换配色方案">更换配色方案</h2>
+<p>更换配色方案是一件简单的事情，确实最能够吸引眼球的事情。我们可以从 GitHub 上找到对应的配置方法，多半只是一个以 <code>.vim</code> 结尾的文件而已，然后将这个文件放在 <code>~/.vim/colors</code> 目录下即可。</p>
+<p>而我选择的配置方案是 [ morhetz/gruvbox ] 。效果图如下:</p>
+<figure data-type="image" tabindex="1"><img src="https://blog.qianqian.fun/post-images/1599562494905.png" alt="" loading="lazy"></figure>
+<p>单独下载主题文件:</p>
+<pre><code>wget http://downloads.end.wiki/gruvbox.vim -O ~/.vim/colors/gruvbox.vim
+</code></pre>
+<h2 id="使用插件管理工具-minpac">使用插件管理工具-Minpac</h2>
+<p>Minpac 是一个基于 Vim8 的包管理工具。我们可以使用如下命令进行安装:</p>
+<pre><code>git clone https://github.com/k-takata/minpac.git \
+    ~/.vim/pack/minpac/opt/minpac
+</code></pre>
+<p>然后我们在 vim 的配置文件( Linux 位于 <code>~/.vimrc</code> ）中加入如下配置:</p>
+<pre><code>if exists('*minpac#init')
+  &quot; Minpac is loaded.
+  call minpac#init()
+  call minpac#add('k-takata/minpac', {'type': 'opt'})
+  &quot; Other plugins
+endif
+if has('eval')
+  &quot; Minpac commands
+  command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('', {'do': 'call minpac#status()'})
+  command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
+  command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
+endif
+</code></pre>
+<p>并不需要理解这些配置是什么意思，主要的目的就是为了启用 Minpac 这个插件管理工具。</p>
+<h2 id="安装卸载插件">安装卸载插件</h2>
+<p>安装插件分为两个步骤，第一是在 <code>~/.vimrc</code> 这个配置文件中加入要安装的插件名称:</p>
+<pre><code>  &quot; Other plugins
+  call minpac#add('tpope/vim-eunuch')
+</code></pre>
+<p>然后我们保存退出之后，重新打开 Vim, 使用命令 <code>PackUpdate</code> 即可。出现如下界面即安装成功:</p>
+<figure data-type="image" tabindex="2"><img src="https://blog.qianqian.fun/post-images/1599562627582.png" alt="" loading="lazy"></figure>
+<p>如果要卸载这个插件，只需要在配置文件中删除刚才加入的 <code>call minpac#add('tpope/vim-eunuch')</code> ， 然后保存文件，输入命令 <code>:PackClean</code> 即可。Pacmin 会询问是否移除插件对应的目录，输入 <code>y</code> 确认即可。</p>
+<p>如果要查看已经安装的插件列表，可以使用命令 <code>:PackStatus</code>。</p>
+<h2 id="显示目录树-nerdtree">显示目录树-NERDTree</h2>
+<p>首先我们需要安装 <code>preservim/nerdtree</code> 插件，这是一个非常好用的目录树插件。</p>
+<p>在安装后，我们使用 Vim 打开一个文件后，使用命令 <code>:NERDTree</code> 就可以打开目录树，如下图所示:</p>
+<figure data-type="image" tabindex="3"><img src="https://blog.qianqian.fun/post-images/1599562730766.png" alt="" loading="lazy"></figure>
+<p>如何切换左边的目录和右边的文件呢？</p>
+<p>• 切换目录，使用 <code>&lt;Ctrl+W+h&gt;</code><br>
+• 切换文件，使用 <code>&lt;Ctrl+W+l&gt;</code></p>
+<p>如何对目录进行操作呢？</p>
+<p>• 使用 <code>P</code> 可以跳到最顶层的根目录，使用 <code>p</code> 可以跳到父级目录。<br>
+• 在任意的目录节点上，使用 <code>m</code> 可以调出操作菜单，对节点进行增删改。<br>
+• 使用 <code>R</code> 可以刷新目录节点。<br>
+• 默认情况下，不会显示隐藏的目录，可以使用 <code>I</code> 显示隐藏或显示的目录或文件。<br>
+• 当光标定位在文件节点，我们可以在右边的窗口打开它。使用 <code>i</code> 是在水平切割的窗口打开，使用 <code>s</code> 是在垂直切割的窗口中打开，而使用 <code>t</code> 是在新的标签页中打开。<br>
+• 标签页的切换可以使用 <code>gt</code> 或者指定数字的标签页 <code>1gt</code> 、 <code>2gt</code> 。</p>
+<p>如何调正分栏的大小呢？使用 <code>&lt;Ctrl+W&gt;+</code> 或者 <code>&lt;Ctrl+W&gt;-</code> 。</p>
+<h2 id="状态栏美化-airline">状态栏美化-Airline</h2>
+<p>Vim 默认的状态栏并不好看，我们需要对其进行美化。首先我们安装两个插件:</p>
+<pre><code>call minpac#add('vim-airline/vim-airline')
+call minpac#add('vim-airline/vim-airline-themes')
+</code></pre>
+<p>然后，我们在 <code>.vimrc</code> 配置文件中加入一行配置：</p>
+<pre><code>let g:airline_theme=&quot;luna&quot;
+</code></pre>
+<p>最后，我们重新打开 Vim 就可以看到如下的状态栏样式, 相比原来的要好看的多:</p>
+<figure data-type="image" tabindex="4"><img src="https://blog.qianqian.fun/post-images/1599562817291.png" alt="" loading="lazy"></figure>
+<h2 id="再见html-标签">再见，HTML 标签</h2>
+<p>我刚开始学习编程的时候，是在 Windows 的记事本上输入 HTML 标签，那种输入速度现在来看真的是蜗牛。在 Vim 中如何快速输入 HTML 标签呢？有一个插件叫做 <code>vim-emmet</code> , 请按照上文中介绍的包管理器安装它。</p>
+<p>在安装之后我们就可以快速输入 HTML 标签了，比如:</p>
+<pre><code>html:5
+</code></pre>
+<p>然后按下 <code>ctrl+y</code> , 接着输入 <code>,</code> （英文输入法下的逗号）,就可以触发了，自动生成如下的标签模板:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>具体的 Emmet 插件的语法，可以参考[官方文档]。</p>
+<h2 id="我的-vimrc">我的 vimrc</h2>
+<p>下面我留下我的 vim 配置文件，供大家参考:</p>
+<pre><code>set ts=4
+set nu
+set background=dark
+syntax on
+set encoding=utf-8
+colorscheme gruvbox
+filetype on
+let g:airline_theme=&quot;luna&quot;
+:set fillchars+=vert:\|
+highlight VertSplit ctermbg=999 ctermfg=230
+if exists('*minpac#init')
+  &quot; Minpac is loaded.
+  call minpac#init()
+  call minpac#add('k-takata/minpac', {'type': 'opt'})
+  &quot; Other plugins
+  call minpac#add('preservim/nerdtree')
+  call minpac#add('vim-airline/vim-airline')
+  call minpac#add('vim-airline/vim-airline-themes')
+  call minpac#add('davidhalter/jedi-vim')
+  call minpac#add('tiagofumo/vim-nerdtree-syntax-highlight')
+  call minpac#add('mattn/emmet-vim')
+endif
+if has('eval')
+  &quot; Minpac commands
+  command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('', {'do': 'call minpac#status()'})
+  command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
+  command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
+endif
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%9B%B4%E6%8D%A2%E9%85%8D%E8%89%B2%E6%96%B9%E6%A1%88">更换配色方案</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7-minpac">使用插件管理工具-Minpac</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E6%8F%92%E4%BB%B6">安装卸载插件</a></li>
+<li><a href="#%E6%98%BE%E7%A4%BA%E7%9B%AE%E5%BD%95%E6%A0%91-nerdtree">显示目录树-NERDTree</a></li>
+<li><a href="#%E7%8A%B6%E6%80%81%E6%A0%8F%E7%BE%8E%E5%8C%96-airline">状态栏美化-Airline</a></li>
+<li><a href="#%E5%86%8D%E8%A7%81html-%E6%A0%87%E7%AD%BE">再见，HTML 标签</a></li>
+<li><a href="#%E6%88%91%E7%9A%84-vimrc">我的 vimrc</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/ce-shi-wen-zhang/">
+              <h3 class="post-title">
+                GitHub 使用语法
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
