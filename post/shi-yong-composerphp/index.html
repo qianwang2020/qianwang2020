@@ -2,17 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>压力测试工具ab | 汪小白的博客</title>
+<title>使用 Composer(PHP) | 汪小白的博客</title>
 <link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599561343297">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="压力测试工具ab | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="使用 Composer(PHP) | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="首先，我找到一个人的 blog，网址是https://blog.codingnow.com/，我想对这个页面进行压力测试，怎么做？我们使用ab工具来进行测试，centos8 的发行版就自带了这个软件。
-ab -n500 https://bl..." />
+    <meta name="description" content="Composer 可以用来安装管理 PHP　项目中所需的各类依赖。
+安装
+首先需要先安装 PHP 的 CLI 程序，然后我们使用 PHP-CLI 来安装 Composer。 下载 Composer 的安装程序，实际上是一个 PHP 脚本:
+..." />
     <meta name="keywords" content="学习" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -75,14 +77,14 @@ ab -n500 https://bl..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              压力测试工具ab
+              使用 Composer(PHP)
             </h2>
             <div class="post-info">
               <span>
-                2020-06-27
+                2020-03-08
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
                 <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
@@ -93,30 +95,46 @@ ab -n500 https://bl..." />
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>首先，我找到一个人的 blog，网址是https://blog.codingnow.com/，我想对这个页面进行压力测试，怎么做？我们使用ab工具来进行测试，centos8 的发行版就自带了这个软件。</p>
-<pre><code>ab -n500 https://blog.codingnow.com/
+                <p>Composer 可以用来安装管理 PHP　项目中所需的各类依赖。</p>
+<h2 id="安装">安装</h2>
+<p>首先需要先安装 PHP 的 CLI 程序，然后我们使用 PHP-CLI 来安装 Composer。 下载 Composer 的安装程序，实际上是一个 PHP 脚本:</p>
+<pre><code>php -r &quot;copy('https://install.phpcomposer.com/installer', 'composer-setup.php');&quot;
 </code></pre>
-<p>返回比较慢，我们换一个网址：</p>
-<pre><code>ab -n3000 http://165.84.180.25/index.html
+<p>执行这个脚本文件:</p>
+<pre><code>php composer-setup.php
 </code></pre>
-<p><code>-n</code> 是指定我们的请求数，一共请求了 3000 次<br>
-<img src="https://blog.qianqian.fun/post-images/1598507506230.png" alt="" loading="lazy"><br>
-你看，结果中显示我们的服务器每秒大概可以处理 4961.70 个这样的请求，但是我们这个只是静态页面。<br>
-然后我们来测试一下我们之前写的 hello 接口：<br>
-<img src="https://blog.qianqian.fun/post-images/1598507943315.png" alt="" loading="lazy"></p>
-<pre><code>ab -n1000 http://165.84.180.25/WeChat.Message/hello
+<p>如果提示缺少相关 PHP  的扩展，自行安装, 至少它需要如下扩展:</p>
+<pre><code>sudo yum install php-mbstring php-json -y
 </code></pre>
-<p><img src="https://blog.qianqian.fun/post-images/1598508112520.png" alt="" loading="lazy"><br>
-明显慢了很多<br>
-<img src="https://blog.qianqian.fun/post-images/1598508013114.png" alt="" loading="lazy"><br>
-每秒只能处理 15.96 个请求<br>
-<img src="https://blog.qianqian.fun/post-images/1598508370974.png" alt="" loading="lazy"><br>
-应该是这样的结果<br>
-<img src="https://blog.qianqian.fun/post-images/1599551466506.png" alt="" loading="lazy"></p>
+<p>然后将 composer.phar 移动到 Path 环境变量下的目录，以方便全局调用:</p>
+<pre><code>mv composer.phar /usr/bin/composer
+</code></pre>
+<p>最后使用 Composer 查看其版本，如果正常输出版本证明安装成功:</p>
+<pre><code>$ composer --version
+Composer version 1.10.10 2020-08-03 11:35:19
+# 删除 Composer 的安装文件
+$ php -r &quot;unlink('composer-setup.php');&quot;
+</code></pre>
+<h2 id="使用-composer-安装框架">使用 Composer 安装框架</h2>
+<p>然后我们可以使用 Composer 来安装一个框架，体验其便捷之处，这里以 ThinkPHP 为例，其他的框架或项目可以再 Packagist.org 上查找:</p>
+<pre><code>composer create-project topthink/think think
+</code></pre>
+<p>如果安装进度非常慢，甚至是失败，可以尝试使用中国镜像:</p>
+<pre><code>composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+</code></pre>
+<p>然后我们就完成了对 ThinkPHP 框架的安装。</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-composer-%E5%AE%89%E8%A3%85%E6%A1%86%E6%9E%B6">使用 Composer 安装框架</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -125,9 +143,9 @@ ab -n500 https://bl..." />
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://blog.qianqian.fun/post/shi-yong-xu-ni-huan-jing/">
+            <a href="https://blog.qianqian.fun/post/ce-shi-wen-zhang/">
               <h3 class="post-title">
-                使用虚拟环境
+                GitHub 使用语法
               </h3>
             </a>
           </div>
