@@ -1,0 +1,405 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>一个完整的前后端应用（Flask） | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599560925998">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="一个完整的前后端应用（Flask） | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="我一直认为，不管是前端，还是后台，或是测试，都应该去做一个完整的包含前后端的应用。只有这样，你才能清楚明白前后端交互的逻辑，只有这样，技术生涯才算完整(如果愿意它更完整，也可以玩玩测试、运维等角色扮演)。
+这篇文档的目的，就是用一个最小的 ..." />
+    <meta name="keywords" content="学习" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599560925998" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              一个完整的前后端应用（Flask）
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-25
+              </span>
+              <span>
+                12 min read
+              </span>
+              
+                <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
+                  # 学习
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>我一直认为，不管是前端，还是后台，或是测试，都应该去做一个完整的包含前后端的应用。只有这样，你才能清楚明白前后端交互的逻辑，只有这样，技术生涯才算完整(如果愿意它更完整，也可以玩玩测试、运维等角色扮演)。</p>
+<p>这篇文档的目的，就是用一个最小的 DEMO 来完成一个前后端对接的过程。我选择了发表说说这样一个谁都知道，谁都体验过的功能。</p>
+<h2 id="技术选型">技术选型</h2>
+<p>在开始一个项目之前，有一项工作叫做技术选型，即需要用什么技术去完成这个项目。没有统一的标准，但有一些思考维度:</p>
+<p>• 你选择的技术你是否能够熟练掌握应用<br>
+• 你选择的技术你团队中的其他人是否熟练掌握应用<br>
+• 你选择的技术是否适合你将要开始的项目<br>
+• 选择这项技术你所需的成本，包括用人成本、学习成本、时间成本以及维护成本等<br>
+• 你的老板、同事、领导、客户等是否喜欢<br>
+• 技术本身是否成熟、社区是否活跃、官方或第三方是否仍旧维护等<br>
+• 其他一切你有所顾忌的因素</p>
+<p>在这个应用中，我选择了小程序作为前端，而非 APP 或者传统的 Web 技术栈(JavaScript、HTML、CSS)。原因是，小程序相对其他的技术，环境容易布置、文档齐全、学习门槛比较低以及比较贴近实际。</p>
+<p>在这个应用中，我选择了 Python + Flask 作为后端技术，原因是这系列文章就是专门讲 Python 的和 Flask 的。这个应用本身，也是为了巩固大家对 Python + Flask 的基础知识的。</p>
+<h2 id="业务说明">业务说明</h2>
+<p>这个应用就只有一个页面，当我们进入这个页面的时候，会讲历史的说说全部展示在列表中，此外，我们也可以在文本框中输入新的说说，然后点击【发表说说】按钮发布说说内容，发布之后，列表中出现新的说说，并且清空文本框中的说说。原型图如下:</p>
+<figure data-type="image" tabindex="1"><img src="https://blog.qianqian.fun/post-images/1599559804873.png" alt="" loading="lazy"></figure>
+<h2 id="前端业务编写">前端业务编写</h2>
+<p>首先，我们需要先创建一个新的页面，命名为 index, 在 pages 目录下。 在小程序里一个页面有三个文件:</p>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>作用描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>index.js</td>
+<td>用来书写业务逻辑</td>
+</tr>
+<tr>
+<td>index.wxml</td>
+<td>用来书写页面元素骨架</td>
+</tr>
+<tr>
+<td>index.wxss</td>
+<td>用来书写页面样式</td>
+</tr>
+</tbody>
+</table>
+<p>这个应用中，暂时不包括 index.wxss 文件的代码，为了不增加编码的复杂度。所以我们写的真实应用可能还不如原型图好看。</p>
+<p>需要注意的是，每个创建的页面都要在 app.json 中的 <code>pages</code> 中注册, 使用小程序开发者工具中的新建 Page 按钮会自动注册:</p>
+<pre><code>{
+  &quot;pages&quot;: [
+    &quot;pages/index&quot;
+  ]
+  ......省略
+}
+</code></pre>
+<p>前端业务的编写主要分为三个部分:</p>
+<ol>
+<li>页面的骨架，这是最先编写的内容，即页面上有什么内容？文案、图片、按钮？</li>
+<li>页面的样式，就是对页面的美化，这部分也包括动画交互</li>
+<li>页面的逻辑，包括与用户的交互和与服务端的交互</li>
+</ol>
+<h2 id="编写页面元素骨架">编写页面元素骨架</h2>
+<p>首先我们要编写页面元素的骨架, 即 index.wxml 文件, 代码如下:</p>
+<pre><code>&lt;view&gt;
+    &lt;input placeholder=&quot;请输入你想说的&quot; bindinput=&quot;onChange&quot; value=&quot;{{say}}&quot; /&gt;
+    &lt;button bindtap=&quot;onTap&quot;&gt;发表说说&lt;/button&gt;
+    &lt;view&gt;你的说说列表:&lt;/view&gt;
+    &lt;view wx:for=&quot;{{list}}&quot;&gt;
+      {{item}}
+    &lt;/view&gt;
+&lt;/view&gt;
+</code></pre>
+<p>小程序是组件化编程，所以页面上的元素都是一个个的组件。上面的代码中，包含如下组件:</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>作用描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>view</td>
+<td>视图组件，可以包含其他任何组件，也作为最外层组件。</td>
+</tr>
+<tr>
+<td>input</td>
+<td>输入框组件。接收文本输入。</td>
+</tr>
+<tr>
+<td>button</td>
+<td>按钮组件。一般用于触发用户的触摸屏幕的事件，然后执行某些操作。</td>
+</tr>
+</tbody>
+</table>
+<p>可以看得出，为了不增加编码复杂度。我们只用了三个小程序官方提供的组件。</p>
+<p>在上面的代码中，有几种特殊的写法讲解一下，但是这并不是专门讲小程序开发的教程，所以不会讲得非常细致，点到为止。</p>
+<p>在组件中，可以包含一些组件地属性, 用来改变组件地外观样式或者行为。比如下面这行代码，我们使用 <code>placeholder</code> 属性来改变当用户没有输入地时候地提示文案: 请输入你想说的。</p>
+<pre><code>&lt;input placeholder=&quot;请输入你想说的&quot; /&gt;
+</code></pre>
+<p>另外，我们还有一个属性地值比较奇怪, 在 input 组件中，我们对 value 组件赋值为 <code>{{say}}</code> ，这说明 say 是一个变量，而不是一个类似于 &quot;请输入你想说的&quot; 这样地字面量(写死地值)。</p>
+<pre><code>&lt;input placeholder=&quot;请输入你想说的&quot; value=&quot;{{say}}&quot; /&gt;
+</code></pre>
+<p>还有一些属性比较奇怪，属性名都是 <code>bind</code>开头, 这些属性是事件的绑定。<strong>什么是事件呢？比如用户单击了某个按钮，微信小程序需要通知我们的程序，用户点击了这件事情，以此出发我们对这个事件预定的操作</strong>。</p>
+<pre><code>&lt;input bindinput=&quot;onChange&quot; /&gt;
+</code></pre>
+<p>这个组件中有一个事件，名字叫做 <code>bindinput</code> , 其含义是当用户输入的时候就会触发这个事件，然后微信小程序会去调用我们预定的方法 <code>onChange</code>。</p>
+<p>类似的还有下面这个 <code>button</code> 组件的 <code>ontap</code> 事件，当用户触摸这个按钮，然后就会出发这个事件，然后微信小程序会去调用我们预定的方法 <code>onTap</code> 。</p>
+<pre><code>&lt;button bindtap=&quot;onTap&quot;&gt;发表说说&lt;/button&gt;
+</code></pre>
+<p>对于说说的列表，我们不可能知道它到底有多少数量，所以我们应该使用循环语句讲其循环出来。即服务端返回多少，我们就展示多少。为了降低程序的复杂度，这里并不涉及到分页:</p>
+<pre><code>&lt;view wx:for=&quot;{{list}}&quot;{{item}}&lt;/view&gt;
+</code></pre>
+<p>这当中的 <code>item</code> 是微信小程序内置的变量，只用在循环块中( <code>&lt;view wx:for=&quot;{{list}}&quot;&gt;...&lt;/view&gt;</code> ，即省略号所在的位置)。</p>
+<h2 id="编写页面逻辑">编写页面逻辑</h2>
+<p>以前，我的编程老师在课上说，要写一个程序首先应该把这个程序中的变量都罗列出来。如果你把变量都罗列出来了，那么这个程序也就完成一半了。</p>
+<p>那时候，我并不是很理解这句话，一个程序那么复杂，为什么定义变量就完成一半了。后来知道了，因为定义了所有的变量，你也就知道程序改怎么写了。</p>
+<p>所以，我们要完成页面逻辑的编写，首先要分析页面，定义出页面逻辑中需要的变量。通过分析，我们需要两个变量，如下:</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>变量类型</th>
+<th>作用描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>say</td>
+<td>String</td>
+<td>用来保存我们在 input 组件中输入的说说文本</td>
+</tr>
+<tr>
+<td>list</td>
+<td>Array</td>
+<td>用来保存我们 list 中的数据</td>
+</tr>
+</tbody>
+</table>
+<p>在 index.js  文件中，加入变量定义的代码：</p>
+<pre><code>Page({
+  data: {
+    say: '',
+    list: [],
+  }
+})
+</code></pre>
+<p>我们已经定义了变量了，并且为这两个变量赋予了初始值。这里要额外说一说，小程序采用数据驱动编程的思想，即我们只需要定义变量，然后再 JS 中更改变量的值，页面中使用了这些变量的元素将会自动更新变量的值。</p>
+<p>下面的讲解就描述了这个过程。</p>
+<p>上面我们已经定义了两个变量，分别是 <code>say</code> 和 <code>list</code> ,那么这两个变量什么时候会改变呢？当然是当某些事件被触发的时候:</p>
+<p>• 页面加载的时候，我们会从后端请求说说列表的数据，然后改变 <code>list</code> 的值，当我们改变了 <code>list</code> 的值，小程序会自动更新页面中的列表，这就是数据驱动。</p>
+<p>• 当用户再 input 组件中输入文本的时候，会触发 input 组件的 bindinput 事件，在其 onChange 方法中，我们会更新 say 的值</p>
+<p>• 当用户触摸“发表说说”按钮的时候，会触发 button 组件的 bindtap 事件，在其 onTap 方法中，我们会改变 list 的值，将 say 这变量中保存的文本加入到 list 数组中。为了让下一次用户输入说说，免去删除之前的说说的操作，我们会自动清楚 say 的值，文本框中的值也会由微信小程序自动清除。</p>
+<p>所以，我们的页面逻辑其实也是围绕着这两个变量展开的，要由我们去完成这些会改变变量的事件，然后小程序会自动重新渲染我们的页面，使得我们的页面可以呈现最新的数据。</p>
+<p>首先，我们要来写 input 组件的 onChange 事件, 在这个事件中，我们只要完成一件事情就可以了，就是将用户在文本框中输入的值，赋值给 <code>say</code> 这个变量，在小程序中，如果要为变量赋值，可以使用 <code>this.setData</code> 方法:</p>
+<pre><code>Page({
+  onChange: function (event) {
+    // 需要说明的是，小程序会主动调用这个方法，并传递 event 这个参数，当中包含了事件相关的数据
+    this.setData({
+      // event 变量中，我们之关系 event.detail.value 这个值，这保存着文本框中用户的内容
+      // 不要问我怎么知道是保存在 event.detail.value 中的，是看微信官方文档知道的
+      say: event.detail.value
+    })
+  },
+})
+</code></pre>
+<p>接着，我们要来完成当用户触摸“发表说说”按钮时，触发 Button 按钮的 bindtap 事件，微信会调用 <code>onTap</code> 方法，在这个方法中，我要要完成四件事情:</p>
+<ol>
+<li>检查说说内容是否为空，因为输入空的说说没有任何意义</li>
+<li>往说说列表中加入新的说说，其实就是更改 list 变量的值</li>
+<li>发送说说给服务端，因为说说最终要保存到数据库，否则下次进来就数据就丢了</li>
+<li>清空说说文本框的内容，其实是将 say 的值改为 '' 空字符串</li>
+</ol>
+<p>详细的代码如下:</p>
+<pre><code>// 检查说说是否为空
+if (this.data.say === '') {
+  wx.showToast({
+    title: '说说不能为空哦'
+  })
+}
+// 往说说的列表中添加新的说说
+this.data.list.push(this.data.say)
+this.setData({
+  list: this.data.list
+})
+// 发送说说给服务端，保存说说到数据库
+wx.request({
+  url: 'http://116.85.30.153:5000/list/save',
+  method: 'post',
+  data: {
+    say: this.data.say
+  }
+ })
+// 清空说受输入框
+this.setData({
+  say: ''
+})
+</code></pre>
+<p>最后，我们要完成页面的 onLoad 方法，当页面加载的时候，微信小程序会执行这个方法。所以我们要在这个方法中，去请求服务端，获取数据库中保存的数据，并加载到列表中(改变 list 的值)：</p>
+<pre><code>onLoad: function (options) {
+    wx.request({
+      url: &quot;http://116.85.30.153:5000/list&quot;,
+      success: (response) =&gt; {
+          this.setData({
+            list: response.data
+          })
+      }
+    })
+}
+</code></pre>
+<p>关于上面 () =&gt; {} 这样的写法叫做箭头函数，可以参考文本 附录: 箭头函数 章节。</p>
+<p>到此为止，我们就完成了整个页面逻辑的编写了。实际上，再怎么复杂的功能，也都是由这些逻辑堆叠的。</p>
+<h2 id="附录-箭头函数">附录: 箭头函数</h2>
+<p>这里需要说明的是，上文中 success 的函数采用了 JavaScript ES6 规范中的语法，箭头函数。这个函数也可以换一种写法:</p>
+<pre><code>onLoad: function (options) {
+  // 因为 this 的作用域是变化的，不能在 success 的回调函数中使用，所以给 that 赋值保存其内容
+    const that = this    
+    wx.request({
+      url: &quot;http://116.85.30.153:5000/list&quot;,
+      success: function (response) {
+          // 这里就不能使用 this 了,因为这里的 this 的指向是 function () {} 本身，所以使用事先保存的 that
+          // 因为 that 才具有 setData 这个方法
+          that.setData({
+            list: response.data
+          })
+      }
+    })
+}
+</code></pre>
+<p>你看，上面这种写法是不是很麻烦？在 JavaScript 语言中， this 它的指向是一个不容易搞懂的问题，经常会因此出错。所以，在新的规范中，创造了箭头函数这样的写法，功能上和普通的函数是一样的，只是它不存在 this 指向问题，可以直接在 success 回调函数中使用 this 变量，而不用事先将 this 赋值给一个变量(示例中使用 that）。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B">技术选型</a></li>
+<li><a href="#%E4%B8%9A%E5%8A%A1%E8%AF%B4%E6%98%8E">业务说明</a></li>
+<li><a href="#%E5%89%8D%E7%AB%AF%E4%B8%9A%E5%8A%A1%E7%BC%96%E5%86%99">前端业务编写</a></li>
+<li><a href="#%E7%BC%96%E5%86%99%E9%A1%B5%E9%9D%A2%E5%85%83%E7%B4%A0%E9%AA%A8%E6%9E%B6">编写页面元素骨架</a></li>
+<li><a href="#%E7%BC%96%E5%86%99%E9%A1%B5%E9%9D%A2%E9%80%BB%E8%BE%91">编写页面逻辑</a></li>
+<li><a href="#%E9%99%84%E5%BD%95-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0">附录: 箭头函数</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/python-zi-fu-chuan-xiang-jie/">
+              <h3 class="post-title">
+                Python字符串详解
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
