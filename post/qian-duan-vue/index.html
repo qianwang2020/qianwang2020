@@ -1,0 +1,191 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>前端Vue | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599551696247">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="前端Vue | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="cd /usr/share/nginx/html/think
+cd public
+然后打开 vim 和目录树
+
+然后加上这些代码
+
+然后访问你的页面会出现一个弹窗
+
+在 JS  中，有一个核心的对象叫做 window，指的就是我们的浏览器窗..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599551696247" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              前端Vue
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-08-27
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><code>cd /usr/share/nginx/html/think</code><br>
+<code>cd public</code><br>
+然后打开 vim 和目录树<br>
+<img src="https://blog.qianqian.fun/post-images/1598511441732.png" alt="" loading="lazy"><br>
+然后加上这些代码<br>
+<img src="https://blog.qianqian.fun/post-images/1598511483216.png" alt="" loading="lazy"><br>
+然后访问你的页面会出现一个弹窗<br>
+<img src="https://blog.qianqian.fun/post-images/1598511510295.png" alt="" loading="lazy"><br>
+在 JS  中，有一个核心的对象叫做 window，指的就是我们的浏览器窗口，<code>alert</code> 是 window 这个对象的一个方法，其实完整的写法是 <code>window.alert('Hello World')</code><br>
+但是Window 这个对象可以省略<br>
+<img src="https://blog.qianqian.fun/post-images/1598513114875.png" alt="" loading="lazy"><br>
+具体的写法是这样的<code>&lt;script&gt; 表示引用或书写 JavaScript 的脚本</code>，第六行是引入了 Vue 这个框架的类库，第7行到第8行是我们自己写的脚本， body 标签当中包含所有再页面中显示的元素，所以 div 标签不可能写在body 外面<br>
+<img src="https://blog.qianqian.fun/post-images/1598513353436.png" alt="" loading="lazy"><br>
+根据上面的代码我一行一行的解释，<code>let message = 'hello world&quot;</code>这是定义了一个变量，在 JS 中并不需要声明变量的类型<code>let app = new Vue({})</code>这也是声明了一个变量叫做 app,但是变量的值是 Vue 这个类的实例,和 PHP 中一样，使用 new 关键字去实例化一个类，得到的是这个类实例化后的对象,这个 Vue 的类写在哪里呢？写在我们通过 script src=&quot;&quot; 标签引入的那个 Js 文件中,然后这个 <code>new Vue({}）</code>接收一个传参，在 JS 中 <code>{}</code> 表示对象,JS 中的对象<code>el</code> 和 <code>data</code> 都是这个对象的属性,<code>data</code> 的值也是一个对象 <code>{}</code>,<code>data</code> 指向的这个对象也有一个属性，属性的名字叫做<code>message</code> , 属性的值是变量 <code>message</code> 的值，也就是 <code>hello world</code>,其实这个写法和小程序很像。我们在 <code>data: {}</code> 中写上变量，就可以直接在 页面中用<code>{{变量名}}</code> 的方式引用了,是不是很方便？记住这样的套路,以前写这样的功能，会很麻烦，现在使用这样的框架很简单,<code>span</code> 标签一般用来显示一些文本,这里出现了一种新的语法，<code>v-if=&quot;show&quot;</code> 这种 <code>v</code>开头的属性是 <code>Vue</code> 中的指令，它是为了实现默写特定的功能，比如这个 <code>v-if</code> 是判断指定的值是否是 <code>true</code>, 如果是则显示它所在的元素，如果不是，则隐藏<br>
+<img src="https://blog.qianqian.fun/post-images/1598514086029.png" alt="" loading="lazy"><br>
+然后还有一个指令，叫做 <code>v-on</code> 是用来绑定事件的，比如说 <code>v-on:click</code> 是用来绑定我们 <code>button</code> 按钮的单机事件，意思就是说， <code>v-on:click=&quot;hasShow&quot;</code> 是表示当单机这个按钮的时候，会指定 <code>methods</code> 中同名的方法<br>
+效果是这样的<br>
+<img src="https://blog.qianqian.fun/post-images/1598515020361.png" alt="" loading="lazy"><br>
+<img src="https://blog.qianqian.fun/post-images/1598515026110.png" alt="" loading="lazy"><br>
+然后在来试试看这个例子<br>
+<img src="https://blog.qianqian.fun/post-images/1598517138828.png" alt="" loading="lazy"><br>
+效果是这样的<br>
+<img src="https://blog.qianqian.fun/post-images/1598517199208.png" alt="" loading="lazy"><br>
+<code>cd ~</code><br>
+<code>git clone https://github.com/PanJiaChen/vue-element-admin.git</code><br>
+<code>cd vue-element-admin</code><br>
+<code>yarn install</code><br>
+安装这个基于 vue 的后台框架</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
