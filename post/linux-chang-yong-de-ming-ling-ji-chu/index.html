@@ -1,0 +1,299 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Linux常用的命令-基础 | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599551812832">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Linux常用的命令-基础 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="这一篇文档记录了一些常用的命令，以备学习查询之用。并将这些命令进行分类整理，方便检索。
+export-环境变量
+你知道什么是环境变量吗？如果你不知道，你应该运行这条命令：
+$ export
+declare -x HISTCONTROL=&q..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599551812832" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Linux常用的命令-基础
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-07-06
+              </span>
+              <span>
+                7 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>这一篇文档记录了一些常用的命令，以备学习查询之用。并将这些命令进行分类整理，方便检索。</p>
+<h2 id="export-环境变量">export-环境变量</h2>
+<p>你知道什么是环境变量吗？如果你不知道，你应该运行这条命令：</p>
+<pre><code>$ export
+declare -x HISTCONTROL=&quot;ignoredups&quot;
+declare -x HISTSIZE=&quot;1000&quot;
+declare -x HOME=&quot;/home/dc2-user&quot;
+declare -x HOSTNAME=&quot;10-255-0-106&quot;
+declare -x LANG=&quot;en_US.UTF-8&quot;
+declare -x LESSOPEN=&quot;||/usr/bin/lesspipe.sh %s&quot;
+declare -x LOGNAME=&quot;dc2-user&quot;
+......省略
+</code></pre>
+<p>是的，使用 <code>export</code> 可以将当前环境下的变量全部打印在屏幕上。所以说，环境变量的本质还是变量，只是这些变量会随着环境的变化而变化，比如登录用户发生了变化。<br>
+有没有想过为什么会有环境变量的存在？<br>
+举个例子，我写了一个程序，它需要调用 Java 程序去执行某些事情。但是很快我就遇到了问题，在我的机器上程序运行没有问题，换了朋友的机器就运行不了了。原来是因为朋友的机器上没有安装 Java。他安装了 Java，还是运行不了。为什么？原来是因为它安装的目录和我不一样。<br>
+通过这个例子，你应该明白了吧？有些因素是和环境相关的，这些环境相关的因素是软件的开发者在软件的编写的时候无法预知的。这就需要环境本身来告诉我。还是以上面这个例子继续说:<br>
+在安装 Java 程序的时候，需要设置 Java 程序的环境变量，比如说 JAVA_HOME 。这样其他的程序在调用 Java 的时候就知道 Java 安装在哪里了。<br>
+除了 Java 安装在哪里，还需要知道当前登录的用户名是什么？当前用户的 Home 目录在哪里？临时目录在哪里？等等等等。 这就是环境变量存在意义：告诉环境中运行的软件，一些在他们的开发者开发的时候不能预测的因素 。<br>
+除此之外， <code>export</code> 还可以设置环境变量，如下示例:</p>
+<pre><code>$ export my_var=my_var_value
+$ echo $my_var   ## my_var_value
+</code></pre>
+<h2 id="history-历史命令">history-历史命令</h2>
+<p>使用 <code>history</code> 命令可以查看我们输入的命令的历史:</p>
+<pre><code>$ history
+    1  python --version
+    2  pip --version
+    3  sudo yum install python3
+</code></pre>
+<p>默认情况下，使用 <code>history</code> 命令输出的每一行都是由序号以及命令组成的，如果我想改变这个格式呢？可以通过设置环境变量的方式，改变 <code>history</code>  命令输入的格式，比如加入命令的执行时间:</p>
+<pre><code>$ export HISTTIMEFORMAT='%F %T '
+$ history
+    1  2020-07-13 22:29:04 python --version
+    2  2020-07-13 22:29:04 pip --version
+    3  2020-07-13 22:29:04 sudo yum install python3
+</code></pre>
+<p>你有没有发现，这几条命令的执行时间都是一样的？是因为这些命令执行的时候，并没有通过设置 <code>HISTTIMEFORMAT</code> 环境变量的方式开启“记录命令执行时间戳”的功能，所以就以其最近记录的时间戳的命令为准。</p>
+<pre><code>$ history | tail -n 3
+  165  2020-07-13 22:41:19 cat
+  166  2020-07-13 22:41:26 echo ok
+  167  2020-07-13 22:41:33 history | tail -n 3
+</code></pre>
+<p>然后我们现在在执行几条命令， 发现时间都不一样了，对吧。另外，我们还可以设置记录历史命令的数量:</p>
+<pre><code> $ echo $HISTSIZE     ## 默认为 1000
+ $ export $HISTSIZE=2000
+</code></pre>
+<p>如果要清空历史记录，可以使用 <code>history -c</code>删除内存中记录的命令。但是，实际上命令是记录在 <code>.bash_history</code> 这个文件中的，所以真正要删除命令，避免下次登录的时候重新加载该文件中的内容，可以使用 <code>history -w</code>命令。<br>
+下表记录了，<code>history</code> 命令相关的环境变量:</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HISTCONTROL=erasedups</td>
+<td>清除整个命令中的重复条目</td>
+</tr>
+<tr>
+<td>HISTCONTROL=ignoredups</td>
+<td>忽略记录命令历史中连续重复的命令</td>
+</tr>
+<tr>
+<td>HISTCONTROL=ignorespace</td>
+<td>忽略记录空格开始的命令</td>
+</tr>
+<tr>
+<td>HISTCONTROL=ignoreboth</td>
+<td>等价于 ignoredups 和 ignorespace</td>
+</tr>
+</tbody>
+</table>
+<p>如果要执行上一条命令，可以使用 <code>!!</code> , 如果要执行历史命令中的某一条命令，可以使用 <code>!&lt;序号&gt;</code> :</p>
+<pre><code>$ !!         ## 执行上一条命令
+$ history
+    1  clear
+    2  history
+    3  cat ~/.bash_history
+$ !3
+</code></pre>
+<h2 id="date-系统时间">date-系统时间</h2>
+<p>在 Windows 上，我们可以通过查看状态栏，得知现在是什么时候了。而在 Linux 中，我们通过什么命令来知晓时间呢？——  <code>date</code> 。</p>
+<pre><code>$ date
+Tue Jul 14 13:25:30 CST 2020
+如果是 CentOS/7 发行版，我们可以使用下面这个命令:
+$ timedatectl
+      Local time: Tue 2020-07-14 13:30:18 CST     ## 本地时间
+  Universal time: Tue 2020-07-14 05:30:18 UTC     ## 世界协调时间
+        RTC time: Tue 2020-07-14 05:30:18         ## RTC 芯片的时间
+       Time zone: Asia/Shanghai (CST, +0800)      ## 时区
+  .....省略
+</code></pre>
+<p>如果时区不对，对造成各类服务时间错误，与第三方对接授权错误，所以应该使用如下命令调整时区：</p>
+<pre><code>$ timedatectl set-timezone &quot;Asia/Shanghai&quot;   # 设置时区
+$ timedatectl list-timezones    # 查看所有时区
+</code></pre>
+<p>注意： 建议将时区全部设置为上海，因为一般大型的互联网企业都在上海设置数据中心。在与这些服务商通信的时候，可以尽可能避免因为细小的时间差距从而导致的错误。<br>
+另外，受限于硬件的精准度，所以我们需要启动 NTP 时间同步服务，与授时服务器定时同步时间，以保证时间的准确:</p>
+<pre><code>$ timedatectl set-ntp true
+</code></pre>
+<h2 id="time-你的程序跑的有多快">time-你的程序跑的有多快</h2>
+<p>我们可以使用 time 来查看程序运行花了多少的时间:</p>
+<pre><code>$ time php -i &gt;&gt; /dev/null
+php -i &gt;&gt; /dev/null  0.06s user 0.01s system 95% cpu 0.074 total
+</code></pre>
+<p>上面这条命令的含义是我们使用 <code>time</code> 来测试 <code>php -i &gt;&gt; /dev/null</code> 这条命令花了多长的时间，其输出的解释如下:</p>
+<pre><code>命令 用户态时间 user 内核态时间 system CPU占用 cpu 总共花费时间 total
+</code></pre>
+<p>所以，这条命令 CPU 的运算时间是 用户态时间+ 内核态时间，而总共花费的时间减去 CPU 的运算时间是中间等待 CPU 分片的时间。</p>
+<h2 id="htop-查看cpu-内存-进程">htop-查看CPU、内存、进程</h2>
+<p>在大多数的 Linux 发行版中，都使用 top 来实时查看系统资源，比如 CPU、内存以及进程的相关信息。现在，我们可以使用 htop 来代替 top 这个程序了。使用 htop 更加的简洁易用、直观明了。<br>
+可以使用包管理工具来安装 htop, 比如在 CentOS8 下，可以使用 <code>sudo dnf install htop -y</code> 。<br>
+然后输入 <code>htop</code> 即可查看系统资源占用情况, 如下图所示:<br>
+<img src="https://blog.qianqian.fun/post-images/1599549979877.png" alt="" loading="lazy"><br>
+可以按下 <code>F1</code> 来查看帮助，可以使用 <code>q</code> 或者 <code>F10</code> 退出程序。可以使用 <code>F4</code> 过滤进程， 使用 <code>F5</code> 排序，按下 <code>t</code> 可以查看进程的父子层级。按下 <code>u</code> 可以显示所有进程的用户列表，并根据用户列表来过滤进程信息。<br>
+更多的用户可以参考帮助信息:<br>
+<img src="https://blog.qianqian.fun/post-images/1599550091813.png" alt="" loading="lazy"></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#export-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F">export-环境变量</a></li>
+<li><a href="#history-%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4">history-历史命令</a></li>
+<li><a href="#date-%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4">date-系统时间</a></li>
+<li><a href="#time-%E4%BD%A0%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%B7%91%E7%9A%84%E6%9C%89%E5%A4%9A%E5%BF%AB">time-你的程序跑的有多快</a></li>
+<li><a href="#htop-%E6%9F%A5%E7%9C%8Bcpu-%E5%86%85%E5%AD%98-%E8%BF%9B%E7%A8%8B">htop-查看CPU、内存、进程</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/ya-li-ce-shi-ab/">
+              <h3 class="post-title">
+                压力测试工具ab
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
