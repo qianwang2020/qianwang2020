@@ -1,0 +1,259 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nginx 配置静态服务器 | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599671010109">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Nginx 配置静态服务器 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="这一篇文档我们来说说如何使用 Nginx 配置一个静态服务器，返回静态文件。这也是 Nginx 最基本的应用。
+那么什么是静态资源呢？一语以敝之: 文件。 Nginx 支持哪些文件呢？所有的都行。Nginx 是服务端，支持所有的文件。
+但是..." />
+    <meta name="keywords" content="随笔,学习" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599671010109" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Nginx 配置静态服务器
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-08-16
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://blog.qianqian.fun/tag/o3xdH1Qtb/" class="post-tag">
+                  # 随笔
+                </a>
+              
+                <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
+                  # 学习
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>这一篇文档我们来说说如何使用 Nginx 配置一个静态服务器，返回静态文件。这也是 Nginx 最基本的应用。</p>
+<p>那么什么是静态资源呢？一语以敝之: 文件。 Nginx 支持哪些文件呢？所有的都行。Nginx 是服务端，支持所有的文件。</p>
+<p>但是客户端并不是支持所有文件的。比如浏览器，会解析 HTML、CSS 以及 JS，但其他的文件却并不支持。对于不支持的文件，会将文件下载到本地。而其他的客户端就不一定了，比如说 Linux 中的 CURL，它并不支持 HTML、CSS等浏览器支持的文件，它会采用下载的方式。</p>
+<h2 id="nginx-的配置文件">Nginx 的配置文件</h2>
+<p>首先我们需要说一下 Nginx 的配置文件，默认情况下位于 <code>/etc/nginx/nginx.conf</code>。</p>
+<p>在一个配置文件下，可以包含多个配置文件，以免单个配置文件过大，在默认的 <code>nginx.conf</code> 配置文件中，我们可以找到如下配置:</p>
+<pre><code>include /usr/share/nginx/modules/*.conf;
+include /etc/nginx/conf.d/*.conf;
+</code></pre>
+<p><code>include</code> 表示引入配置文件，我们可以把配置文件存放在其他的目录中，在 <code>nginx.conf</code> 配置文件中，使用 <code>include</code> 指令引入。</p>
+<p>在 Nginx 的配置文件中，有两种类型的配置，分为为块配置(多条配置)和指令(单条配置)。块配置如下:</p>
+<pre><code>http {}
+</code></pre>
+<p>比如上面这个名为 http 的块配置，它指定了 http 的相关设定。一个块配置中可以包含多个块配置，比如：</p>
+<pre><code>http {
+  server {}
+  server {}
+}
+</code></pre>
+<p>另外，配置是有作用域的，在 http 块中的配置也都适用于其包含的 server 配置。相同的配置，小作用域中的配置覆盖大作用域中的配置。</p>
+<p>另一种配置是指令，是单条配置, 必须以 <code>;</code> 结尾:</p>
+<pre><code>http {
+    access_log /var/log/nginx/access.log main;
+}
+</code></pre>
+<h2 id="测试和重载配置">测试和重载配置</h2>
+<p>在改写了配置文件之后，可以使用 <code>nignx -t</code> 命令来测试配置文件的语法是否正确:</p>
+<pre><code>$ nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+</code></pre>
+<p>如果配置正确，然后我们需要重新载入 Nginx 配置:</p>
+<pre><code>$ nginx -s reload
+</code></pre>
+<p>这两条命令也可以合并在一起执行:</p>
+<pre><code>$ nginx -t -s reload
+</code></pre>
+<h2 id="配置-web-静态服务器">配置 Web 静态服务器</h2>
+<p>接着，我们来配置静态服务器, 加入如下配置:</p>
+<pre><code>server {
+    root /usr/share/nginx/html;
+  index index.html;
+  
+  location / {}
+}
+</code></pre>
+<p>这是一个基本的配置，我们来说说它的含义。</p>
+<p>• root 指令表示这个 Web 静态服务器的根目录， 也就是说，所有请求的文件都必须在这个目录或者子目录下。<br>
+• index 指令表示在没有指定文件的情况下，默认的文件，默认值为 <code>index.html</code>。举例说明，如果你访问的是<code>http://domain.com/</code> 那么默认为返回 <code>http://domain.com/index.html</code>。</p>
+<p>• location 表示 URL 的匹配，如果匹配则采用 location 中的配置。</p>
+<h2 id="配置多个-web-虚拟主机">配置多个 Web 虚拟主机</h2>
+<p>为了充分发挥服务器的作用，我们可以通过 Nginx 配置多个虚拟主机，即在 <code>http</code> 块配置下，创建多个 server 配置:</p>
+<pre><code>server {
+    root /usr/share/nginx/html;
+  index index.html;
+  
+  location / {}
+}
+server {
+    root /usr/share/nginx/html/api;
+  
+  location / {}
+}
+</code></pre>
+<p>然后你去使用 <code>nginx -t</code> 测试配置文件的时候，提示了如下警告:</p>
+<pre><code>$ nginx -t
+nginx: [warn] conflicting server name &quot;&quot; on 0.0.0.0:80, ignored
+......其他输出省略
+</code></pre>
+<p>这告诉我们针对相同的 <code>server_name</code> 不能配置一样的端口。也就是说，多个虚拟主机之间，必须网卡、端口或者域名中有一个是不一样的。所以，针对上面的配置，我们应该加入 <code>listen</code> 指令, 或者 <code>server_name</code> 指令指定域名。</p>
+<pre><code>server {
+    listen 80;
+  server_name http://api.hacking.icu;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#nginx-%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">Nginx 的配置文件</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E5%92%8C%E9%87%8D%E8%BD%BD%E9%85%8D%E7%BD%AE">测试和重载配置</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE-web-%E9%9D%99%E6%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8">配置 Web 静态服务器</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E5%A4%9A%E4%B8%AA-web-%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA">配置多个 Web 虚拟主机</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/typescript-ji-ben-yu-fa/">
+              <h3 class="post-title">
+                TypeScript 基本语法
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
