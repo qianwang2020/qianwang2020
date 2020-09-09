@@ -1,0 +1,463 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>理解 ps | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599666040277">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="理解 ps | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="有些命令因为比较容易使用，所以我没有单独拉出来说。而像 ps 这样的命令，拉出来说是因为它的使用有些困难，内容有些多，甚至可以写一本小册子。
+事实上，也没有谁可以掌握并使用它的全部内容，大家都有自己固定的参数搭配，获取自己想要得到的信息。所..." />
+    <meta name="keywords" content="Linux,学习" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599666040277" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              理解 ps
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-03-19
+              </span>
+              <span>
+                10 min read
+              </span>
+              
+                <a href="https://blog.qianqian.fun/tag/leUO5UNGy/" class="post-tag">
+                  # Linux
+                </a>
+              
+                <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
+                  # 学习
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>有些命令因为比较容易使用，所以我没有单独拉出来说。而像 ps 这样的命令，拉出来说是因为它的使用有些困难，内容有些多，甚至可以写一本小册子。</p>
+<p>事实上，也没有谁可以掌握并使用它的全部内容，大家都有自己固定的参数搭配，获取自己想要得到的信息。所以这篇文章，想要对 ps 命令进行一个梳理，给大家一个参考作用。</p>
+<h2 id="显示当前终端开启的进程">显示当前终端开启的进程</h2>
+<p>你可以把 ps 命令当作是一个数据库，当中保存着所有和进程相关的信息。你可以在终端中输入 ps 命令，然后回车，显示如下:</p>
+<pre><code>$ ps
+    PID TTY          TIME CMD 
+   2798 pts/0    00:00:00 bash
+   8115 pts/0    00:00:00 ps  
+</code></pre>
+<p>上面展示的是当前终端下的进程，换句话说，就是你登录服务器，你开启的进程。这并不包括那些在你登录服务器之前已经开启的进程。</p>
+<blockquote>
+<p>什么是终端: 当你使用 SSH 登录服务器，服务器就会分配一个终端，你可以理解成你输入命令的环境，是Linux上的一个软件。从前终端是一台机器，可以让你远程输入命令，并通过网络传输命令到计算机上。现在使用的都是软件的终端，你可以通过 SSH 登录 Linux 操作系统上安装的这个软件，名为终端。</p>
+</blockquote>
+<p>那么上面这些输出是什么意思呢？</p>
+<table>
+<thead>
+<tr>
+<th>PID</th>
+<th>TTY</th>
+<th>TIME</th>
+<th>CMD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>进程ID</td>
+<td>启动此进程的终端名称</td>
+<td>进程所占用的CPU时间总和，单位为秒</td>
+<td>开启进程所使用的命令</td>
+</tr>
+</tbody>
+</table>
+<h2 id="显示系统中所有进程">显示系统中所有进程</h2>
+<p>为了显示系统中所有的进程，可以使用参数组合 <code>ps aux</code> , 输出如下:</p>
+<pre><code>USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.7 179540 13944 ?        Ss   Sep08   0:04 /usr/lib/systemd/systemd --switched-root --system --deserialize 17
+root           2  0.0  0.0      0     0 ?        S    Sep08   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        I&lt;   Sep08   0:00 [rcu_gp]
+......more......
+</code></pre>
+<p>然后我们先解释一下 <code>aux</code> 分别是什么意思:<br>
+• a ： 显示各终端上所有的进程<br>
+• u：  显示进程所属用户名<br>
+• x：  对于没有关联到终端上的进程，也展示出来</p>
+<p>需要注意的是，你会发现有人会将 <code>ps aux</code> 写成 <code>ps -aux</code> ，这两种写法有什么区别呢？没有区别。这是历史原因造成的，这是也 ps 命令难学的原因之一。这三宗格式分别是 BSD 格式、UNIX 格式以及 GNU 格式。比较常用的是 BSD 格式和 UNIX 格式。</p>
+<p>所以，你也会看到有人，比如说我，喜欢使用 <code>ps -eF</code> 命令，其实是一样的，如下:</p>
+<pre><code>UID          PID    PPID  C    SZ   RSS PSR STIME TTY          TIME CMD
+root           1       0  0 44885 13944   0 Sep08 ?        00:00:04 /usr/lib/systemd/systemd...
+root           2       0  0     0     0   0 Sep08 ?        00:00:00 [kthreadd]
+root           3       2  0     0     0   0 Sep08 ?        00:00:00 [rcu_gp]
+......more......
+</code></pre>
+<p>一样的，我们解释一下 -eF 这两个参数的含义:</p>
+<p>• -e:  显示全部的进程<br>
+• -F:  显示详细的进程信息</p>
+<p>所以这只是两种风格而已，使用哪种看自己喜欢。</p>
+<h2 id="过滤行-过滤列以及排序">过滤行、过滤列以及排序</h2>
+<p>ps 命令可以显示上百个列的信息，不可能一次性全部展示出来，如何自定义展示的列呢？</p>
+<pre><code>$ ps -eo pid,user,cmd,start=stime | head -n 5
+    PID USER     CMD                            stime
+      1 root     /usr/lib/systemd/systemd --   Sep 08
+      2 root     [kthreadd]                    Sep 08
+      3 root     [rcu_gp]                      Sep 08
+      4 root     [rcu_par_gp]                  Sep 08
+</code></pre>
+<p>我选取了前面的 5 个进程，使用 <code>start=stime</code> 改写了默认的列名，就类似于 SQL 查询中使用 <code>as</code> 为列名重命名一般。所以，不能单纯的将 ps 命令看作是一个纯粹的命令，把它看作是一个庞大的进程相关的数据库更合适。</p>
+<p>我们可以指定一个用户:</p>
+<pre><code>$ ps -eo user,cmd -u root| head -n 5
+USER     CMD
+root     /usr/lib/systemd/systemd --switched-root --system --deserialize 17
+root     [kthreadd]
+root     [rcu_gp]
+root     [rcu_par_gp]
+</code></pre>
+<p>默认情况下，ps 命令是按照 PID 进行排序的，我们可以使用指定的列进行排序，比如说按照 CPU　使用率进行排序:</p>
+<pre><code>$ ps -aux --sort -pcpu | head -n 5
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         916  0.1  0.5 273864 10624 ?        Ssl  Sep08   2:07 /usr/bin/vmtoolsd
+root           1  0.0  0.7 179540 13944 ?        Ss   Sep08   0:04 /usr/lib/systemd/systemd --switched-root --system --deserialize 17
+root           2  0.0  0.0      0     0 ?        S    Sep08   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        I&lt;   Sep08   0:00 [rcu_gp]
+</code></pre>
+<p>使用 <code>-</code> 为倒序排列，使用 <code>+</code> 号为升序排列, 比如按照内存升序排列:</p>
+<pre><code>$ ps -aux --sort +pmem | head -n 5
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           2  0.0  0.0      0     0 ?        S    Sep08   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        I&lt;   Sep08   0:00 [rcu_gp]
+root           4  0.0  0.0      0     0 ?        I&lt;   Sep08   0:00 [rcu_par_gp]
+root           6  0.0  0.0      0     0 ?        I&lt;   Sep08   0:00 [kworker/0:0H-kblockd]
+</code></pre>
+<p>此外，我们还可以使用 <code>-L</code> 参数查看线程, 我们以 MySQL 为例，因为它是单进程多线程架构:</p>
+<pre><code>$ ps -ef | grep mysql | grep -v grep
+mysql       9171       1  1 11:45 ?        00:00:03 /usr/libexec/mysqld --basedir=/usr
+</code></pre>
+<p>首先我们查出 MySQL 的进程号为 9171， 然后使用 <code>ps -L</code> 指定其进程号查询其线程信息:</p>
+<pre><code>$ ps -L 9171
+    PID     LWP TTY      STAT   TIME COMMAND
+   9171    9171 ?        Ssl    0:01 /usr/libexec/mysqld --basedir=/usr
+   9171    9174 ?        Ssl    0:00 /usr/libexec/mysqld --basedir=/usr
+   9171    9175 ?        Ssl    0:00 /usr/libexec/mysqld --basedir=/usr
+   9171    9176 ?        Ssl    0:00 /usr/libexec/mysqld --basedir=/usr
+......more......
+</code></pre>
+<h2 id="进程树">进程树</h2>
+<p>我们知道，进程是由层级的，父进程可以衍生出子进程。那么如何查看进程的层级呢？如下示例:</p>
+<pre><code>$ ps axjf | head -n 5
+   PPID     PID    PGID     SID TTY        TPGID STAT   UID   TIME COMMAND
+      0       2       0       0 ?             -1 S        0   0:00 [kthreadd]
+      2       3       0       0 ?             -1 I&lt;       0   0:00  \_ [rcu_gp]
+      2       4       0       0 ?             -1 I&lt;       0   0:00  \_ [rcu_par_gp]
+      2       6       0       0 ?             -1 I&lt;       0   0:00  \_ [kworker/0:0H-kblockd]
+</code></pre>
+<p>解释一下命令中的参数的含义，除了 <code>a</code> 和 <code>x</code> 我们之前已经说过了，表示显示所有的进程，即使是没有控制终端的进程：</p>
+<p>• j ：用任务格式来显示进程<br>
+• f： 用 ASCII 字符显示树状结构，表达此程序间的层级关系</p>
+<p>上面是使用 BSD 格式来达成显示层级的目的，我们也可以使用 UNIX 格式来达成此目的:</p>
+<pre><code>$ ps -ejH | head -n 5
+    PID    PGID     SID TTY          TIME CMD
+      2       0       0 ?        00:00:00 kthreadd
+      3       0       0 ?        00:00:00   rcu_gp
+      4       0       0 ?        00:00:00   rcu_par_gp
+      6       0       0 ?        00:00:00   kworker/0:0H-kblockd
+</code></pre>
+<p>其中， <code>j</code> 表示用任务格式来显示进程，而 <code>H</code> 表示显示树状结构，表达此程序间的层级关系。</p>
+<p>如果你觉得这样的命令参数太难记忆了，我也建议你使用另一个命令: <code>pstree</code> :</p>
+<pre><code>$ pstree | head -n 5
+systemd-+-NetworkManager---2*[{NetworkManager}]
+        |-VGAuthService
+        |-agetty
+        |-auditd---{auditd}
+        |-chronyd
+</code></pre>
+<h2 id="附录-ps-的列以及其含义表">附录: ps 的列以及其含义表</h2>
+<p>下面我们把 ps 命令支持的部分列展示在这张表格中，以备查询:</p>
+<table>
+<thead>
+<tr>
+<th>列</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%cpu</td>
+<td>进程所占用的 CPU 时间占比</td>
+</tr>
+<tr>
+<td>%mem</td>
+<td>进程所使用的物理内存占比</td>
+</tr>
+<tr>
+<td>addr</td>
+<td>进程的内存地址</td>
+</tr>
+<tr>
+<td>args</td>
+<td>命令的参数列表</td>
+</tr>
+<tr>
+<td>blocked</td>
+<td>进程的状态（阻塞态）blocked信号掩码。根据字段的宽度，以十六进制格式显示32位或64位掩码。(别名sig_block, sigmask)。</td>
+</tr>
+<tr>
+<td>bsdstart</td>
+<td>进程的开始时间</td>
+</tr>
+<tr>
+<td>bsdtime</td>
+<td>CPU累计使用时间，即 user + system.</td>
+</tr>
+<tr>
+<td>c</td>
+<td>CPU利用率，同 cp</td>
+</tr>
+<tr>
+<td>caught</td>
+<td>捕获信号的掩码，见信号(7)。根据字段的宽度，以十六进制格式显示32或64位掩码。(别名sig_catch, sigcatch)</td>
+</tr>
+<tr>
+<td>cgroup</td>
+<td>进程所属的控制组</td>
+</tr>
+<tr>
+<td>class</td>
+<td>进程的调度类。(别名policy, cls)</td>
+</tr>
+<tr>
+<td>cls</td>
+<td>同class</td>
+</tr>
+<tr>
+<td>cmd</td>
+<td>进程名以及参数， 同 command</td>
+</tr>
+<tr>
+<td>command</td>
+<td>进程名以及参数， 同 cmd</td>
+</tr>
+<tr>
+<td>fgroup</td>
+<td>进程文件所属的用户组ID对应的组名</td>
+</tr>
+<tr>
+<td>fuid</td>
+<td>进程文件所属的用户ID</td>
+</tr>
+<tr>
+<td>fuser</td>
+<td>进程文件所属的用户ID对应的用户名</td>
+</tr>
+<tr>
+<td>ni</td>
+<td>进程的 NICE 值，用于调节优先级</td>
+</tr>
+<tr>
+<td>pid</td>
+<td>进程编号</td>
+</tr>
+<tr>
+<td>ppid</td>
+<td>进程的父进程编号</td>
+</tr>
+<tr>
+<td>pri</td>
+<td>进程的优先级</td>
+</tr>
+<tr>
+<td>rss</td>
+<td>实际内存使用量，单位是 KB</td>
+</tr>
+<tr>
+<td>s</td>
+<td>进程的状态(S代表休眠，R代表可运行，Z代表僵尸进程，T代表停止，0代表正在运行)，同 stat。</td>
+</tr>
+<tr>
+<td>start</td>
+<td>进程的开始时间</td>
+</tr>
+<tr>
+<td>start_time</td>
+<td>进程的开始时间</td>
+</tr>
+<tr>
+<td>stat</td>
+<td>进程的状态(S代表休眠，R代表可运行，Z代表僵尸进程，T代表停止，0代表正在运行), 同 s。</td>
+</tr>
+<tr>
+<td>sz</td>
+<td>虚拟内存使用量</td>
+</tr>
+<tr>
+<td>tt</td>
+<td>启动此进程的终端名称，同 tty。</td>
+</tr>
+<tr>
+<td>tty</td>
+<td>启动此进程的终端名称，同 tt。</td>
+</tr>
+<tr>
+<td>uname</td>
+<td>用户名，同 euser、user。</td>
+</tr>
+<tr>
+<td>user</td>
+<td>用户名，同 uname、euser。</td>
+</tr>
+<tr>
+<td>wchan</td>
+<td>如果此进程正在睡眠，则显示睡眠中的系统调用名</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考资料">参考资料</h2>
+<ol>
+<li><a href="https://book.douban.com/subject/26849844/">《Linux大棚命令百篇(下):网络和系统篇》</a></li>
+<li><a href="https://juejin.im/post/6844903938144075783">史上最全 Linux ps 命令详解</a></li>
+<li><a href="https://www.man7.org/linux/man-pages/man1/ps.1.html">Linux PS User Commands</a></li>
+</ol>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E7%BB%88%E7%AB%AF%E5%BC%80%E5%90%AF%E7%9A%84%E8%BF%9B%E7%A8%8B">显示当前终端开启的进程</a></li>
+<li><a href="#%E6%98%BE%E7%A4%BA%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%89%80%E6%9C%89%E8%BF%9B%E7%A8%8B">显示系统中所有进程</a></li>
+<li><a href="#%E8%BF%87%E6%BB%A4%E8%A1%8C-%E8%BF%87%E6%BB%A4%E5%88%97%E4%BB%A5%E5%8F%8A%E6%8E%92%E5%BA%8F">过滤行、过滤列以及排序</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E6%A0%91">进程树</a></li>
+<li><a href="#%E9%99%84%E5%BD%95-ps-%E7%9A%84%E5%88%97%E4%BB%A5%E5%8F%8A%E5%85%B6%E5%90%AB%E4%B9%89%E8%A1%A8">附录: ps 的列以及其含义表</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/chong-xin-ren-shi-echo1/">
+              <h3 class="post-title">
+                重新认识 echo
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
