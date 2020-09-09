@@ -1,0 +1,475 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>基于命令行的框架-FastCLI | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599652420281">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="基于命令行的框架-FastCLI | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="安装框架
+我们从代码仓库克隆代码:
+git clone https://github.com/jinzhi2020/fast-cli.git
+
+
+注意: 我们的框架只支持 PHP7.4 以上的版本，不兼容老版本。
+
+然后使用包管理工具安装依..." />
+    <meta name="keywords" content="随笔,学习" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599652420281" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              基于命令行的框架-FastCLI
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-05-09
+              </span>
+              <span>
+                7 min read
+              </span>
+              
+                <a href="https://blog.qianqian.fun/tag/o3xdH1Qtb/" class="post-tag">
+                  # 随笔
+                </a>
+              
+                <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
+                  # 学习
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="安装框架">安装框架</h2>
+<p>我们从代码仓库克隆代码:</p>
+<pre><code>git clone https://github.com/jinzhi2020/fast-cli.git
+</code></pre>
+<blockquote>
+<p>注意: 我们的框架只支持 PHP7.4 以上的版本，不兼容老版本。</p>
+</blockquote>
+<p>然后使用包管理工具安装依赖:</p>
+<pre><code>composer install
+</code></pre>
+<p>完成安装之后，我们看一下目录结构:</p>
+<table>
+<thead>
+<tr>
+<th>目录或文件</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>App</td>
+<td>存放所有的业务逻辑代码</td>
+</tr>
+<tr>
+<td>App/Http</td>
+<td>存放所有的控制器方法</td>
+</tr>
+<tr>
+<td>Configs</td>
+<td>存放所有的配置文件</td>
+</tr>
+<tr>
+<td>FastCLI</td>
+<td>存放框架源码</td>
+</tr>
+<tr>
+<td>vendor</td>
+<td>存放所有的框架以及项目的依赖的类库</td>
+</tr>
+<tr>
+<td>composer.json</td>
+<td>项目依赖的配置文件</td>
+</tr>
+<tr>
+<td>composer.lock</td>
+<td>项目依赖的版本信息锁定的文件</td>
+</tr>
+</tbody>
+</table>
+<h2 id="配置文件">配置文件</h2>
+<p>所有的配置文件都存放在 <code>Configs</code> 目录下， 采用 <code>ini</code> 的文件格式。框架定义的配置文件有两个:</p>
+<table>
+<thead>
+<tr>
+<th>配置文件</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Configs/app.ini</td>
+<td>用于存放框架所需的配置</td>
+</tr>
+<tr>
+<td>Configs/database.ini</td>
+<td>用于存放数据库所需的配置</td>
+</tr>
+</tbody>
+</table>
+<p>比如 app.ini 中，有如下配置:</p>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>product_name</td>
+<td>项目的名称</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>时区, 默认为'Asia/Shanghai'， 即上海</td>
+</tr>
+<tr>
+<td>command_namespace</td>
+<td>自定义命令的命名空间</td>
+</tr>
+</tbody>
+</table>
+<p>另外，还有一个 database.ini 中的配置:</p>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>host</td>
+<td>数据库服务的地址</td>
+</tr>
+<tr>
+<td>usernameBN</td>
+<td>数据库的用户名</td>
+</tr>
+<tr>
+<td>db</td>
+<td>数据库的名字</td>
+</tr>
+<tr>
+<td>port</td>
+<td>数据库的端口</td>
+</tr>
+<tr>
+<td>charset</td>
+<td>数据库的字符集</td>
+</tr>
+</tbody>
+</table>
+<p>除此之外，你可以任意在 Configs 目录下添加自定义的配置文件，以  <code>ini</code> 的格式即可，框架会自动合并这些配置文件。</p>
+<p>如何在代码中获取配置呢？</p>
+<pre><code>&lt;?php
+FastCLI/Configs::get('app');
+</code></pre>
+<p>这样就可以获取 app.ini 文件下所有的配置信息了。</p>
+<h2 id="路由">路由</h2>
+<p>我们的路由是基于目录文件的，比如如下这个目录结构:</p>
+<pre><code>App
+...Http
+......User
+.........Login.php
+</code></pre>
+<p>在这个 Login.php 中有一个控制器方法，名为 mini:</p>
+<pre><code>&lt;?php
+namespace App\Http\User;
+class Login
+{
+        public function mini() {}
+}
+</code></pre>
+<p>那么路由就是 <code>User-Login-mini</code> , 其实就是 <code>模块-控制器-方法</code> 。我们要运行这个路由也很简单，在命令行中，使用命令:</p>
+<pre><code>php start.php --route User-Login-mini
+</code></pre>
+<p>要访问路由，可以通过 <code>--route</code> 这个参数，而路由的值由三段组成，分别是模块、控制器、方法，通过 <code>-</code> 分割。</p>
+<h2 id="传递和接收参数">传递和接收参数</h2>
+<p>如何接收命令行的参数呢？我们创建一个控制器:</p>
+<pre><code>&lt;?php
+class Test
+{
+        public function test($name, $password)
+        {
+                return &quot;name:$name password:$password&quot;
+        }
+}
+</code></pre>
+<p>然后我们运行这个方法并传参:</p>
+<pre><code>php start.php --route Test-Test-test --name bob --password 12345
+</code></pre>
+<p>通过上面的示例，我们看到，传参和路由一样，都是通过 <code>--</code> 加上方法名的形式指定的。运行之后再命令和行中会输出: <code>name:bob password:12345</code>。</p>
+<p>传参也可以使用默认值:</p>
+<pre><code>&lt;?php
+class Test
+{
+        public function test($name, $age = 18) {}
+}
+</code></pre>
+<p>上面这个示例中， <code>$age</code>  存在默认值，所以可以不用传值:</p>
+<pre><code>php start.php --route Test-Test-test --name bob
+</code></pre>
+<p>如果仍然传递了 <code>--age</code> 参数，则会覆盖默认值。<strong>但是，不要将有默认值的参数写在没有默认值参数的前面</strong>。</p>
+<h2 id="异常处理">异常处理</h2>
+<p>默认情况下，系统对所有的异常都做了统一的处理，通过红色的 JSON 字符串输出。包含错误代码、错误消息、出错的文件、代码所在文件的行号以及堆栈信息。</p>
+<p>后面将会允许开发者接管异常，自行处理。</p>
+<h2 id="在终端输出">在终端输出</h2>
+<p>在终端输出，可以在控制器方法中返回字符串或者数组，如果返回的是数组，则会转换成 JSON 格式输出。</p>
+<pre><code>&lt;?php
+namespace App\Http\User;
+class Hello
+{
+        public function World()
+    {
+            return ['version' =&gt; '1.1']; 
+    }
+}
+</code></pre>
+<p>默认情况下，使用 return 返回的数据，将会通过绿色在终端输出，而如果是异常状况，会通过红色在终端输出。</p>
+<p>也可以直接使用 <code>echo</code> 输出， 如果希望带颜色的输出，可以使用框架封装的 <code>FastCLI\Console</code> 类输出，这个类包含三个方法： <code>success</code> \ <code>error</code> \ <code>warn</code> , 分别对应着绿色、红色以及黄色三种颜色。</p>
+<h2 id="使用数据库">使用数据库</h2>
+<p>在 FastCLI 中并没有自己写数据库的组件，而是使用 composer 引入了  <code>thingengineer/mysqli-database-class</code> 这个类库。因此所有的操作都和它一样，只是自己封装了一个 Model 类，在 Model 类中间接调用了这个类库的方法:</p>
+<pre><code>&lt;?php
+class Model
+{
+        ...其他代码省略
+        public function __call(string $method, array $args)
+        {
+                call_user_func([self::$conn, $method], $args);
+        }
+}
+</code></pre>
+<p>所以，你可以参考这个类库的 <a href="https://github.com/ThingEngineer/PHP-MySQLi-Database-Class">GitHub</a> 来获取具体的使用方法。</p>
+<h2 id="命令行">命令行</h2>
+<p>框架根据调用方式的不同可以分为路由模式和命令模式，区别如下:</p>
+<pre><code># 路由模式
+php start.php --route User-Login-mini [--arg]...
+# 命令模式
+php start.php help [--arg]...
+</code></pre>
+<p>基本上，两者没有本质上的区别，只是风格不同。但是，如果业务逻辑比较复杂，仍然是建议使用路由模式，而对于一些逻辑较为简单，或者辅助开发的功能，建议使用命令模式。</p>
+<h2 id="系统集成命令">系统集成命令</h2>
+<p>命令模式分为框架集成命令和自定义命令。框架集成的命令，可以通过 <code>php start.php help</code> 来查看:</p>
+<pre><code>$ php start.php help
+[description]
+        FastCLI command mode.
+[example]
+        php start.php command [--arg]...
+[commands]
+        Help: Show Help info.
+        RouteList: Show route list.
+</code></pre>
+<p>另外，也可以通过系统集成的命令 <code>RouteList</code> 来查看所有的控制器路由： <code>php start.php RouteList</code>：</p>
+<h2 id="自定义命令">自定义命令</h2>
+<p>除了系统集成的命令外，还可以自定义命令。首先需要在 <code>app.ini</code> 配置文件中，添加自定义命令类的命名空间。</p>
+<pre><code>[app]
+command_namespace='App\Commands\'
+</code></pre>
+<p>然后，在 App\Commands 所在的目录下，创建一个命令类，比如 <code>HelloWorld.php</code>：</p>
+<pre><code>&lt;?php
+namespace App\Commands;
+class HelloWorld
+{
+        public function help(){}
+        public function exec()
+        {
+                echo 'Hello World' . PHP_EOL;
+        }
+}
+</code></pre>
+<p>需要注意的是，这个类必须含有两个方法，分别是 <code>help</code>  和 <code>exec</code> ， 分别输出帮助信息和执行的响应信息。</p>
+<p>在完成了上面两部之后，就可以直接使用这个命令了，命令的名称等同于类名:</p>
+<pre><code>$ php start.php HelloWorld
+Hello World
+</code></pre>
+<h2 id="http-客户端">HTTP 客户端</h2>
+<p>简单的封装了一个 Http客户端。发送 GET 请求如下:</p>
+<pre><code>&lt;?php
+(new FastCLI\HttpClient)-&gt;setUrl('http://xxx.com')-&gt;get();
+</code></pre>
+<p>发送 POST 请求如下:</p>
+<pre><code>&lt;?php
+(new FastCLI\HttpClient)-&gt;setUrl('http://xxx.com')-&gt;setData(['name' =&gt; 'xxx'])-&gt;post();
+</code></pre>
+<p>设置 Http Header:</p>
+<pre><code>&lt;?php
+(new FastCLI\HttpClient)-&gt;setUrl('http://xxx.com')
+  -&gt;setHeader(['Content-Type' =&gt; 'application/json'])-&gt;post();
+</code></pre>
+<h2 id="注解">注解</h2>
+<p>目前，支持的注解如下表所示:</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>作用</th>
+<th>作用域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@example</td>
+<td>在调用 RouteList 命令的时候，会将 @example 中的文本和路由一同打印在终端</td>
+<td>控制器</td>
+</tr>
+</tbody>
+</table>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%AE%89%E8%A3%85%E6%A1%86%E6%9E%B6">安装框架</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">配置文件</a></li>
+<li><a href="#%E8%B7%AF%E7%94%B1">路由</a></li>
+<li><a href="#%E4%BC%A0%E9%80%92%E5%92%8C%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0">传递和接收参数</a></li>
+<li><a href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">异常处理</a></li>
+<li><a href="#%E5%9C%A8%E7%BB%88%E7%AB%AF%E8%BE%93%E5%87%BA">在终端输出</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93">使用数据库</a></li>
+<li><a href="#%E5%91%BD%E4%BB%A4%E8%A1%8C">命令行</a></li>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90%E5%91%BD%E4%BB%A4">系统集成命令</a></li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%BD%E4%BB%A4">自定义命令</a></li>
+<li><a href="#http-%E5%AE%A2%E6%88%B7%E7%AB%AF">HTTP 客户端</a></li>
+<li><a href="#%E6%B3%A8%E8%A7%A3">注解</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/bu-shu-dong-tai-wang-zhan/">
+              <h3 class="post-title">
+                部署动态网站
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

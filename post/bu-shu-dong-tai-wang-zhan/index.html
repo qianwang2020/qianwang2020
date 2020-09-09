@@ -1,0 +1,290 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>部署动态网站 | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599652420281">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="部署动态网站 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="在之前的文档中，我们讲述了如何借助 Nginx 部署静态网站。这一篇我们将继续使用 Nginx 来部署动态网站。那么，什么是静态网站？什么是动态网站呢？
+静态网站和动态网站的区别
+静态网站是纯粹由 HTML 网页（前端技术栈)组成的，通常只..." />
+    <meta name="keywords" content="Linux,学习" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599652420281" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              部署动态网站
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-04-23
+              </span>
+              <span>
+                7 min read
+              </span>
+              
+                <a href="https://blog.qianqian.fun/tag/leUO5UNGy/" class="post-tag">
+                  # Linux
+                </a>
+              
+                <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
+                  # 学习
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>在之前的文档中，我们讲述了如何借助 Nginx 部署静态网站。这一篇我们将继续使用 Nginx 来部署动态网站。那么，什么是静态网站？什么是动态网站呢？</p>
+<h2 id="静态网站和动态网站的区别">静态网站和动态网站的区别</h2>
+<p>静态网站是纯粹由 HTML 网页（前端技术栈)组成的，通常只是用来展示内容，而不能和用户进行交互，比如说一部分的企业官网。仅仅是用来展示企业信息，就可以使用静态网站。</p>
+<blockquote>
+<p>前端技术栈, 不准确的说法指的是 HTML + JavaScript + CSS，这也是浏览器能够解析的内容。</p>
+</blockquote>
+<p>动态网站指的是由前端技术栈加上后端技术栈，用户可以提交信息，由后端保存到数据库。页面上展示的信息也是动态的，比如你访问 12306， 你看到的列车表都是实时展示在你面前的。你可以登录你的账号，你可以购买动车票，甚至可以兑换积分，有很多的用户交互在里面。</p>
+<blockquote>
+<p>后台技术栈，非常的广泛。大体来讲，有后台语言(例如 Java、PHP、Python、Ruby 等等), 以及数据库技术( Oracle、MySQL、Redis 等等)。用户的信息通过后台语言存储到数据库中，然后在后台的语言从数据库中读出并展示到页面上。</p>
+</blockquote>
+<h2 id="在-linux-上安装-python">在 Linux 上安装 Python</h2>
+<p>这次我们使用的语言是 Python，在 CentOS7 版本默认使用的是 Python2.7 版本。但是目前最新的版本是 Python3。所以，我们需要在 Linux 上重新安装 Python3，在卸载 Python2.7 之后:</p>
+<pre><code>## 查看是否已经安装 Python 软件包
+sudo rpm -qa python     ## python-2.7.5-76.el7.x86_64
+## 卸载已经安装的 Python 旧版本
+sudo rpm -e python --nodeps    ## 需要加上 --nodeps 避免去检查相关依赖导致不能卸载
+</code></pre>
+<blockquote>
+<p>什么是依赖，可以参考附录-软件依赖。</p>
+</blockquote>
+<p>卸载了旧版本的 Python 之后，我们要安装新版本的 Python：</p>
+<pre><code>$ sudo yum install python36-Cython -y
+$ pyhton --version  ## Python 3.6.8
+$ pip3.6 --version  ## pip 9.0.3 from /usr/lib/python3.6/site-packages (python 3.6)
+</code></pre>
+<h2 id="编写一个简单的-web-应用">编写一个简单的 Web 应用</h2>
+<p>这里使用 Flask 这个基于 Python 的框架，编写一个简单的 Web 应用。主要的目的不是为了学习 Python 或 Flask， 而是为了演示如何创建一个动态网站。</p>
+<p>首先我们需要安装 Flask 框架, 使用 Python 的包管理工具 pip：</p>
+<pre><code>sudo pip36 install flask
+</code></pre>
+<p>复制下面的命令，在命令行中粘贴, 然后回车:</p>
+<pre><code>sh -c &quot;cat &lt;&lt;EOF &gt; hello_world.py
+from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+EOF&quot;
+</code></pre>
+<p>然后设置应用的环境变量:</p>
+<pre><code>export FLASK_APP=hello_world.py
+</code></pre>
+<p>最后运行这个应用:</p>
+<pre><code>flask run --host=0.0.0.0
+</code></pre>
+<blockquote>
+<p>0.0.0.0 是一个特殊的表示法，指代监听所有的 ip 的请求。即，所有的人都可以访问你的网站。</p>
+</blockquote>
+<p>默认情况下， flask 监听的是 5000 端口，需要开启防火墙对 5000 端口的限制。访问 http://ip:5000 就可以看到你的应用了。</p>
+<h2 id="使用-nginx-部署-flask">使用 Nginx 部署 Flask</h2>
+<p>首先需要安装 python-devel 软件包:</p>
+<pre><code>sudo yum install python3-devel -y
+</code></pre>
+<p>然后安装 uwsgi ：</p>
+<pre><code>pip3.6 install uwsgi
+</code></pre>
+<p>然后使用 uwsgi 启动应用:</p>
+<pre><code>uwsgi -s 0.0.0.0:5000 --manage-script-name --mount /home/dc2-user/hello_world.py=hello:app
+</code></pre>
+<p>编辑 Nginx 配置文件: <code>sudo vim /etc/nginx/conf.d/default.conf</code> , 修改内容如下：</p>
+<pre><code>location / {
+  include uwsgi_params;
+  uwsgi_pass 127.0.0.1:5000;
+}
+</code></pre>
+<p>然后重新加载 nginx 配置:</p>
+<pre><code>sudo nginx -s reload
+## 如果没有启动 nginx
+sudo systemctl start nginx
+</code></pre>
+<p>最后通过浏览器访问应用即可: http://ip, 可以看到如下界面：</p>
+<figure data-type="image" tabindex="1"><img src="https://blog.qianqian.fun/post-images/1599650488904.png" alt="" loading="lazy"></figure>
+<h2 id="附录">附录</h2>
+<h3 id="软件依赖">软件依赖</h3>
+<p>什么是依赖？就像生活中，每个人都会有所依赖以及牵挂。</p>
+<p>在软件的世界也是一样的，我要写一个浏览器，要实现很多功能，其中一部分功能别的软件已经实现了，我就没有必要去实现这个功能，调用别人的软件来完成就好了。这样，一个软件可能会依赖很多其他的软件。</p>
+<figure data-type="image" tabindex="2"><img src="https://blog.qianqian.fun/post-images/1599650574988.png" alt="" loading="lazy"></figure>
+<p>这就导致了安装非常麻烦，我安装一个软件的前提是安装好这些软件，不然这个软件中那些借助别的软件实现的功能就不能正常运行。</p>
+<p>后台，有了类似于 <code>apt</code> 、 <code>yum</code> 这样的软件包管理工具。这样的工具软件会帮我们分析一个软件依赖其他什么软件(其他软件也可能会依赖其他软件), 然后自动帮我们安装这个软件的各种依赖，最后安装我们所需要的软件。通过这样的方式，保证我们的软件在依赖这个层面可以正常的运行。</p>
+<h2 id="源码编译">源码编译</h2>
+<p>上面我们讲了使用 Yum 这类包管理工具，可以在线安装软件，并且自动完成其依赖的安装。这在大多数情况下都非常便捷有效。</p>
+<p>但是有些情况下我们需要手动安装软件。比如说在软件发行方没有构建能够使用包管理工具安装的软件包的时候，比如说在我们不满足包管理工具使用预定的安装参数安装软件的时候(即我们需要自定义安装选项的时候)。</p>
+<p>在本文中，我们安装 Python 使用源码编译，是出于学习目的。因为使用 Linux 系统，很多的软件都是需要源码编译的，我们需要掌握其原理和应用。</p>
+<p>以 Python 为例，官方版本使用的是 C 语言编写的。所以，当我们说下载 Python 源码包的时候，指的就是下载其 C 语言的源代码。而 C 语言的源码是需要通过编译成目标机器可以识别运行的二进制文件之后，才可以正常运行使用的。</p>
+<p>在这个过程中，我们可能需要自定义编译、安装参数，需要手动安装其所需的各种依赖，确实会比较麻烦，但这个过程中，我们可以更多地了解 Linux 操作系统。</p>
+<p>C 语言的编译，一般需要编译器，我们使用的是 gcc。gcc 会根据配置文件 <code>Makefile</code>  来编译源码。除了 gcc 之外，还需要 make 用来构建安装源码。</p>
+<h2 id="编译-gcc-更高版本">编译 Gcc 更高版本</h2>
+<p>由于 Gcc 版本太低，导致安装失败。所以，我们需要卸载原有的 Gcc 版本，安装更高的版本:</p>
+<pre><code>$ wget http://downloads.end.wiki/gcc-10.1.0.tar.gz   ## 下载 gcc 源码包
+$ tar -zxvf gcc-10.1.0.tar.gz      ## 解压源码包
+$ cd gcc-10.1.0    ## 进入源码目录
+## 安装 gcc 所需的依赖
+$ sudo yum install gmp gmp-devel mpfr mpfr-devel libmpc libmpc-devel glibc-devel -y
+$ sudo find /usr/ -name crti*
+$ sudo make /usr/lib/x86_64-linux-gnu/
+$ sudo cp /usr/lib64/crt* /usr/lib/x86_64-linux-gnu/
+$ ./configure --disable-multilib
+$ sudo make -j4 &amp;&amp; sudo make install
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99%E5%92%8C%E5%8A%A8%E6%80%81%E7%BD%91%E7%AB%99%E7%9A%84%E5%8C%BA%E5%88%AB">静态网站和动态网站的区别</a></li>
+<li><a href="#%E5%9C%A8-linux-%E4%B8%8A%E5%AE%89%E8%A3%85-python">在 Linux 上安装 Python</a></li>
+<li><a href="#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84-web-%E5%BA%94%E7%94%A8">编写一个简单的 Web 应用</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-nginx-%E9%83%A8%E7%BD%B2-flask">使用 Nginx 部署 Flask</a></li>
+<li><a href="#%E9%99%84%E5%BD%95">附录</a>
+<ul>
+<li><a href="#%E8%BD%AF%E4%BB%B6%E4%BE%9D%E8%B5%96">软件依赖</a></li>
+</ul>
+</li>
+<li><a href="#%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91">源码编译</a></li>
+<li><a href="#%E7%BC%96%E8%AF%91-gcc-%E6%9B%B4%E9%AB%98%E7%89%88%E6%9C%AC">编译 Gcc 更高版本</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/unix-jin-cheng/">
+              <h3 class="post-title">
+                Unix 进程
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
