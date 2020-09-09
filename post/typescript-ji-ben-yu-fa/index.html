@@ -1,0 +1,312 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TypeScript 基本语法 | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599670050476">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="TypeScript 基本语法 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="什么是 TypeScript 呢？它和我们熟悉的 JavaScript 有什么不同呢？
+什么是 TypeScript
+TypeScript 是微软推出一门语言，它包含的所有 JavaScript 的语法特性，还包括一些更新的语法。因此我们说..." />
+    <meta name="keywords" content="JavaScript,学习" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599670050476" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              TypeScript 基本语法
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-08-11
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://blog.qianqian.fun/tag/SFkSMDSFL/" class="post-tag">
+                  # JavaScript
+                </a>
+              
+                <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
+                  # 学习
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>什么是 TypeScript 呢？它和我们熟悉的 JavaScript 有什么不同呢？</p>
+<h2 id="什么是-typescript">什么是 TypeScript</h2>
+<p>TypeScript 是微软推出一门语言，它包含的所有 JavaScript 的语法特性，还包括一些更新的语法。因此我们说 TypeScript 是 JavaScript 的超集。</p>
+<p>为什么有了 JavaScript，微软还要推出 TypeScript 呢？因为微软觉得 JavaScript 不好。哪里不好呢？最大的不好在于不支持变量类型的提示，不利于大型项目的开发。</p>
+<p>所以，这一篇文档，我们来了解 TyepScript(下文简称 TS) 有哪些语法特性，和 JavaScript 又有哪些不同。</p>
+<h2 id="准备开发环境">准备开发环境</h2>
+<p>本文所有的示例都是在 CentOS8 这个 Linux 发行版上进行的，你需要先安装环境:</p>
+<pre><code>$ sudo yum install nodejs npm -y
+</code></pre>
+<p>我使用的软件版本如下:</p>
+<pre><code>$ node --version  ## v10.21.0
+$ npm --version   ## v6.14.4
+</code></pre>
+<p>npm 是前端的一个包管理工具，默认情况下它从国外的服务器上下载资源，所以非常慢。我们可以使用 Yarn 来代替 npm。安装 Yarn 如下:</p>
+<pre><code>$ npm install yarn -g
+</code></pre>
+<p>我们的浏览器当前只支持 JavaScript，并不支持 TypeScript。所以，我们需要将我们写的 TS 代码转为 JavaScript 代码才能够正常在浏览器中执行。所以，我们需要下载 TS 的编译器:</p>
+<pre><code>$ npm install typescript -g
+</code></pre>
+<h2 id="hello-world">Hello World</h2>
+<p>继承传统，我们还是从 Hello World 说起, 创建一个文件，命名为 <code>hello.ts</code> :</p>
+<pre><code>console.log('Hello World')
+</code></pre>
+<p>然后，我们需要将 TS 的代码编译成 JavaScript 的代码:</p>
+<pre><code>$ tsc hello.ts
+$ ls
+hello.js  hello.ts
+</code></pre>
+<p>我们发现，编译之后，当前目录下出现了一个名为 hello.js 的文件, 我们来看一下文件的内容:</p>
+<pre><code>$ cat hello.js
+console.log('Hello World');
+</code></pre>
+<p>好像和原本我们写的并没有什么区别，真的没有吗？行末多了一个 <code>;</code> 。这说明这句代码是经过编译的，不是简单的复制过来，虽然只是多了一个 <code>;</code> 。所以，我们说 TypeScript 其实是包含了所有的 JavaScript 的语法的，或者说兼容所有的 JavaScript 语法。</p>
+<h2 id="变量和变量类型">变量和变量类型</h2>
+<p>首先我们来定义一些变量，通过变量的定义来了解变量的类型。</p>
+<h3 id="布尔-数值-字符串">布尔、数值、字符串</h3>
+<p>如何定义变量呢？我们使用 <code>let</code> ，这代替了在 JavaScript 中使用的 <code>var</code> 。然后我们可以在变量名的后面增加变量类型, 如下示例:</p>
+<pre><code>// 定义布尔类型的变量
+let isExists: boolean = false;
+// 定义数字类型的变量
+let count: number = 5;
+// 定义字符串类型的变量
+let name: string = &quot;bob&quot;
+// 使用插值语法实现字符串拼接
+let sentence: string = `Hello, My name is ${name}`;
+</code></pre>
+<h3 id="数组-元组">数组、元组</h3>
+<p>数组和元组可以定义值的集合，但数组是可以变长的，而元组则是定长的，而且元组可以由不同类型的值组成，但是每一个值的类型必须事先确定:</p>
+<pre><code>// 定义数值类型的数组
+let arr: number[] = [1, 2, 3];
+// 定义元组，元组的元素个数是不能变的，并且其类型都是已知的
+let tup: [string, number] = ['bob', 18]
+</code></pre>
+<h3 id="枚举">枚举</h3>
+<p>为什么要定义枚举类型呢？因为在我们的代码中经常会有一些数字的出现，比如订单的状态，我们写的时候可能知道这个数值的含义，是代发货还是待评价。但时间久了，自己和其他同事都会忘记它是什么意思。所以，我们会定义一个枚举类型，给这些数值类型的值定义一个名字，如下:</p>
+<pre><code>enum OrderStatus {Created = 1, Payed = 2, Received = 3, Completed = 4}
+let status: OrderStatus = OrderStatus.Created
+</code></pre>
+<p>另外枚举也约束了值的范围，一旦超出了范围，编译器可以提前给出错误提示。</p>
+<pre><code>let status: OrderStatus = 5  // 这就是错误的，编译器会给出错误提示
+</code></pre>
+<h3 id="空值-null-undefined">空值、Null、Undefined</h3>
+<p>有些函数，并没有返回值，我们可以将其返回值声明为空值, 即 <code>void</code> ：</p>
+<pre><code>function print(content): void {
+    console.log(content); 
+}
+</code></pre>
+<p>而 Null 和 Undefined 也是两种类型，它们是任意类型的子类型，也就是说可以将他们赋值给任意类型的变量。</p>
+<pre><code>let name: string = null;
+let age: int = undefined;
+</code></pre>
+<p>在实际的实践中，我建议使用 <code>null</code> 而非 <code>undefined</code> 。</p>
+<h3 id="任意类型">任意类型</h3>
+<p>任意类型的值是在定义这个变量的时候，我也不确定它是什么类型，所以可以接收这个变量是任意类型的，比如说它可以是字符串、可以是元组、可以是数值.....</p>
+<pre><code>// any 表明这个类型的值可以是任意类型，数值、字符串、数组......
+let anyTypeValue: any = 4;
+// 重新赋予它字符串的类型的值
+anyTypeValue = 'bob'
+// 为数组声明为任意类型，表示它的元素可以是任意类型
+let list: any[] = [1, true, 'free']
+</code></pre>
+<h3 id="nerver-类型">Nerver 类型</h3>
+<p>还有一个更为特殊的类型，叫做 <code>never</code> , 从字面意识上理解它表示永远，永远什么呢？永远不能到达。</p>
+<p>通常用作一个函数返回值的声明:</p>
+<pre><code>function run(): never {
+    while(true) {} 
+}
+</code></pre>
+<p>像上面这个函数，它永远都不会执行结束，因为它当中是一个死循环，这样的函数就可以使用 <code>never</code> 类型用作其返回值的声明。</p>
+<p>除了上面这种情况之外，还有一些情况可以使用 <code>never</code> 用作返回值的声明，比如说抛出异常:</p>
+<pre><code>function error(message: string): never {
+    throw new Error(message);
+}
+</code></pre>
+<h3 id="类型断言">类型断言</h3>
+<p>有如下这段代码, 我们声明了一个 <code>any</code> 类型的变量, 并为其赋值:</p>
+<pre><code>let str: any = 'This is string'
+console.log((str as string).length)
+</code></pre>
+<p><code>(str as string)</code> ，通过这样的语法形式告诉编译器，我确定它是字符串类型的，你不用管。</p>
+<h2 id="附录">附录</h2>
+<h3 id="vim-配置语法高亮和自动补全">Vim 配置语法高亮和自动补全</h3>
+<p>首先需要安装两个插件:</p>
+<ol>
+<li>HerringtonDarkholme/yats.vim</li>
+<li>ycm-core/YouCompleteMe</li>
+</ol>
+<p>然后加入在 <code>.vimrc</code> 配置文件中加入如下内容:</p>
+<pre><code>if !exists(&quot;g:ycm_semantic_triggers&quot;)
+        let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers['typescript'] = ['.']
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-typescript">什么是 TypeScript</a></li>
+<li><a href="#%E5%87%86%E5%A4%87%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83">准备开发环境</a></li>
+<li><a href="#hello-world">Hello World</a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%92%8C%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B">变量和变量类型</a>
+<ul>
+<li><a href="#%E5%B8%83%E5%B0%94-%E6%95%B0%E5%80%BC-%E5%AD%97%E7%AC%A6%E4%B8%B2">布尔、数值、字符串</a></li>
+<li><a href="#%E6%95%B0%E7%BB%84-%E5%85%83%E7%BB%84">数组、元组</a></li>
+<li><a href="#%E6%9E%9A%E4%B8%BE">枚举</a></li>
+<li><a href="#%E7%A9%BA%E5%80%BC-null-undefined">空值、Null、Undefined</a></li>
+<li><a href="#%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B">任意类型</a></li>
+<li><a href="#nerver-%E7%B1%BB%E5%9E%8B">Nerver 类型</a></li>
+<li><a href="#%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80">类型断言</a></li>
+</ul>
+</li>
+<li><a href="#%E9%99%84%E5%BD%95">附录</a>
+<ul>
+<li><a href="#vim-%E9%85%8D%E7%BD%AE%E8%AF%AD%E6%B3%95%E9%AB%98%E4%BA%AE%E5%92%8C%E8%87%AA%E5%8A%A8%E8%A1%A5%E5%85%A8">Vim 配置语法高亮和自动补全</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/vue3-ji-ben-yu-fa/">
+              <h3 class="post-title">
+                Vue3 基本语法
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
