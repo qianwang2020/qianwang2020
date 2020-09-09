@@ -2,26 +2,19 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>GitHub 使用语法 | 汪小白的博客</title>
+<title>配置 SSL 证书 | 汪小白的博客</title>
 <link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599669110812">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="GitHub 使用语法 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="配置 SSL 证书 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="一个 # 号表示一号标题，比如
-一号标题
-‘Ctrl + P’可以预览效果
-很自然的，##二号标题，###三号标题，####四号标题......一直到六号标题
-二号标题
-三号标题
-四号标题
-五号标题
-六号标题
-在文字的前后加上 两个 ‘ *..." />
-    <meta name="keywords" content="学习" />
+    <meta name="description" content="本文将描述如何在 Nginx 上配置 SSL 证书，让域名支持使用 https 协议进行访安全地访问。
+申请证书
+推荐使用 FREESSL 这个服务商购买 SSL 证书。在购买证书之后，在 FreeSSL 的网站上，下载两个证书文件，分别是..." />
+    <meta name="keywords" content="随笔,学习" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -83,15 +76,19 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              GitHub 使用语法
+              配置 SSL 证书
             </h2>
             <div class="post-info">
               <span>
-                2019-12-11
+                2019-06-02
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
+              
+                <a href="https://blog.qianqian.fun/tag/o3xdH1Qtb/" class="post-tag">
+                  # 随笔
+                </a>
               
                 <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
                   # 学习
@@ -101,77 +98,82 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>一个 # 号表示一号标题，比如</p>
-<h1 id="一号标题">一号标题</h1>
-<p>‘Ctrl + P’可以预览效果</p>
-<p>很自然的，##二号标题，###三号标题，####四号标题......一直到六号标题</p>
-<h2 id="二号标题">二号标题</h2>
-<h3 id="三号标题">三号标题</h3>
-<h4 id="四号标题">四号标题</h4>
-<h5 id="五号标题">五号标题</h5>
-<h6 id="六号标题">六号标题</h6>
-<p>在文字的前后加上 两个 ‘ ** ’表示加粗，一个 ‘  * ’表示斜体。比如：<strong>加粗</strong>，<em>斜体</em></p>
-<p>如果你要插入代码，分为两种，一种是行内代码，代码前后使用*‘*符号包裹，。</p>
-<p><code>print 'Hello World'</code></p>
-<p>如果你要插入多行代码，可以使用 如下：</p>
-<pre><code>def index():
-    print 'Hello World'
+                <p>本文将描述如何在 Nginx 上配置 SSL 证书，让域名支持使用 https 协议进行访安全地访问。</p>
+<h2 id="申请证书">申请证书</h2>
+<p>推荐使用 <a href="https://freessl.cn/">FREESSL</a> 这个服务商购买 SSL 证书。在购买证书之后，在 FreeSSL 的网站上，下载两个证书文件，分别是以 <code>.pem</code> 和 <code>.key</code> 结尾的文件。之后，将证书上传到服务器。</p>
+<h2 id="配置证书">配置证书</h2>
+<p>首先应该确认，系统中已经安装了最新版本的 OpenSSL 库。并且在 nginx 编译选项中加入了 <code>ngx_http_ssl_module</code> 模块:</p>
+<pre><code>$ openssl version
+$ nginx -V
 </code></pre>
-<p>如果是列表：</p>
-<ul>
-<li>列表项一</li>
-<li>列表项二</li>
-<li>列表项N</li>
-</ul>
-<p>上面的是无序列表，有序列表如下：</p>
-<ol>
-<li>列表项一</li>
-<li>列表项二</li>
-<li>列表项三</li>
-<li>列表项N</li>
-</ol>
-<p><a href="%E7%BD%91%E5%9D%80%E9%93%BE%E6%8E%A5">参考文档</a></p>
-<blockquote>
-<p>注意。。。。。。。。。。。</p>
-</blockquote>
+<p>Nginx 关于 SSL 证书的配置如下:</p>
+<pre><code> server {
+                listen       443 ssl;
+        server_name  hk.hacking.icu;
+        ssl_certificate   cert/c.pem;   ## 更换成自己的证书路径
+        ssl_certificate_key  cert/c.key; ## 更换成自己的证书路径
+        ssl_session_timeout 5m;
+        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        ssl_prefer_server_ciphers on;
+......省略
+</code></pre>
+<p>然后检查配置，重启 Nginx 服务:</p>
+<pre><code>$ nginx -t
+$ nginx -s reload
+</code></pre>
+<p>解释一下，上面这些关于 SSL 配置的含义：</p>
 <table>
 <thead>
 <tr>
-<th>项目一</th>
+<th>配置项</th>
 <th>描述</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>111</td>
-<td>2222</td>
+<td>ssl_certificate</td>
+<td>SSL 的证书</td>
+</tr>
+<tr>
+<td>ssl_certificate_key</td>
+<td>SSL 的证书的密钥</td>
+</tr>
+<tr>
+<td>ssl_session_timeout</td>
+<td>SSL 会话的超时时间</td>
+</tr>
+<tr>
+<td>ssl_ciphers</td>
+<td>支持的算法</td>
+</tr>
+<tr>
+<td>ssl_protocols</td>
+<td>SSL 支持的协议</td>
+</tr>
+<tr>
+<td>ssl_perfer_server_ciphers</td>
+<td>在使用 TLSv3 版本的时候，优先使用服务端密码</td>
 </tr>
 </tbody>
 </table>
-<p>掌握以上的这些基本就可以完成一篇比较漂亮的文章了。</p>
+<blockquote>
+<p>更为权威的以及更多的内容，应该参考官方的 <a href="http://nginx.org/en/docs/http/ngx_http_ssl_module.html">ngx_http_ssl_module</a>。</p>
+</blockquote>
+<h2 id="https-的优化">HTTPS 的优化</h2>
+<ol>
+<li>设置 keepalive_tiemout 100;</li>
+<li>设置 SSL Session 的缓存；</li>
+</ol>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#%E4%B8%80%E5%8F%B7%E6%A0%87%E9%A2%98">一号标题</a>
+<li>
 <ul>
-<li><a href="#%E4%BA%8C%E5%8F%B7%E6%A0%87%E9%A2%98">二号标题</a>
-<ul>
-<li><a href="#%E4%B8%89%E5%8F%B7%E6%A0%87%E9%A2%98">三号标题</a>
-<ul>
-<li><a href="#%E5%9B%9B%E5%8F%B7%E6%A0%87%E9%A2%98">四号标题</a>
-<ul>
-<li><a href="#%E4%BA%94%E5%8F%B7%E6%A0%87%E9%A2%98">五号标题</a>
-<ul>
-<li><a href="#%E5%85%AD%E5%8F%B7%E6%A0%87%E9%A2%98">六号标题</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#%E7%94%B3%E8%AF%B7%E8%AF%81%E4%B9%A6">申请证书</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E8%AF%81%E4%B9%A6">配置证书</a></li>
+<li><a href="#https-%E7%9A%84%E4%BC%98%E5%8C%96">HTTPS 的优化</a></li>
 </ul>
 </li>
 </ul>
@@ -181,6 +183,15 @@
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/php-ji-ben-yu-fa/">
+              <h3 class="post-title">
+                PHP 基本语法
+              </h3>
+            </a>
+          </div>
         
 
         

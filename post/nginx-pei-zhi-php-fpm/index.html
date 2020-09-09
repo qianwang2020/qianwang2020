@@ -2,26 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>GitHub 使用语法 | 汪小白的博客</title>
+<title>Nginx 配置 PHP-FPM | 汪小白的博客</title>
 <link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599669110812">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="GitHub 使用语法 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Nginx 配置 PHP-FPM | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="一个 # 号表示一号标题，比如
-一号标题
-‘Ctrl + P’可以预览效果
-很自然的，##二号标题，###三号标题，####四号标题......一直到六号标题
-二号标题
-三号标题
-四号标题
-五号标题
-六号标题
-在文字的前后加上 两个 ‘ *..." />
-    <meta name="keywords" content="学习" />
+    <meta name="description" content="大部分的 PHP 项目都使用 PHP-FPM( PHP 进程管理器）和 Nginx 进行通信。如何通信的呢？
+Nginx 将请求反向代理给 PHP-FPM，然后 PHP-FPM 启用 PHP 进程处理请求内容，执行完成之后将响应返还给 Ng..." />
+    <meta name="keywords" content="随笔,学习" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -83,15 +75,19 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              GitHub 使用语法
+              Nginx 配置 PHP-FPM
             </h2>
             <div class="post-info">
               <span>
-                2019-12-11
+                2019-06-15
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
+              
+                <a href="https://blog.qianqian.fun/tag/o3xdH1Qtb/" class="post-tag">
+                  # 随笔
+                </a>
               
                 <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
                   # 学习
@@ -101,86 +97,53 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>一个 # 号表示一号标题，比如</p>
-<h1 id="一号标题">一号标题</h1>
-<p>‘Ctrl + P’可以预览效果</p>
-<p>很自然的，##二号标题，###三号标题，####四号标题......一直到六号标题</p>
-<h2 id="二号标题">二号标题</h2>
-<h3 id="三号标题">三号标题</h3>
-<h4 id="四号标题">四号标题</h4>
-<h5 id="五号标题">五号标题</h5>
-<h6 id="六号标题">六号标题</h6>
-<p>在文字的前后加上 两个 ‘ ** ’表示加粗，一个 ‘  * ’表示斜体。比如：<strong>加粗</strong>，<em>斜体</em></p>
-<p>如果你要插入代码，分为两种，一种是行内代码，代码前后使用*‘*符号包裹，。</p>
-<p><code>print 'Hello World'</code></p>
-<p>如果你要插入多行代码，可以使用 如下：</p>
-<pre><code>def index():
-    print 'Hello World'
+                <p>大部分的 PHP 项目都使用 PHP-FPM( PHP 进程管理器）和 Nginx 进行通信。如何通信的呢？</p>
+<p>Nginx 将请求反向代理给 PHP-FPM，然后 PHP-FPM 启用 PHP 进程处理请求内容，执行完成之后将响应返还给 Nginx, Nginx 将响应返回给客户端。</p>
+<p>这一篇文档将描述如何在 Nginx 中配置 PHP-FPM。</p>
+<p>首先要启动 PHP-FPM:</p>
+<pre><code>sudo systemctl start php-fpm
 </code></pre>
-<p>如果是列表：</p>
-<ul>
-<li>列表项一</li>
-<li>列表项二</li>
-<li>列表项N</li>
-</ul>
-<p>上面的是无序列表，有序列表如下：</p>
-<ol>
-<li>列表项一</li>
-<li>列表项二</li>
-<li>列表项三</li>
-<li>列表项N</li>
-</ol>
-<p><a href="%E7%BD%91%E5%9D%80%E9%93%BE%E6%8E%A5">参考文档</a></p>
-<blockquote>
-<p>注意。。。。。。。。。。。</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>项目一</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>111</td>
-<td>2222</td>
-</tr>
-</tbody>
-</table>
-<p>掌握以上的这些基本就可以完成一篇比较漂亮的文章了。</p>
+<p>然后在 Nginx 的配置中加入如下配置:</p>
+<pre><code>server {
+    listen 80;
+  server_name hk.hakcing.icu;
+  root /usr/share/nginx/html;
+  index index.php;
+  
+  location ~ \.php$ { 
+        index index.php;
+        fastcgi_pass   unix:/run/php-fpm/www.sock; 
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name; 
+        include        fastcgi_params; 
+    } 
+}
+</code></pre>
+<p>其中 fastcgi_pass 有两种写法，一种是监听 sock 文件，一种是监听指定的端口。上面示例中是属于第一种，这个是根据 PHP-FPM 的配置得到的。可以通过如下的命令来获取该项配置:</p>
+<pre><code>$ sudo grep -E &quot;^listen.=&quot; /etc/php-fpm.d/www.conf
+listen = /run/php-fpm/www.sock
+</code></pre>
+<p>其中， <code>/etc/php-fpm.d/www.conf</code> 是 PHP-FPM 的配置文件，当中有一个配置项叫做 listen，用来表示 PHP-FPM 的监听端口。</p>
+<p>重启 nginx 后生效:</p>
+<pre><code>sudo nginx -t -s reload
+</code></pre>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li><a href="#%E4%B8%80%E5%8F%B7%E6%A0%87%E9%A2%98">一号标题</a>
-<ul>
-<li><a href="#%E4%BA%8C%E5%8F%B7%E6%A0%87%E9%A2%98">二号标题</a>
-<ul>
-<li><a href="#%E4%B8%89%E5%8F%B7%E6%A0%87%E9%A2%98">三号标题</a>
-<ul>
-<li><a href="#%E5%9B%9B%E5%8F%B7%E6%A0%87%E9%A2%98">四号标题</a>
-<ul>
-<li><a href="#%E4%BA%94%E5%8F%B7%E6%A0%87%E9%A2%98">五号标题</a>
-<ul>
-<li><a href="#%E5%85%AD%E5%8F%B7%E6%A0%87%E9%A2%98">六号标题</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/pei-zhi-ssl-zheng-shu/">
+              <h3 class="post-title">
+                配置 SSL 证书
+              </h3>
+            </a>
+          </div>
         
 
         

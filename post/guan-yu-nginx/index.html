@@ -1,0 +1,235 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>关于 Nginx | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599669110812">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="关于 Nginx | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="What
+什么是 Nginx? 我们来看 《nginx” in “The Architecture of Open Source Applications》一文中的相关简介，其中文翻译版本《[译] 开源项目之 Nginx》，其原文节选如下:..." />
+    <meta name="keywords" content="随笔,学习" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599669110812" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              关于 Nginx
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-07-05
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://blog.qianqian.fun/tag/o3xdH1Qtb/" class="post-tag">
+                  # 随笔
+                </a>
+              
+                <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
+                  # 学习
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="what">What</h2>
+<p>什么是 Nginx? 我们来看 《nginx” in “The Architecture of Open Source Applications》一文中的相关简介，其中文翻译版本<a href="https://blog.csdn.net/weixin_33774615/article/details/91450578">《[译] 开源项目之 Nginx》</a>，其原文节选如下:</p>
+<pre><code>nginx (pronounced &quot;engine x&quot;) is a free open source web server written by Igor Sysoev, a Russian software engineer. Since its public launch in 2004, nginx has focused on high performance, high concurrency and low memory usage. Additional features on top of the web server functionality, like load balancing, caching, access and bandwidth control, and the ability to integrate efficiently with a variety of applications, have helped to make nginx a good choice for modern website architectures. Currently nginx is the second most popular open source web server on the Internet.
+</code></pre>
+<p>nginx(读作 “engine x”)是由俄罗斯一位名为 Igor Sysoev 软件工程师创作开源的 web 应用服务器。自它在 2004年公开发行之后，nginx 聚焦于高性能、高并发以及低内存占用，另外还添加了很多先进的 web 服务器功能的实现，比如负载均衡，缓存，访问和带宽控制，将这些功能高效的组合在一起。nginx 为构建现代化的网站架构提供了帮助。当前 nginx 以及是互联网上第二受欢迎的开源 web 服务器了。</p>
+<h2 id="特点和优势">特点和优势</h2>
+<p>Nginx 有下面这些优势特性</p>
+<p>• 高并发、高性能<br>
+• 扩展性好，有着非常多的模块和生态<br>
+• 异步非阻塞的事件驱动模型(是高并发、高性能的原因)<br>
+• 高可靠性<br>
+• 热部署、平滑升级<br>
+• BSD 许可证，开源，可商业应用<br>
+• 大厂背书, 比如 Google，阿里，腾讯，百度......</p>
+<h2 id="安装-nginx">安装 Nginx</h2>
+<p>使用 Docker 安装:</p>
+<pre><code>docker run --name some-nginx -v /some/content:/usr/share/nginx/html:ro -d nginx
+</code></pre>
+<p>使用 Yum 安装, 创建</p>
+<pre><code>#!/bin/bash
+## 配置 Yum 仓库
+sh -c 'cat &lt;&lt;EOF &gt; /etc/yum.repos.d/nginx.repo
+    [nginx-stable]
+    name=nginx stable repo
+    baseurl=http://nginx.org/packages/centos/\$releasever/\$basearch/
+    gpgcheck=1
+    enabled=1
+    gpgkey=https://nginx.org/keys/nginx_signing.key
+    module_hotfixes=true
+EOF'
+## 安装
+yum install nginx -y
+nginx -v   ## 输出版本号
+## 启动服务并设置开机启动项
+systemctl start nginx
+systemctl enable nginx
+</code></pre>
+<p>是否启动成功可以访问服务:</p>
+<pre><code>curl -XGET
+</code></pre>
+<p>其他的系统或发行版，可以参考官方文档: <a href="https://nginx.org/en/docs/install.html">Installing nginx</a>。</p>
+<h2 id="什么是反向代理">什么是反向代理</h2>
+<p>既然有反向代理(the Reverse Proxy Server)，就会有正向代理，两者都是代理，只是方向不同。</p>
+<p>那什么是代理呢？比如我要访问 Google，因为政治环境，我们没办法通过正常访问。于是我通过先访问香港的VPN服务器，然后通过VPN服务器代替我去访问 Google,然后将内容返回给我。这就是代理，而且是正向代理。</p>
+<p>而反向代理呢？是 Google 在收到我的请求之后，通过其代理服务器将请求转发给提供搜索服务的服务器集群，有他们中的一台服务器实例提供给我想要的内容。相对于正向代理，这种就叫做反向代理。</p>
+<p>反向代理的出处是一篇 Sun 公司的文章 ———— <a href="https://www.informit.com/articles/article.aspx?p=169534">《Securing Web Applications through a Secure Reverse Proxy》</a>。这篇文章大致讲述了使用设置反向代理服务器，集中客户端的请求，然后在转发给后端服务器集群，从而来保障后台服务器集群的安全。</p>
+<p>从这个角度而言，反向代理指的就是负载均衡器, 而 Nginx 就提供了负载均衡的能力。<strong>反向代理只是相对于正向代理而言的，代理才是其本质</strong>。</p>
+<h2 id="nginx-的作者和轶事">Nginx 的作者和轶事</h2>
+<p>Nginx 的作者是俄罗斯的伊戈尔·赛索耶夫(Igor Sysoev)，毫无疑问他是一个人才。Nginx 这个开源项目有着良好的结构和优雅的代码，简直是有口皆碑。</p>
+<p>不仅如此，其高性能和良好的生态与让 Nginx 在 2019年2月成为了互联网上部署最广泛的服务器，超越了 Apache 的 Httpd。</p>
+<p>但是 Nginx 其实是作者在上班期间做的私活，所以后面又发生了版本之争，引申除了程序员写的私活其版权归属的问题。有兴趣的同学，可以了解一下: <a href="https://www.zdnet.com/article/russian-police-raid-nginx-moscow-office/">Russian police raid NGINX Moscow office</a>。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#what">What</a></li>
+<li><a href="#%E7%89%B9%E7%82%B9%E5%92%8C%E4%BC%98%E5%8A%BF">特点和优势</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85-nginx">安装 Nginx</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86">什么是反向代理</a></li>
+<li><a href="#nginx-%E7%9A%84%E4%BD%9C%E8%80%85%E5%92%8C%E8%BD%B6%E4%BA%8B">Nginx 的作者和轶事</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/nginx-pei-zhi-php-fpm/">
+              <h3 class="post-title">
+                Nginx 配置 PHP-FPM
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
