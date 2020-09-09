@@ -1,0 +1,299 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>部署静态网站 | 汪小白的博客</title>
+<link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599649813479">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="部署静态网站 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="我们的很多产品，都需要通过网站的形式对外提供服务。那么如何使用 Linux 来搭建一个属于自己的网站呢？这就是本文写作的目的。
+我们需要安装一个软件，来对外提供 Web 服务，类似的软件有很多，常用的比如 Apache 、Nginx。本文使..." />
+    <meta name="keywords" content="Linux,学习" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.qianqian.fun">
+  <img class="avatar" src="https://blog.qianqian.fun/images/avatar.png?v=1599649813479" alt="">
+  </a>
+  <h1 class="site-title">
+    汪小白的博客
+  </h1>
+  <p class="site-description">
+    用勤劳的双手换取想要的生活
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              部署静态网站
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-02-21
+              </span>
+              <span>
+                11 min read
+              </span>
+              
+                <a href="https://blog.qianqian.fun/tag/leUO5UNGy/" class="post-tag">
+                  # Linux
+                </a>
+              
+                <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
+                  # 学习
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>我们的很多产品，都需要通过网站的形式对外提供服务。那么如何使用 Linux 来搭建一个属于自己的网站呢？这就是本文写作的目的。</p>
+<p>我们需要安装一个软件，来对外提供 Web 服务，类似的软件有很多，常用的比如 Apache 、Nginx。本文使用 Nginx 。</p>
+<h2 id="创建一个静态网站">创建一个静态网站</h2>
+<p>首先，我们需要安装一个软件，这个软件叫做 Nginx。安装软件我们之前已经说过了，很简单:</p>
+<pre><code>sudo yum install nginx -y
+</code></pre>
+<p>然后，我们发现如下输出:</p>
+<pre><code>$ sudo yum install nginx -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: centos.nethub.com.hk
+ * extras: centos.uhost.hk   
+ * updates: centos.uhost.hk  
+No package nginx available.
+Error: Nothing to do
+</code></pre>
+<p>好奇怪啊，yum 并没有安装，而是说 No package nginx available（ 没有可用的 nginx 的软件包)。可是我们之前安装 wget 并没有这样的提示啊。这是因为 yum 去安装一个软件，首先会去查找其软件源的服务器，是否包含这个软件的信息（比如下载地址). wget 这个软件在其源服务器上有，而 nginx 没有。</p>
+<p>我们可以创建一个配置文件来告诉 yum 去哪里下载 nginx, 创建文件命令为 <code>/etc/yum.repos.d/nginx.repo</code>, 内容如下:</p>
+<pre><code>[nginx-stable]
+name=nginx stable repo
+baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=https://nginx.org/keys/nginx_signing.key
+module_hotfixes=true
+</code></pre>
+<p>然后再行安装 nginx：</p>
+<pre><code>sudo yum install nginx -y
+</code></pre>
+<p>安装成功后，我们就可以启动 nginx 了:</p>
+<pre><code>nginx -c /etc/nginx/nginx.conf
+</code></pre>
+<p><code>-c</code> 这个参数，指定了 nginx 的配置文件，这个配置文件默认为 <code>/etc/nginx/nginx.conf</code>。</p>
+<p>到这里，我们已经有了一个属于自己的静态网站了，并且可以在这个世界的任意角落通过互联网去访问。于是，我们通过 ip  地址去访问这个站点，却发现访问不通，如下所示:</p>
+<figure data-type="image" tabindex="1"><img src="https://blog.qianqian.fun/post-images/1599641393099.png" alt="" loading="lazy"></figure>
+<p>这是为什么呢？应该是防火墙阻挡了我们的访问, 去阿里云的服务器安全组设置中，开放 80 端口即可。再次访问如下:</p>
+<figure data-type="image" tabindex="2"><img src="https://blog.qianqian.fun/post-images/1599641417636.png" alt="" loading="lazy"></figure>
+<p>这个网页是安装 nginx 的时候，默认创建的。我们可以修改这个网页的内容:</p>
+<pre><code>echo 'Hello World' &gt; /usr/share/nginx/html/index.html
+</code></pre>
+<p><code>echo</code> 命令可以在屏幕上输出文本内容，通过 <code>&gt;</code> 重定向符可以将内容输出到某一个文件中，并清空该文件原有的内容。</p>
+<p>一个网站，最基本也是最重要的功能就是展示信息。而现在，你就可以向全世界知道你 ip 的人展示任何信息了。</p>
+<h2 id="使用域名">使用域名</h2>
+<p>但是，问题来了，ip 地址太难记了。我连手机号都记不住，更不用说是 ip 了。所以，我希望用域名来访问我的网站，而不是 ip 地址。所以，接下来，我要去申请一个域名。</p>
+<h3 id="购买域名">购买域名</h3>
+<p>我们可以在阿里云上搜索并购买域名:</p>
+<figure data-type="image" tabindex="3"><img src="https://blog.qianqian.fun/post-images/1599641531646.png" alt="" loading="lazy"></figure>
+<p>如上图所示，有很多的域名，有的已经被注册，有的还没有。而且不同的域名每年的租金都是不一样的。</p>
+<p>然后，你要选择一个没有被注册的域名，买下来，这样你就有这个域名一年的使用权。</p>
+<h3 id="域名解析">域名解析</h3>
+<p>有了域名之后，还需要做域名解析，将你的域名和你的 IP 进行映射。这样你就可以通过你的域名访问你的网站了。下面的域名解析使用阿里云作为示例，其他的服务商的操作也都类似:</p>
+<figure data-type="image" tabindex="4"><img src="https://blog.qianqian.fun/post-images/1599641620376.png" alt="" loading="lazy"></figure>
+<p>这里为什么写 www 呢？www 指的是万维网，但是这里写 www 只是一个习惯而已，你也可以写成任意你希望的单词。当然，你还可以写为 <code>@</code> ，这样当你访问 <code>www.whoareyou.pro</code> 或者 <code>whoareyou.pro</code> 的时候，都可以正确的访问你的网站。如果你写成 <code>www</code> 访问的时候，就需要访问 <code>www.whoareyou.pro</code> , 如果你写成 <code>image</code> 那么访问的时候就要是 <code>image.whoareyou.pro</code>。</p>
+<h3 id="国内服务器域名需要备案">国内服务器域名需要备案</h3>
+<p>如果<strong>使用国内的服务器绑定域名访问，则需要备案</strong>。 为什么要备案呢？为了让中国政府知道你用这个域名以及创建这个网站在干什么。所以，如果你不希望让政府知道这些信息，你可以使用国外的服务器资源。</p>
+<p>如果是阿里云的域名，备案推荐使用阿里云移动端的 app, 比较快。需要注意以下内容:</p>
+<p>• <strong>注意，你使用阿里云的服务器，备案必须是阿里云备案。使用腾讯云的服务器，域名的备案必须在腾讯云。这也是国家规定的。<br>
+• 另外，也不是所有的域名都可以在国内备案的，比如(顶级)域名使用 cc 结尾的不能在国内备案，如果是 pro 则不能再北京备案</strong>。</p>
+<h2 id="网站原理浅析">网站原理浅析</h2>
+<p>到目前为置，我们已经创建了一个网站。经历了这个过程，想来你对网站的创建有了大概的了解，其实就是安装一个类似于 Nginx 的软件，它会将你的网页对外公开。</p>
+<h3 id="浏览一个网页都经历了什么">浏览一个网页都经历了什么</h3>
+<p>那么你是否好奇，当我们从浏览器输入一个网址后，到浏览器加载网页，中间都经历了些什么呢？</p>
+<figure data-type="image" tabindex="5"><img src="https://blog.qianqian.fun/post-images/1599641901561.png" alt="" loading="lazy"></figure>
+<ol>
+<li>用户在浏览器中输入网址</li>
+<li>浏览器拿到网址之后，会请求操作系统要求解析网址的域名成 IP</li>
+<li>操作系统拿到 IP 之后会请求 DNS 服务器获取域名对应的 IP</li>
+<li>操作系统将从 DNS 服务器那里拿到的 IP 返回给浏览器</li>
+<li>浏览器拿到了 IP 之后，请求操作系统将这个网址的请求发送给这个服务器</li>
+<li>操作系统接受这浏览器的请求之后，会将请求发送给本机的网卡</li>
+<li>网卡会将请求发送给家里的路由器</li>
+<li>路由器将请求发送给位于公网中的路由器，公网中的路由器不断传递这个请求</li>
+<li>最终这个请求经由路由器发送给了阿里的服务器，但是在阿里的服务器网络中安装有防火墙</li>
+<li>然后防火墙会根据预定的或者用户设定的规则判断是否允许这次访问</li>
+<li>如果防火墙判定不允许，则会拒绝，将拒绝的信息发送回去，用户就不会看到网页，而是浏览器的错误页面</li>
+<li>如果防火墙判断允许，则会将请求发送给服务器的网卡</li>
+<li>服务器的网卡会将请求发送给操作系统</li>
+<li>服务器的操作系统会判断是谁监听了这个端口，原来是 Nginx，所以将请求发送给 Nginx</li>
+<li>Nginx 拿到了请求之后，会将请求的资源发送给操作系统，操作系统发送给网卡，网卡发送给内网中的防火墙</li>
+<li>防火墙会再次判断是否放行请求，阿里云的服务器默认会放行所有从服务器发送给客户端的请求</li>
+<li>防火墙放行之后，这个网页的数据会经过公网中很多个路由器最终转发给我们家里的电脑</li>
+<li>我们的电脑通过网卡接受了这个网页的数据包，又将数据包发送给操作系统</li>
+<li>操作系统将数据包组合成网页发送给浏览器，浏览器解析这个网页的内容，展示网页在我们的眼前</li>
+</ol>
+<p>没有想到，只是浏览一个网页，却经历了那么多的事情。其实这个过程也是简略版的，实际上这上面的每一步都可以写成一本书。概括一下上面的内容： 一个请求经过浏览器、操作系统、网卡、DNS 服务器、路由器，防火墙、服务器等网络上的硬件或软件最终将需要的数据返回 。</p>
+<h3 id="什么是-ip">什么是 IP</h3>
+<p>IP 一个编号，用来标识网络中的每一台主机，就像每一个房子都有一个门牌号码一样。每一台联入网络的电脑，都必须有一个 IP，这样消息才能发出去，才能接收的到。</p>
+<h3 id="什么是域名">什么是域名</h3>
+<p>因为用 IP 来表示主机地址很难记忆，就好像除了你自己家的门牌号，你肯定不记得你任意一个朋友家的门牌号，你也不会去记忆。</p>
+<p>所以，我们用域名来代替 IP，方便人们记忆。你说是记住 whoareyou.pro 容易，还是 41.123.123.12 容易？</p>
+<h3 id="什么是-dns-解析">什么是 DNS 解析</h3>
+<p>既然用 IP 来表示网络中唯一一台主机，有用域名来方便人们记忆 IP，那么就需要将人们输入的域名转成 IP。这就需要 DNS 服务器来做这件事情了。还记得之前你在阿里云上填写的域名解析的内容吗？你写入了域名以及 IP，阿里云会请求 DNS 服务器，记录 域名和 IP 的对应关系。这样网络上任意一台主机去请求 DNS 服务器，就可以知道域名对应的 IP 了。</p>
+<h3 id="什么是路由器">什么是路由器</h3>
+<p>可以说，整个网络就是通过路由器这样的网络设备连接在一起的，更准确地说路由器连接了无数个小的网络，最终组成了我们大的互联网。</p>
+<p>路由器就像我们的邮局或者快递公司，每个快递公司在每个城市或者乡镇都有分布，你的包裹会通过他们这些分布在城市间的站点进行传递。当你浏览一个网页的时候，这个网页的请求可能会经过十几个到几十个路由器，最终到达你要请求的服务器。</p>
+<h3 id="什么是端口">什么是端口</h3>
+<p>我们说 IP 就像是一栋房子的门牌号码，可是一栋房子中可能会有很多个房间，很多住户，你这封信要给谁呢？所以，写信的时候，我们还要说明是 201室。</p>
+<p>同样的道理，一个操作系统中，可能运行很多服务(软件), 光是 IP 地址无法区分到底那个消息要给那个服务，是 Nginx 还是 QQ ？</p>
+<p>所以，每个服务启动的时候，都需要指定一个通信的端口号，比如 Nginx 启动的时候默认使用的是 80 端口。当你在浏览器中输入一个网址，但是没有指定端口的时候，浏览器默认的端口号也是 80。所以操作系统收到这个请求之后，会根据端口号，将请求给对应的软件或者服务处理。</p>
+<h3 id="什么是防火墙">什么是防火墙</h3>
+<p>防火墙可以是软件，也可以是硬件。就像你用 IP 去访问网站的时候，访问不通。就是因为被阿里云的防火墙阻止了，然后你通过控制台去添加了一条防火墙的规则，放行了 80 端口(网站服务默认请求的就是 80 端口)。这时候你就可以访问了。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99">创建一个静态网站</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%9F%9F%E5%90%8D">使用域名</a>
+<ul>
+<li><a href="#%E8%B4%AD%E4%B9%B0%E5%9F%9F%E5%90%8D">购买域名</a></li>
+<li><a href="#%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90">域名解析</a></li>
+<li><a href="#%E5%9B%BD%E5%86%85%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9F%9F%E5%90%8D%E9%9C%80%E8%A6%81%E5%A4%87%E6%A1%88">国内服务器域名需要备案</a></li>
+</ul>
+</li>
+<li><a href="#%E7%BD%91%E7%AB%99%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90">网站原理浅析</a>
+<ul>
+<li><a href="#%E6%B5%8F%E8%A7%88%E4%B8%80%E4%B8%AA%E7%BD%91%E9%A1%B5%E9%83%BD%E7%BB%8F%E5%8E%86%E4%BA%86%E4%BB%80%E4%B9%88">浏览一个网页都经历了什么</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-ip">什么是 IP</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%9F%9F%E5%90%8D">什么是域名</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-dns-%E8%A7%A3%E6%9E%90">什么是 DNS 解析</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%AF%E7%94%B1%E5%99%A8">什么是路由器</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%AB%AF%E5%8F%A3">什么是端口</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%98%B2%E7%81%AB%E5%A2%99">什么是防火墙</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.qianqian.fun/post/yong-hu-he-quan-xian/">
+              <h3 class="post-title">
+                用户和权限
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  @汪小白
+  <a class="rss" href="https://blog.qianqian.fun/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
