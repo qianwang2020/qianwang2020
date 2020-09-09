@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://blog.qianqian.fun</id>
     <title>汪小白的博客</title>
-    <updated>2020-09-08T11:06:44.386Z</updated>
+    <updated>2020-09-09T06:30:28.690Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://blog.qianqian.fun"/>
     <link rel="self" href="https://blog.qianqian.fun/atom.xml"/>
@@ -11,357 +11,44 @@
     <icon>https://blog.qianqian.fun/favicon.ico</icon>
     <rights>All rights reserved 2020, 汪小白的博客</rights>
     <entry>
-        <title type="html"><![CDATA[PHP 基本语法]]></title>
-        <id>https://blog.qianqian.fun/post/php-ji-ben-yu-fa/</id>
-        <link href="https://blog.qianqian.fun/post/php-ji-ben-yu-fa/">
+        <title type="html"><![CDATA[终端复用器：tmux]]></title>
+        <id>https://blog.qianqian.fun/post/zhong-duan-fu-yong-qi-tmux/</id>
+        <link href="https://blog.qianqian.fun/post/zhong-duan-fu-yong-qi-tmux/">
         </link>
-        <updated>2020-09-08T10:35:49.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="命名空间">命名空间</h2>
-<p>命名空间的目的是为了防止类或者函数重名，PHP 采用的方法就是使用 namespace 关键字给类名加上前缀。</p>
-<h2 id="数组">数组</h2>
-<p>示例和说明如下:</p>
-<pre><code>&lt;?php
-// 定义一个数组
-// 注意： 数组在 PHP 中的地位非常高，它包括了在Python 中的元组、列表、字典等数据类型
-$arr = [1, 2, 3];
-// 你也可以看到这样的写法, 但已经很少有人这么写了
-$arr = array(1, 2, 3);
-// 可以通过 var_dump() 打印
-var_dump($arr);
-// 像 var_dump 这样的称谓函数，都是 PHP 定义的
-// 在 PHP中有几千个这样的函数，非常之多，比如我们用的　sha1 加密函数
-// 数组的形式多种多样，比如字典的形式
-$arr = ['a' =&gt; 'b', 'c' =&gt; 'd'];
-// 访问数组
-var_dump($arr['a']);  // 输出 b
-// 数组中可以嵌套数组
-$arr = [
-    'user' =&gt; [
-        'name' =&gt; 'bob',
-        'age' =&gt; 14
-    ]
-];
-var_dump($arr['user']['name']);  // 输出 bob
-// 有很多函数是为了数组服务的
-// implode 是将数组转为字符串，使用 分隔符分割
-echo implode('-', [1, 2, 3]);   // 输出 1-2-3
-var_dump(explode('-', '1-2-3')); // 和 implode 相反，是将字符串通过指定的分隔符转为数组
-// 在 PHP 中最方便的就是遍历数组
-foreach ([1, 2, 3] as $num) {
-    echo $num;    // 将会分别输出 1 2 3
-}
-// 数组的下标可以是数值索引，从0 开始，也可以是任意的字符串,称之为 key
-$arr = [
-  'name' =&gt; 'bob',
-  'age' =&gt; 23
-];
-foreach ($arr as $key =&gt; $value) {
-    echo $key . '/' . $value;   // 输出: name/bob 以及 age/23
-}
+        <updated>2020-08-19T08:20:38.000Z</updated>
+        <content type="html"><![CDATA[<p>使用 Linux，我们绝大多数的时候看到的都是黑漆漆的画面，是有一些枯燥的。但是，能不能在枯燥的画面中，玩些花样呢？<br>
+比如说，我们模拟一个多窗口的环境，可以在多个窗口之间切换。再比如说，模拟一个多桌面的环境，不同的桌面包含不同的窗口。<br>
+要实现上面这些功能，我们就需要清楚这篇文章的主角了 —— tmux。</p>
+<h2 id="安装-tmux">安装 tmux</h2>
+<p>如果是 CentOS：</p>
+<pre><code>$ sudo yum install tmux
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Python基础语法]]></title>
-        <id>https://blog.qianqian.fun/post/ji-chu-yu-fa/</id>
-        <link href="https://blog.qianqian.fun/post/ji-chu-yu-fa/">
-        </link>
-        <updated>2020-09-05T09:24:57.000Z</updated>
-        <content type="html"><![CDATA[<p>这一系列的文档使用 Python3, 采用 Linux 环境编程。</p>
-<h2 id="hello-world">Hello World</h2>
-<p>我们先从 Hello World 开始:</p>
-<pre><code>print(&quot;Hello World!&quot;)
+<p>如果是 macOS:</p>
+<pre><code>$ brew install tmux
 </code></pre>
-<h2 id="定义变量">定义变量</h2>
-<p>上面使用的 <code>&quot;Hello World&quot;</code> 是一个字符串，我们可以将这个字符串赋值给一个变量:</p>
-<pre><code>message = &quot;Hello World&quot;
-print(message)
+<h2 id="创建和销毁会话">创建和销毁会话</h2>
+<p>在 tmux 中，有一个 Session 的概念，和桌面是一样的意思。一个 Session 可以包含多个窗口( Window ）。如何创建 Session 呢？</p>
+<pre><code>$ tmux new -s &lt;Session Name&gt;
 </code></pre>
-<h2 id="变量的类型">变量的类型</h2>
-<p>我们的变量是有类型的？ 为什么需要有类型呢？因为这些变量的值都需要存储在内存中，不同类型的值在内存中的占用容量也不一样。所以我们定义了类型，以便在内存中提前为这些变量的值开辟空间 。</p>
-<p>Python 中支持的类型如下图所示:</p>
-<figure data-type="image" tabindex="1"><img src="https://blog.qianqian.fun/post-images/1599557260246.png" alt="" loading="lazy"></figure>
-<h2 id="字符串和数值">字符串和数值</h2>
-<p>最常见的类型莫过于字符串和数值了，在我们的生活中也无时不刻在用。比如我们去买菜，买了什么？白菜，白菜是一个名字，是一个字符串。这个白菜多少一斤呢？1块钱一斤，那么这个1块钱就是数值。</p>
-<p>我们之前定义的 message 的变量就是一个字符串类型。不同的类型，会有不同的方法？什么是方法啊？就是预定义的操作。比如我们可以将字符串全部转成小写输出:</p>
-<pre><code>message = &quot;Hello World&quot;
-print(message.lower())  ## Hi, Bob
+<p>查看已经创建的 Session：</p>
+<pre><code>$ tmux ls
 </code></pre>
-<p>此外，我们还可以将多个字符串通过 <code>+</code> 拼接起来，就拿打招呼为例:</p>
-<pre><code>name = &quot;Bob&quot;
-print(&quot;Hi,&quot; + &quot; &quot; + name)
+<p>进入已经创建的 Session：</p>
+<pre><code>$ tmux a -t &lt;Session Name&gt;
 </code></pre>
-<p>接着，如果我去买菜，花了5.8，然后递给买菜的大妈一张 10 元人民币，按照道理她应该找我 3.2 元。但是呢？我想要这两毛钱也没什么用，我就说凑个整吧:</p>
-<pre><code>price = 5.8
-print(round(price))
-此外，我们还可以对数值进行运算:
-print(10 * 10)  ## 100
-print(20 - 10)  ## 10
-print(30 / 2)   ## 15
-print(15 + 16)
-</code></pre>
-<h2 id="列表和元组">列表和元组</h2>
-<p>在实际的生活中，我们经常会对事物按照不同的维度进行归类分组。而程序最大的目的就是为了模拟现实，解决现实中的一些问题。对于一组的数据，在程序中，我们可以通过 <code>列表</code> 这个概念来表示:</p>
-<pre><code>languages = [&quot;PHP&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;C&quot;]
-print(languages)   ## ['PHP', 'Python', 'Java', 'C']
-</code></pre>
-<p>我们可以访问这个列表中的每一个元素，通过下标, 即为列表中的每一个元素按顺序进行标号，从 0 开始:</p>
-<pre><code>languages = [&quot;PHP&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;C++&quot;]
-print(languages[0], languages[3])            ## PHP C++
-</code></pre>
-<p>既然可以访问，就可以修改:</p>
-<pre><code>languages = [&quot;PHP&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;C++&quot;]
-languages[2] = &quot;C&quot;
-print(languages[2])  ## C
-</code></pre>
-<p>可以追加，可以删除:</p>
-<pre><code>languages = [&quot;PHP&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;C++&quot;]
-# 在列表的末尾添加
-languages.append(&quot;Swift&quot;)
-# 在指定的位置添加
-languages.insert(1, &quot;Ruby&quot;)
-languages.pop(1)
-print(languages)        ## ['PHP', 'Python', 'Java', 'C++', 'Swift']
-可以对列表进行排序:
-languages = [&quot;PHP&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;C++&quot;]
-languages.sort()           ## ['C++', 'Java', 'PHP', 'Python']
-print(languages)
-languages.reverse()        ## ['Python', 'PHP', 'Java', 'C++']
-print(languages)
-</code></pre>
-<p>元组和列表十分相似，最大的区别在于元组中元素的地址是不可变的 。</p>
-<pre><code>## 定义并计算元组长度
-pers = (&quot;Bob&quot;, &quot;Foo&quot;, &quot;June&quot;)
-print(len(pers))  ## 3
-</code></pre>
-<p>如果你尝试对元组中的元素的值进行重写的话，会产生一个错误:</p>
-<pre><code>pers = (&quot;Bob&quot;, &quot;Foo&quot;, &quot;June&quot;)
-pers[0] = &quot;Wang&quot;
-</code></pre>
-<p>运行上面的程序，会输出如下错误:</p>
-<pre><code>C:\Users\admin\PycharmProjects\test\venv\Scripts\python.exe C:/Users/admin/PycharmProjects/test/test.py
-Traceback (most recent call last):
-  File &quot;C:/Users/admin/PycharmProjects/test/test.py&quot;, line 2, in &lt;module&gt;
-    pers[0] = &quot;Wang&quot;
-TypeError: 'tuple' object does not support item assignment
-Process finished with exit code 1
-</code></pre>
-<h2 id="字典">字典</h2>
-<p>在现实的生活中，总有一些人的名字会让我们感到尴尬，因为当中的某个字我不认识。这时候，我就需要去查字典, 比如这个名字：林茜。通过查字典我知道，这个茜字有两个含义两个读音:<br>
-• 茜(qian: 第四声)：茜草，多年生攀缘草本植物。茎方形，有倒刺。根黄红色，可提取染料，也可供药用。<br>
-• 茜(xi: 第一声): 音译用字。多用于外国女子名。<br>
-通过上面这个例子，大概能感觉到，字典是一种映射，为了方便查询。在 Python 中，也提供了字典类型，提供了从 key 到 value 的映射。</p>
-<pre><code>words = {&quot;qian&quot;: &quot;茜草，多年生攀缘草本植物。茎方形，有倒刺。根黄红色，可提取染料，也可供药用&quot;, &quot;xi&quot;: &quot;音译用字。多用于外国女子名&quot;}
-print(words[&quot;qian&quot;])  # 茜草，多年生攀缘草本植物。茎方形，有倒刺。根黄红色，可提取染料，也可供药用
-print(words[&quot;xi&quot;])  # 音译用字。多用于外国女子名
-</code></pre>
-<p>和列表一样，我们可以对字典中的键值对进行添加、修改以及删除操作:</p>
-<pre><code>user = {&quot;name&quot;: &quot;admin&quot;, &quot;age&quot;: 14, &quot;email&quot;: &quot;admin@end.wiki&quot;}
-# 修改年龄
-user['age'] += 1
-# 添加工作
-user['job'] = &quot;soft developer&quot;
-# 删除邮箱
-del user['email']
-print(user)   # {'name': 'admin', 'age': 15, 'job': 'soft developer'}
-</code></pre>
-<h2 id="分支以及循环">分支以及循环</h2>
-<p>编程语言中核心的概念并不多，其中最基本的是变量、分支、循环。我们的代码按照执行顺序可以分为三种结构，分别是顺序、分支以及循环。</p>
-<p>所谓顺序，就是上一行代码执行完成之后执行下一行代码。所谓分支，就是对条件进行判断，然后执行对应的代码块。而循环，则是对某一段代码进行多次执行，根据其是否满足条件决定执行的次数。</p>
-<h3 id="分支">分支</h3>
-<p>我们的生活中处处都存在着抉择，每一次抉择，都会或多或少改变我们人生的走向。比如晚上我是吃饭还是吃面:</p>
-<pre><code>food = &quot;noodles&quot;
-if food == &quot;noodles&quot;:
-    print(&quot;走去兰州拉面&quot;)    ## 还是吃面吧
-else:
-    print(&quot;走去地沟油菜馆&quot;)
-</code></pre>
-<p>但是生活的难并不仅仅是在于没有选择的余地，有时候也会出现有太多的选择:</p>
-<pre><code>needs = &quot;我想要钱，我想要房子，我想要名望，我想要...&quot;
-if needs == &quot;money&quot;:
-    print(&quot;奋斗或偷盗&quot;)
-elif needs == &quot;house&quot;:
-    print(&quot;租或者买&quot;)
-elif needs == &quot;popular&quot;:
-    print(&quot;选秀或者扑街&quot;)
-else:
-    print(&quot;做梦&quot;)
-</code></pre>
-<h3 id="循环">循环</h3>
-<p>使用 while 语句进行循环，并通过对数值变量的递增或递减控制循环的次数:</p>
-<pre><code>i = 1
-while i &lt;= 5:
-    print(i)
-    i += 1
-</code></pre>
-<p>在循环中，也可以通过 <code>continue</code> 跳过某次循环，或者通过 <code>break</code> 结束循环。<br>
-对列表或元组进行循环:</p>
-<pre><code>languages = [&quot;PHP&quot;, &quot;Python&quot;, &quot;Java&quot;, &quot;Swift&quot;]
-for language in languages:
-    print(language)
-</code></pre>
-<p>对字典进行循环:</p>
-<pre><code>user = {&quot;name&quot;: &quot;admin&quot;, &quot;email&quot;: &quot;admin@end.wiki&quot;, &quot;country&quot;: &quot;China&quot;, &quot;Job&quot;: &quot;soft developer&quot;}
-for k in user:
-    print(k + &quot;\t:&quot; + user[k])
-</code></pre>
-<p>输出内容如下:</p>
-<pre><code>name    :admin
-email   :admin@end.wiki
-country :China
-Job :soft developer
-</code></pre>
-<h2 id="函数">函数</h2>
-<p>函数是对一段代码的分装，一个函数是一个动作、操作。比如一个函数是一声问候:</p>
-<pre><code>def greet():
-    print(&quot;Hello&quot;)
-greet()    # Hello
-</code></pre>
-<p>也可以指定一个人问候:</p>
-<pre><code>def greet(name):
-    print(&quot;Hello, &quot; + name)
-greet(&quot;Bob&quot;)   # Hello, Bob
-</code></pre>
-<p>为函数的传参指定一个默认值:</p>
-<pre><code>def greet(name = &quot;Bob&quot;):
-    print(&quot;Hello, &quot; + name)
-greet()    # Hello, Bob
-</code></pre>
-<p>调用函数的时候，也可以指定传参的名称，可以增加可读性:</p>
-<pre><code>def greet(name = &quot;Bob&quot;):
-   print(&quot;Hello, &quot; + name)
-greet(name = &quot;Foo&quot;)   # Foo
-</code></pre>
-<p>函数可以有返回值:</p>
-<pre><code>def sum(num1, num2):
-    return num1 + num2
-print(sum(1, 2))   # 3
-</code></pre>
-<p>也可以传递任意数量的参数:</p>
-<pre><code>def sum(*numbers):
-    total = 0
-    for number in numbers:
-        total += number
-    return total
-print(sum(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))  # 55
-</code></pre>
-<h2 id="模块module">模块(Module)</h2>
-<p>上面我们这些内容都是很基础的，三两行代码，所以放在一个文件里也是没什么问题。如果我们真得去写一个项目，代码量可能就不会是三两行，而是三四千行、万行、数十万行。这么多的代码，可不能放在一个文件里哦，不方便管理和维护。</p>
-<p>那么，我们就会将代码分割成不同的部分，放在不同的文件中。这时候，我们就可以使用模块了，一个模块其实就是一个以 <code>.py</code> 结尾的 Python 代码文件。这个文件中，声明了一些可能会被其他模块用到的变量、函数以及类。比如我们申明如下这个模块（文件命令为 database.py，当中有一个 Database 的类, 用来操作数据库:</p>
-<pre><code>class Database:
-    def query(self):
-        print('Query Database...')
-class Mysql:
-    def query(self):
-        print('MySQL query Database...')
-</code></pre>
-<p>模块有了，那么如何在其他的代码文件中引入这个模块中的这个 Database 类呢?</p>
-<pre><code>import database
-db = database.Database()
-database.query()  # Query Database...
-</code></pre>
-<p>如果我并不像引入这个 database 文件，只是向引入部分内容呢？</p>
-<pre><code>from database import Mysql
-mysql = Mysql()
-mysql.query()    # MySQL query Database...
-</code></pre>
-<p>虽然，我们也可以使用 <code>from databases import *</code> 来导入 database 模块中所有的内容(变量、函数以及类)。但是不可以这么做，因为这样做的话，你在阅读代码的时候，不知道这个变量、函数或者类来自哪里？因为你引入的时候使用了 <code>*</code> 号这个通配符，并没有说明从这个文件中引入了什么。</p>
-<h2 id="包package">包(Package)</h2>
-<p>如果说模块是对变量、函数以及类的封装，那么包就是对模块的封装。简单的说，包当中含有模块，而模块中包含类、函数以及变量。</p>
-<p>之所以会有模块、包这样的概念，就是因为随着代码量的增大，需要对代码进行拆分管理。这非常好理解，就像人多了之后，需要对人进行拆分管理，比如亚洲、中国、浙江、杭州、西湖区、XX街道、XX小区、3幢、一单元、201室......为什么需要分的那么细？因为人太多了，不分不方便管理。 分而治之是计算机中非常常见以及重要的思想 。</p>
-<p>那么怎么创建一个包呢？很简单，再一个目录中创建一个空的文件，命名为 <code>__init__.py</code> 即可。这么文件所在的目录就是一个包。</p>
-<pre><code>mkdir pack &amp;&amp; touch pack/__init__.py
-</code></pre>
-<p>然后我们再这个包当中加入一个模块,命名为 <code>pack/data.py</code> ，模块中包含一个方法:</p>
-<pre><code>def greet():
-    print('Hello')
-</code></pre>
-<p>然后，我们一个文件，名为 <code>app.py</code> , 文件内容如下:</p>
-<pre><code>import pack.data
-pack.data.greet()
-</code></pre>
-<p>也可以写成如下形式:</p>
-<pre><code>from pack.data import greet
-greet()
-</code></pre>
-<p>包当中还可以包含子包，和目录层级一致，比如包名是 <code>package.sub.module</code> ,那么路径名也应该是 <code>package/sub/module.py</code>。</p>
-<p>经过这样一个例子，你明白为什么 Python 可以将我们拆分开的代码重新组合再一起执行了吗？<strong>当我们执行 <code>python app.py</code> 的时候，python 的解释器会去逐行解释代码，当发现代码以 <code>import</code> 或者 <code>from</code> 开头的时候，会根据包名和模块名找寻对应的目录下的代码文件，然后将对应的文件内容插入 <code>app.py</code> 中逐行执行</strong>。</p>
-<figure data-type="image" tabindex="2"><img src="https://blog.qianqian.fun/post-images/1599558023140.png" alt="" loading="lazy"></figure>
-<h2 id="异常处理exception">异常处理(Exception)</h2>
-<p>我们总是希望生活是美好的，总是希望明天充满了希望，但现实生活也总是希望和失望相互交织。在程序中也是如此，我们希望程序可以从头到尾没有任何问题，但我们这么天真的想法本身就是问题。</p>
-<p>于是，在生活中，我们开始学着为自己找好退路。而在编程中，我们也会尽可能去假设会出现问题，提前<strong>捕获异常(Catch exception)</strong>。</p>
-<p>最简单的一个例子，除数不能为 0，但却写出了这样的代码:</p>
-<pre><code>$ python -c &quot;print(1/0)&quot;
-Traceback (most recent call last):
-  File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
-ZeroDivisionError: division by zero
-</code></pre>
-<p>然后程序给你一个无情的耳光，没办法再执行下去了。有的同学会说，我知道除数不能为 0，所以我不会写出这样的代码的。但是，程序是由万千的变量和分支组成的，很多数据也是来源于我们的用户或者第三方是我们不能掌控的。 所以，<strong>异常是不可能避免的，但是可以提前预防的</strong>。</p>
-<p>再比如说，当使用 Python3 去运行 Python2 的某些语法的时候:</p>
-<pre><code>$ python2 -c &quot;print 'Hello World'&quot;
-Hello World
-$ python3 -c &quot;print 'Hello World'&quot;
-  File &quot;&lt;string&gt;&quot;, line 1
-    print 'Hello World'
-                      ^
-SyntaxError: Missing parentheses in call to 'print'. Did you mean print('Hello World')?
-</code></pre>
-<p>Python3 是一个不能向下兼容的版本，所以比如 <code>print 'Hello World'</code> 这样的语句在 Python3 中是无法执行的。抛出了一个异常 —— SyntaxError 。</p>
-<p>当我们预感代码可能会抛出异常的时候，可以捕获异常进行处理，记录日志:</p>
-<pre><code>try:
-    fdajljfdjalfjdlkajfdasjfldsa
-except:
-    print('syntax error')
-print('continue')
-</code></pre>
-<p>另外，我们还可以对特定的异常进行捕获:</p>
-<pre><code>try:
-    1 / 0
-except (ZeroDivisionError):
-    print('Zero Division Error')
-except:
-    print('syntax error')
-print('continue')
-</code></pre>
-<p>通常，发生异常的时候，我们会希望能够提供更多的异常相关的信息, 我们可以使用 <code>as</code> 关键字来获取 <strong>异常对象（没错，异常也是对象)</strong> :</p>
-<pre><code>try:
-    1 / 0
-except ZeroDivisionError as e:
-    print('Zero Division Error:' + e.__class__.__name__) # Zero Division Error:ZeroDivisionError
-except:
-    print('syntax error')
-print('continue')
-</code></pre>
-<p>另外，Python 还提供了两个关键字, 分别是 <code>else</code> 和 <code>finally</code>：</p>
-<pre><code>try:
-    1 / 0
-except ZeroDivisionError as e:
-    print('Zero Division Error:' + e.__class__.__name__)
-except:
-    print('syntax error')
-else:
-    print('normal')
-finally:
-    print('exception')
-</code></pre>
-<p><code>else</code> 只有在没有发生异常的时候会执行，而 <code>finally</code> 是不管有没有发生异常，都会执行。</p>
-<p>上面看到的示例都是 Python 解释器抛出的异常，我们自己也可以抛出异常, 使用 <code>raise</code> 关键字:</p>
-<pre><code>python3 -c &quot;raise TypeError('Type Error')&quot;
-</code></pre>
-<p>上面的 TypeError 也是 Python 自带的，我们可以自定义异常类，继承 BaseException 类。</p>
-<pre><code>class UserNotFound(Exception):
-    def __init__(self, user_id):
-        super().__init__(&quot;User not found ${}&quot;.format(user_id))
-        self.user_id = user_id
-raise UserNotFound(10010)
-</code></pre>
-<p>执行这段代码，抛出自定义的异常如下:</p>
-<pre><code>$ python3 test.py
-Traceback (most recent call last):
-  File &quot;test.py&quot;, line 6, in &lt;module&gt;
-    raise UserNotFound(10010)
-__main__.UserNotFound: User not found 10010
-</code></pre>
+<p>如果要临时退出会话, 使用 <code>ctrl+b</code> ，然后按下 <code>d</code> 。<br>
+如果要销毁会话，使用 <code>ctrl+b</code> ，然后按下 <code>:</code> 进入命令模式，输入命令: <code>kill-session</code> 。</p>
+<h2 id="模拟多窗口的环境">模拟多窗口的环境</h2>
+<p>窗口是基于 Session 的，所以需要先进入一个 Session。然后创建窗口，需要使用 <code>Ctrl + b</code> , 然后按下  <code>c</code> 键:<br>
+<img src="https://blog.qianqian.fun/post-images/1599553600554.png" alt="" loading="lazy"><br>
+我们看到下面显示着一行绿色的状态栏，内容如下:<br>
+<img src="https://blog.qianqian.fun/post-images/1599553606953.png" alt="" loading="lazy"><br>
+你看到上面切换的窗口序号了吗？我们可以根据这个切换窗口，比如要切换到第一个窗口，就可以按下组合键: <code>Ctrl + b</code> , 然后按下 <code>1</code> ，这里的 <code>1</code> 就是窗口的序号。<br>
+我们看到，起 Window 的默认命令规则是采用了命令提示符，如果要重命名呢？ <code>Ctrl+B</code> ,然后按下 <code>,</code> 。<br>
+如果我们要暂停这个会话，回到最初的界面呢？ <code>Ctrl + B</code> ，然后按下 <code>d</code> 。</p>
+<h2 id="分割窗口">分割窗口</h2>
+<p>一个窗口可以切换成多个 Pane(面板)。使用 <code>Ctrl+B</code> ，然后按下 <code>&quot;</code> 可以创建水平面板，按下 <code>%</code> 可以创建垂直面板。<br>
+如果需要切换全屏，可以使用 <code>Ctrl+B</code> ,然后按下 <code>z</code> 。</p>
 ]]></content>
     </entry>
     <entry>
@@ -369,7 +56,7 @@ __main__.UserNotFound: User not found 10010
         <id>https://blog.qianqian.fun/post/python-huan-jing-de-da-jian/</id>
         <link href="https://blog.qianqian.fun/post/python-huan-jing-de-da-jian/">
         </link>
-        <updated>2020-09-03T09:03:59.000Z</updated>
+        <updated>2020-08-03T09:03:59.000Z</updated>
         <content type="html"><![CDATA[<p>本文就 python 开发环境的安装配置做一些说明。</p>
 <h2 id="python-版本的选择">Python 版本的选择</h2>
 <p>Python 采用了两段式的版本号 <code>&lt;Main&gt;.&lt;Subject&gt;</code> , 比如当前最新版本是 3.8。大的版本号分为 2.X 和 3.X。没有例外，应该全部选择 3.X 版本，2.X 已经走入了历史。</p>
@@ -451,44 +138,14 @@ trusted-host = pypi.doubanio.com
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[终端复用器：tmux]]></title>
-        <id>https://blog.qianqian.fun/post/zhong-duan-fu-yong-qi-tmux/</id>
-        <link href="https://blog.qianqian.fun/post/zhong-duan-fu-yong-qi-tmux/">
+        <title type="html"><![CDATA[正义不会缺席]]></title>
+        <id>https://blog.qianqian.fun/post/zheng-yi-bu-hui-que-xi/</id>
+        <link href="https://blog.qianqian.fun/post/zheng-yi-bu-hui-que-xi/">
         </link>
-        <updated>2020-09-01T08:20:38.000Z</updated>
-        <content type="html"><![CDATA[<p>使用 Linux，我们绝大多数的时候看到的都是黑漆漆的画面，是有一些枯燥的。但是，能不能在枯燥的画面中，玩些花样呢？<br>
-比如说，我们模拟一个多窗口的环境，可以在多个窗口之间切换。再比如说，模拟一个多桌面的环境，不同的桌面包含不同的窗口。<br>
-要实现上面这些功能，我们就需要清楚这篇文章的主角了 —— tmux。</p>
-<h2 id="安装-tmux">安装 tmux</h2>
-<p>如果是 CentOS：</p>
-<pre><code>$ sudo yum install tmux
-</code></pre>
-<p>如果是 macOS:</p>
-<pre><code>$ brew install tmux
-</code></pre>
-<h2 id="创建和销毁会话">创建和销毁会话</h2>
-<p>在 tmux 中，有一个 Session 的概念，和桌面是一样的意思。一个 Session 可以包含多个窗口( Window ）。如何创建 Session 呢？</p>
-<pre><code>$ tmux new -s &lt;Session Name&gt;
-</code></pre>
-<p>查看已经创建的 Session：</p>
-<pre><code>$ tmux ls
-</code></pre>
-<p>进入已经创建的 Session：</p>
-<pre><code>$ tmux a -t &lt;Session Name&gt;
-</code></pre>
-<p>如果要临时退出会话, 使用 <code>ctrl+b</code> ，然后按下 <code>d</code> 。<br>
-如果要销毁会话，使用 <code>ctrl+b</code> ，然后按下 <code>:</code> 进入命令模式，输入命令: <code>kill-session</code> 。</p>
-<h2 id="模拟多窗口的环境">模拟多窗口的环境</h2>
-<p>窗口是基于 Session 的，所以需要先进入一个 Session。然后创建窗口，需要使用 <code>Ctrl + b</code> , 然后按下  <code>c</code> 键:<br>
-<img src="https://blog.qianqian.fun/post-images/1599553600554.png" alt="" loading="lazy"><br>
-我们看到下面显示着一行绿色的状态栏，内容如下:<br>
-<img src="https://blog.qianqian.fun/post-images/1599553606953.png" alt="" loading="lazy"><br>
-你看到上面切换的窗口序号了吗？我们可以根据这个切换窗口，比如要切换到第一个窗口，就可以按下组合键: <code>Ctrl + b</code> , 然后按下 <code>1</code> ，这里的 <code>1</code> 就是窗口的序号。<br>
-我们看到，起 Window 的默认命令规则是采用了命令提示符，如果要重命名呢？ <code>Ctrl+B</code> ,然后按下 <code>,</code> 。<br>
-如果我们要暂停这个会话，回到最初的界面呢？ <code>Ctrl + B</code> ，然后按下 <code>d</code> 。</p>
-<h2 id="分割窗口">分割窗口</h2>
-<p>一个窗口可以切换成多个 Pane(面板)。使用 <code>Ctrl+B</code> ，然后按下 <code>&quot;</code> 可以创建水平面板，按下 <code>%</code> 可以创建垂直面板。<br>
-如果需要切换全屏，可以使用 <code>Ctrl+B</code> ,然后按下 <code>z</code> 。</p>
+        <updated>2020-07-25T06:59:54.000Z</updated>
+        <content type="html"><![CDATA[<p>最近关于来女士的案子在网上广为流传，虽然我们都希望她平安无事，但天不遂人愿。从出事到今天警方发布案子通告，真相虽然已经浮出水面，但是相信很多人都想不通，为什么枕边人竟就是那个凶手，当然我也没想明白，为什么好好的日子过成了这样。十年修得同船渡，百年修得共枕眠，原本应该相亲相爱携手渡百年的夫妻却以如今这段惨剧收场了，可怜他们那小女儿，这段经历在她心里也许永远都挥之不去。</p>
+<p>究其原因竟然只是因为家庭琐事意见不合，在此我真的想说，广大同胞们，凡事都是可以心平气和的讨论的，遇事要及时沟通，不要积在心里。不要走极端，走极端就容易出问题，以上就是活生生的例子啊。有什么事情过不去非要以这种方式来解决呢。最后发生这种事的原因只是一个导火线，也许就是因为没有及时沟通，有些事日积月累，就导致了这样的恶果。那个作为凶手的丈夫，他但凡想着点家庭，孩子，及时沟通的话，也不会生出犯罪的想法，更不会酿成这样的惨案。</p>
+<p>事已至此，我就希望来女士能安息，愿天堂没有恶魔。我希望凶手能诚心悔过，承担应有的责任，我更希望他们的小女儿能忘记这段过去，走出这个阴影，阳光快乐的生活。我还想说不要想着犯罪，无论你有多高明，我们的人民警察一定能抓住你，只不过事时间问题。要记住，天网恢恢，疏而不漏，正义也许会迟到，但是永远不会缺席！</p>
 ]]></content>
     </entry>
     <entry>
@@ -496,7 +153,7 @@ trusted-host = pypi.doubanio.com
         <id>https://blog.qianqian.fun/post/yi-ge-wan-zheng-de-qian-hou-duan-ying-yong-flask/</id>
         <link href="https://blog.qianqian.fun/post/yi-ge-wan-zheng-de-qian-hou-duan-ying-yong-flask/">
         </link>
-        <updated>2020-08-25T10:07:17.000Z</updated>
+        <updated>2020-07-12T10:07:17.000Z</updated>
         <content type="html"><![CDATA[<p>我一直认为，不管是前端，还是后台，或是测试，都应该去做一个完整的包含前后端的应用。只有这样，你才能清楚明白前后端交互的逻辑，只有这样，技术生涯才算完整(如果愿意它更完整，也可以玩玩测试、运维等角色扮演)。</p>
 <p>这篇文档的目的，就是用一个最小的 DEMO 来完成一个前后端对接的过程。我选择了发表说说这样一个谁都知道，谁都体验过的功能。</p>
 <h2 id="技术选型">技术选型</h2>
@@ -724,312 +381,130 @@ this.setData({
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Python字符串详解]]></title>
-        <id>https://blog.qianqian.fun/post/python-zi-fu-chuan-xiang-jie/</id>
-        <link href="https://blog.qianqian.fun/post/python-zi-fu-chuan-xiang-jie/">
+        <title type="html"><![CDATA[压力测试工具ab]]></title>
+        <id>https://blog.qianqian.fun/post/ya-li-ce-shi-ab/</id>
+        <link href="https://blog.qianqian.fun/post/ya-li-ce-shi-ab/">
         </link>
-        <updated>2020-08-25T09:54:56.000Z</updated>
-        <content type="html"><![CDATA[<p>什么是字符串？其实就是字符，区分于其他的类型，比如说数字。下面展示的都是一些字符串:</p>
-<pre><code>str1 = 'Hello World'
-str2 = '123'
-str3 = &quot;Let's go to moon&quot;
-str4 = &quot;&quot;&quot;
-   窗前明月光
-   怀是滴上霜
-&quot;&quot;&quot;
-str5 = '''
-   Left's go to moon
-'''
+        <updated>2020-06-27T05:45:57.000Z</updated>
+        <content type="html"><![CDATA[<p>首先，我找到一个人的 blog，网址是https://blog.codingnow.com/，我想对这个页面进行压力测试，怎么做？我们使用ab工具来进行测试，centos8 的发行版就自带了这个软件。</p>
+<pre><code>ab -n500 https://blog.codingnow.com/
 </code></pre>
-<h2 id="多种引号之间的区别">多种引号之间的区别</h2>
-<p>在 Python 中，使用引号来包裹字符串内容。可以使用单引号、双引号以及像上面 <code>str4</code> 和 <code>str5</code> 那样使用连续的三个单引号或三个双引号来表示多行文本。</p>
-<p>注意：这些引号都应该在英文输入法下输入，都是英文的引号，而不是中文。</p>
-<p>那么单引号和双引号有什么区别呢？就如变量 <code>str3</code> 一样，双引号可以包含转义字符，比如 <code>'</code> 。如果在单引号中出现转义字符，则需要使用转移符号 <code>\</code> 进行转义，否则程序将出错:</p>
-<pre><code>str1 = 'Let's go to moon'   # 这样写是错误的
-str2 = 'Let\'s go to moon'  # 使用转义符号转义是正确的
-str3 = &quot;Let's go to moon'   # 双引号不需要明确使用转义符号进行转义
+<p>返回比较慢，我们换一个网址：</p>
+<pre><code>ab -n3000 http://165.84.180.25/index.html
 </code></pre>
-<p>通常这种情况，推荐使用双引号，看起来比较舒服，也无需关系转义字符导致的程序异常。</p>
-<p>三引号又分为三个单引号和三个双引号，它们都是用来表示多行文本，并没有区别。也就是说，两种方式都可以使用。</p>
-<p>多行文本用在，单行文本太长的情况下，或者需要换行的情况。比如我需要用一个字符串变量来包含一段 Python 代码:</p>
-<pre><code>code = '''
-from flask import Flask
-app = Flask(__name__)
-@app.route('/')
-def index():
-    return 'Hello World'
-'''
-# 引号并不要求单独写一行，但是习惯上单独写一行，较为直观。
+<p><code>-n</code> 是指定我们的请求数，一共请求了 3000 次<br>
+<img src="https://blog.qianqian.fun/post-images/1598507506230.png" alt="" loading="lazy"><br>
+你看，结果中显示我们的服务器每秒大概可以处理 4961.70 个这样的请求，但是我们这个只是静态页面。<br>
+然后我们来测试一下我们之前写的 hello 接口：<br>
+<img src="https://blog.qianqian.fun/post-images/1598507943315.png" alt="" loading="lazy"></p>
+<pre><code>ab -n1000 http://165.84.180.25/WeChat.Message/hello
 </code></pre>
-<p>这种情况下，就很适合使用多行文本。Python 会在每一行末尾加入 <code>\n</code> 转义字符，表示换行。</p>
-<h2 id="什么是转义字符">什么是转义字符</h2>
-<p>什么是转义字符？可以理解成是特殊的字符。那么它们特殊在哪里呢？</p>
-<p><strong>其中一部分的转义字符是为了表示看不见的字符</strong>。我们很自然的以为，在键盘上敲击的每一个键都可以在屏幕上显示出起对应的字符。但实际上有一些键同样输出了字符，但在屏幕上并没有显示。比如说我们上面中出现的 <code>\n</code> 换行符。虽然看不见，但必须使用一个字符告诉计算机，我回车了。</p>
-<p><strong>还有一类是在编程语言中，已经被语言本身使用并表示特殊含义的字符</strong>。比如说引号，在 Python 中使用一对引号来表示字符串。这时候如果在一对双引号中再次输入一个双引号，就会导致程序没有办法判断哪里是字符串的开始、哪里是字符串的结束。</p>
-<p>还有一些其他的作用，但是没有必要去死记硬背。记住几个常用的就好了，比如说 <code>\n</code> 表示换行、 <code>\r</code> 表示回车、 <code>\t</code> 表示制表符(Tab键)。</p>
-<p>转义符号 <code>\</code> 本身也是转义字符，如果我希望它能在字符串中输出，那么也应该对它进行转义，比如:</p>
-<pre><code>print('转义符号: \\')
-</code></pre>
-<p>另外，我们也可以通过原始字符串(Raw String)的方式来表达:</p>
-<pre><code>path = r'C:\Windows\system64\etc\derver\etc\hosts'
-print(path)
-</code></pre>
-<h2 id="字符串的运算">字符串的运算</h2>
-<p>我们在生活中，经常会对数值进行运算，那么什么叫做对字符串运算呢？我举一个例子：</p>
-<pre><code>老板: 这个东西今天能做完吗？
-我: 不能！
-老板: 把不字去掉！
-</code></pre>
-<p>对，这就是字符串的运算之一，对字符串内容的剪切。除此之外，我们还经常回对字符串内容进行拼接、替换等操作。</p>
-<h3 id="字符串的拼接">字符串的拼接:</h3>
-<pre><code>print('Hello' + ' ' + 'World')
-</code></pre>
-<p>上面是字符串的“加法运算”，表示对字符串进行拼接。那么如果是乘法呢？</p>
-<pre><code>print('Hello' * 3)  # HelloHelloHello
-print('Hello' * 'World') # 语法错误
-</code></pre>
-<p>字符串(String)本质上是一串字符(Char)，是 Char 的列表。所以，我们也可以使用列表的形式来访问字符串:</p>
-<pre><code>print('Hello'[0]) # H
-print('Hello'[-1])  # o
-print('Hello'[0:3]) # Hel
-print('Hello'[0:-1]) # Hell
-print('Hello'[1:])   # ello, 截取到末尾
-</code></pre>
+<p><img src="https://blog.qianqian.fun/post-images/1598508112520.png" alt="" loading="lazy"><br>
+明显慢了很多<br>
+<img src="https://blog.qianqian.fun/post-images/1598508013114.png" alt="" loading="lazy"><br>
+每秒只能处理 15.96 个请求<br>
+<img src="https://blog.qianqian.fun/post-images/1598508370974.png" alt="" loading="lazy"><br>
+应该是这样的结果<br>
+<img src="https://blog.qianqian.fun/post-images/1599551466506.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[linux常用的命令-文件和磁盘]]></title>
-        <id>https://blog.qianqian.fun/post/linux-chang-yong-de-ming-ling-wen-jian-he-ci-pan/</id>
-        <link href="https://blog.qianqian.fun/post/linux-chang-yong-de-ming-ling-wen-jian-he-ci-pan/">
+        <title type="html"><![CDATA[什么是 Linux]]></title>
+        <id>https://blog.qianqian.fun/post/shi-me-shi-linux/</id>
+        <link href="https://blog.qianqian.fun/post/shi-me-shi-linux/">
         </link>
-        <updated>2020-08-20T07:57:09.000Z</updated>
-        <content type="html"><![CDATA[<p>这一篇文档记录了一些有关于文件和磁盘的命令。</p>
-<h2 id="linux-文件系统">Linux 文件系统</h2>
-<p>在了解这些命令之前，我们需要先了解 Linux 文件系统。在 Windows 中，我们的磁盘会被划分为多个逻辑磁盘:<br>
-<img src="https://blog.qianqian.fun/post-images/1599553062832.png" alt="" loading="lazy"><br>
-但是在 Linux 上，和 Windows 是完全不一样，没有 A盘、B盘、C盘的概念，有的只是一棵目录树。<br>
-<img src="https://blog.qianqian.fun/post-images/1599553021390.jpg" alt="" loading="lazy"><br>
-那么这么多的目录他们都是干什么用的呢？下面这张表格可以回答这个问题:</p>
-<table>
-<thead>
-<tr>
-<th>目录</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>bin</td>
-<td>重要的可执行文件、shell 命令</td>
-</tr>
-<tr>
-<td>boot</td>
-<td>引导器配置文件、内核等</td>
-</tr>
-<tr>
-<td>dev</td>
-<td>设备文件</td>
-</tr>
-<tr>
-<td>etc</td>
-<td>系统专有的配置文件</td>
-</tr>
-<tr>
-<td>lib</td>
-<td>重要的共享库和内核模块</td>
-</tr>
-<tr>
-<td>media</td>
-<td>可移动设备挂载点</td>
-</tr>
-<tr>
-<td>mnt</td>
-<td>其他文件系统的临时挂载点</td>
-</tr>
-<tr>
-<td>opt</td>
-<td>附加应用软件包</td>
-</tr>
-<tr>
-<td>sbin</td>
-<td>重要的系统可执行文件</td>
-</tr>
-<tr>
-<td>tmp</td>
-<td>临时文件</td>
-</tr>
-<tr>
-<td>usr</td>
-<td>文件系统的第三层</td>
-</tr>
-<tr>
-<td>var</td>
-<td>可变数据</td>
-</tr>
-</tbody>
-</table>
-<h2 id="find-查找文件">find-查找文件</h2>
-<p>比如我们需要查找名为 <code>passwd</code> 的文件:</p>
-<pre><code>$ sudo find / -name passwd   ## 对应的格式： find [path...] -name [pattern]
+        <updated>2020-06-10T08:32:34.000Z</updated>
+        <content type="html"><![CDATA[<p>简单的说， Linux 和 Windows 、macOS 一样，都是操作系统，而操作系统本质上来讲也是一种软件(超大型的软件，代码量都在千万级以上)。</p>
+<p>Linux 对于我们最大的意义在于，绝大多数的服务器上都使用 Linux 作为操作系统。我们的产品的开发、测试也都在 Linux 系统上进行操作。</p>
+<h2 id="搭建-linux-环境">搭建 Linux 环境</h2>
+<p>搭建 Linux 环境大致有两种做法，一种是在本地(虚拟机)模拟一台服务器，然后安装 Linux 系统。另外一种就是选择云服务器厂商购买一台在线的服务器。</p>
+<p>我更倾向于第二种方式，更加的快捷方便，但是需要一定的学习成本。第一种方式，对本地电脑的配置有一定要求，但是成本相对较低。</p>
+<p>如果选择云服务器产品的话，可以选择阿里云、腾讯云、百度云、京东云、滴滴云、青云等等。滴滴云的成本最低，阿里云的应用较为广泛。对于初期学习而言，其实也都差不多，生产环境一般会选择阿里云或者腾讯云，如果是服务国外，可能会选择阿里云、Google Cloud Platform 以及亚马逊云。</p>
+<h2 id="什么是发行版">什么是发行版</h2>
+<p>在购买服务器的时候，会要求选择操作系统，当然我们会选择 Linux，另外还会要求选择 Linux 的发行版。那么什么是发行版呢？</p>
+<p>简单的来说，我们平时所说的 Linux 指的是 Linux 内核(可以理解成 Linux 的核心）。不同的厂商、组织、开发者会针对某一版本的 Linux 内核做一些优化、加装一些软件形成自己的发行版本。</p>
+<p>常见的发行版有 CentOS、RedHat、Ubuntu、Debian 等等。生产环境一般选用 CentOS, 而学习的话可以选择 CentOS 或者 Ubuntu。不严谨的定义，如下:</p>
+<pre><code>Linux 发行版 = Linux 内核 + 其他的软件
 </code></pre>
-<p>我们可以指定文件类型，比如说指定为目录:</p>
-<pre><code>$ sudo find / -type d -name etc
-/sys/firmware/qemu_fw_cfg/by_name/etc
-/etc
-...省略
+<p>接下来的系列文章，都会采用 CentOS 7.6 版本或者更高。</p>
+<h2 id="初识命令行">初识命令行</h2>
+<p>相对于 Windows，我们所有的操作都是在图形化的界面中完成的，Linux 的所有操作都可以在命令行中完成。这样的操作更加的原始，但却更加的快速有效。</p>
+<p>另外，Linux 的服务器一般都在异地的大型机房中，我们都需要通过网络连接去操作它。使用命令行传输指令相对于传出图形界面，会占用更小的带宽，传输更快。</p>
+<p>Linux 的命令行界面一般如下图所示:</p>
+<figure data-type="image" tabindex="1"><img src="https://blog.qianqian.fun/post-images/1599554112148.png" alt="" loading="lazy"></figure>
+<p>初学者对于这样的界面是困惑的，黑漆漆的背景，几个不知道含义的文本，不知道怎么做。但是我相信，你很快就会喜欢上这样的界面，因为它非常的高效，极客。</p>
+<p>这就是命令行，你可以用各种各样的命令去做任何你想做的事情，前提是你需要理解命令的运作机制，这是学习 Linux 的第一道门槛，跨过去！</p>
+<p>我们使用操作系统，通常是为了使用一些基于操作系统的软件，不管是聊天软件还是游戏软件或者是浏览器。因为在 Linux 中，我们通常都是使用命令行的，所以没有平时使用 Windows 中看到的哪些界面。而所谓的命令，其实就是一个个的软件，我们通过下面这种方式去运行，而不是通过鼠标去界面上点击：</p>
+<figure data-type="image" tabindex="2"><img src="https://blog.qianqian.fun/post-images/1599554549565.png" alt="" loading="lazy"></figure>
+<p>你看，你平时使用微信或者QQ，是不是要鼠标双击 QQ或者微信的图标啊，那么在命令行中，我们并不需要用鼠标，只需要输入 QQ 就可以了。另外，当你打开QQ 的界面的时候，你需要告诉QQ你的用户名和密码，而在 命令行中使用命令行参数来告诉运行的软件一些信息, 比如 <code>--username</code>  和 <code>--password</code> 。</p>
+<p>所以，你其实不用恐惧命令行，学习 Linux 其实就是学习这些软件怎么使用，就和你学习微信、QQ 如何使用一样，只是稍微比微信、QQ 这样的软件要复杂一点点。</p>
+<p>所以，究其本质来说，命令行和图形化界面没有什么区别，只是一个是通过文本来运行软件，一个是通过界面来简化软件的使用罢了 。理解这一点很重要！</p>
+<h2 id="常用的命令">常用的命令</h2>
+<p>下面介绍一些常用的软件(命令), 不要去死记硬背，只要常常去用就好了。首先，我们创建一个文件夹, 这个文件夹名字叫做 <code>test</code> ：</p>
+<pre><code>## 创建一个名为 test 的文件夹
+mkdir test
+## 把当前的目录切换到名为 test 的文件夹
+cd test
+## 创建一个文件
+touch test.txt
+## 查看文本内容
+cat test.txt
+## 查看当前所在的目录
+pwd
+## 计算 1 + 1
+expr 1 + 1
 </code></pre>
-<p>文件的类型如下表所示:</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>d</td>
-<td>文件夹</td>
-</tr>
-<tr>
-<td>f</td>
-<td>普通文件</td>
-</tr>
-<tr>
-<td>l</td>
-<td>符号连接文件</td>
-</tr>
-<tr>
-<td>b</td>
-<td>块设备</td>
-</tr>
-<tr>
-<td>c</td>
-<td>字符设备</td>
-</tr>
-<tr>
-<td>p</td>
-<td>管道文件</td>
-</tr>
-<tr>
-<td>s</td>
-<td>socket 套接字</td>
-</tr>
-</tbody>
-</table>
-<p>命令当中也可以指定通配符, 比如我要搜索 <code>.jpg</code> 结尾的文件:</p>
-<pre><code>$ sudo find / -name '*.jpg'
-/usr/share/backgrounds/morning.jpg
-/usr/share/backgrounds/night.jpg
-...省略
+<p>你会发现，如果熟练掌握了这些命令，那种用鼠标去点击各种按钮的操作会显得非常没有效率。接下来，我们来安装一个软件:</p>
+<pre><code>sudo yum install wget -y
 </code></pre>
-<p>我们还可以按照文件的大小来搜索:</p>
-<pre><code>$ sudo find / -type f -size +40M
-/var/lib/rpm/Packages
-/usr/lib/locale/locale-archive
-/usr/local/sgd/ags/monitor/log/INFO.log
-...省略
+<p>相对上面的命令，这个看上去要复杂很多,解释一下:</p>
+<p>如果你登录的账户是 root 用户，并不需要使用 sudo 就可以拥有安装软件的权限。因为 root 是 Linux 中权力做大的用户。否则，你可能需要使用 sudo 去提升你的权限，sudo 的意思就是 super to do ，使用超级管理员的权限去做某件事。</p>
+<p>yum 是 CentOS 发行版中使用的软件管理工具，你可以使用它来安装一些软件，就像是 Windows 上的 360 软件管家。</p>
+<p>install 是 yum 的子命令，表示安装。</p>
+<p>wget 是要安装的名字。而 -y 是说直接安装，不需要我确认了。</p>
+<p>我举一个 qq 发送消息的例子:</p>
+<pre><code>qq send hello -to bob
 </code></pre>
-<h2 id="du和df-磁盘占用">du和df-磁盘占用</h2>
-<p>du 命令，全称是 disk usage, 用来展示磁盘使用量的统计信息。</p>
-<pre><code>## 统计当前目录下的磁盘占用
-## s 表示每一个给定的参数计算其磁盘使用量
-## h 表示使用人类可以阅读的单位显示，比如 KB\MB\GB
-$ du -sh .     
+<p>这条命令翻译过来就是: 使用 qq 这个软件发送给 bob 这个人一条消息，消息的内容为 &quot;hi&quot; 。</p>
+<p>这个 wget 是干什么的呢？就像是 Windows 上的迅雷，用来下载文件的:<br>
+wget http://downloads.end.wiki/hello.txt</p>
+<p>用法非常简单，后面跟上文件的地址就可以了。</p>
+<h2 id="使用网络学习命令">使用网络学习命令</h2>
+<p>其实命令行就这么简单，不需要死记硬背，用到的时候去查一下，多用用就好了。下面推荐一个地址，用来学习、搜索各种命令:  [ Linux 命令大全(手册) ] [ https://www.linuxcool.com/ ]。这个网站对命令提供了搜索功能，对一些常见的命令还进行了分类:</p>
+<figure data-type="image" tabindex="3"><img src="https://blog.qianqian.fun/post-images/1599555382438.png" alt="" loading="lazy"></figure>
+<h2 id="使用-man-手册">使用 man 手册</h2>
+<p>如果有一个人问我，这条命令怎么用，我会告诉他去问那个男人(man)。在 Unix/Linux 这个男人大名鼎鼎，比谁都更了解 Unix/Linux。其实 man 并不是指男人的意思，而是英文单词 manuals 的缩写，意为手册。</p>
+<pre><code>man man
 </code></pre>
-<p>df 命令, 侧重在文件系统级别的磁盘占用，而 du 则是测试中在文件夹和文件的磁盘占用。</p>
-<pre><code>$ df -h
-Filesystem      Size  Used Avail Use% Mounted on
-/dev/vda1        40G  2.2G   38G   6% /
-devtmpfs        1.9G     0  1.9G   0% /dev
-tmpfs           1.9G     0  1.9G   0% /dev/shm
-tmpfs           1.9G   33M  1.9G   2% /run
-...省略
+<p>man 是 Unix/Linux 系统手册，我们可以使用 man 来查看 man 命令的帮助:</p>
+<pre><code>man - an interface to the on-line reference manuals
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[近期学习的Linux命令]]></title>
-        <id>https://blog.qianqian.fun/post/jin-qi-xue-xi-de-linux-ming-ling/</id>
-        <link href="https://blog.qianqian.fun/post/jin-qi-xue-xi-de-linux-ming-ling/">
-        </link>
-        <updated>2020-07-25T08:18:36.000Z</updated>
-        <content type="html"><![CDATA[<ol>
-<li>mkdir 创建文件夹<br>
-<code>mkdir aa</code></li>
-<li>touch 创建文件<br>
-<code>touch a.txt</code></li>
-<li>cd 切换目录<br>
-<code>cd home</code><br>
-<code>cd /</code><br>
-<code>cd ~</code></li>
-<li>cat 查看文件内容<br>
-<code>cat a.txt</code></li>
-<li>登陆服务器<br>
-<code>ssh root@47.100.18.25</code></li>
-<li>tail 查看文件尾部内容<br>
-<code>tail -n1 /etc/passwd</code></li>
-<li>ls 显示指定工作目录下的内容及属性信息<br>
-<code>sudo ls -al /etc/skel</code><br>
--a	显示所有文件及目录 (包括以“.”开头的隐藏文件)<br>
--l	使用长格式列出文件及目录信息</li>
-<li>echo 输出字符串或提取Shell变量的值<br>
-<code>echo '' alias CD_TEST='cd ~/test' &quot; &gt;&gt; ~/.bashrc</code><br>
-追加内容  alias CD_TEST='cd ~/test'  到bashrc中</li>
-<li>alias 设置命令别名<br>
-<code>alias -p</code><br>
-查看系统已经设置的别名</li>
-<li>su 切换用户<br>
-<code>su - test</code><br>
-切换到 wq 用户，并改变 wq 用户的环境变量，- 表示切换用户的环境变量</li>
-<li>useradd 创建用户<br>
-<code>useradd -m test</code></li>
-<li><code>sudo passwd test</code><br>
-设置用户密码</li>
-<li>userdel 删除用户<br>
-<code>sudo userdel -r test</code><br>
-userdel 可删除etc/passwd 下的用户信息，但不会删除家目录<br>
--r 可以删除相关的目录信息</li>
-<li>创建新用户并加入新创建的组<br>
-<code>sudo useradd test_user</code> 创建新用户<br>
-<code>sudo groupadd test_group</code> 创建新的用户组<br>
-<code>sudo usermod -G test_group test_user</code> 将新用户加入新的组<br>
-<code>sudo groupmod -n test_mod_group test_group</code>  将test_group 组名<br>
-改为test_mod_group</li>
-<li>查看文件权限<br>
-<code>ls -la test_file</code></li>
-<li>chmod 分配权限<br>
-<code>sudo chmod u-r test_file</code><br>
-u -文件所属者<br>
-g -文件的所属组<br>
-o -其他用户</li>
-<li>查看发行版的详细信息<br>
-<code>lsb_release -a</code></li>
-<li>查看系统发行版本<br>
-<code>less /etc/issue</code> q 退出<br>
-<code>cat /etc/issue</code></li>
-<li>查看软件版本信息<br>
-<code>python --version</code></li>
-<li>查看是否安装了某个软件包<br>
-<code>sudo rpm -qa python</code></li>
-<li>卸载已经安装的软件包<br>
-<code>sudo rpm -e python --nodeps</code>  --nodeps 避免去检查相关的依赖环境导致不能卸载</li>
-<li>安装软件<br>
-<code>sudo yum install python36 -y</code></li>
-<li>服务器重装后keys改了终端连接不上的方法<br>
-<code>ssh-keygen -R</code> 在本机执行此命令即可</li>
+<p>它是一个在线的参考手册的接口，首先是参考手册，然后你自己的程序也可以实现它的接口，提供程序的帮助信息。</p>
+<p>这个参考手册分为若干的章节(section)，如下:</p>
+<ol>
+<li>章节 1 : 一般的命令</li>
+<li>章节 2 : 系统调用</li>
+<li>章节 3: C 库函数</li>
+<li>章节 4: 特殊文件</li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[正义不会缺席]]></title>
-        <id>https://blog.qianqian.fun/post/zheng-yi-bu-hui-que-xi/</id>
-        <link href="https://blog.qianqian.fun/post/zheng-yi-bu-hui-que-xi/">
-        </link>
-        <updated>2020-07-25T06:59:54.000Z</updated>
-        <content type="html"><![CDATA[<p>最近关于来女士的案子在网上广为流传，虽然我们都希望她平安无事，但天不遂人愿。从出事到今天警方发布案子通告，真相虽然已经浮出水面，但是相信很多人都想不通，为什么枕边人竟就是那个凶手，当然我也没想明白，为什么好好的日子过成了这样。十年修得同船渡，百年修得共枕眠，原本应该相亲相爱携手渡百年的夫妻却以如今这段惨剧收场了，可怜他们那小女儿，这段经历在她心里也许永远都挥之不去。</p>
-<p>究其原因竟然只是因为家庭琐事意见不合，在此我真的想说，广大同胞们，凡事都是可以心平气和的讨论的，遇事要及时沟通，不要积在心里。不要走极端，走极端就容易出问题，以上就是活生生的例子啊。有什么事情过不去非要以这种方式来解决呢。最后发生这种事的原因只是一个导火线，也许就是因为没有及时沟通，有些事日积月累，就导致了这样的恶果。那个作为凶手的丈夫，他但凡想着点家庭，孩子，及时沟通的话，也不会生出犯罪的想法，更不会酿成这样的惨案。</p>
-<p>事已至此，我就希望来女士能安息，愿天堂没有恶魔。我希望凶手能诚心悔过，承担应有的责任，我更希望他们的小女儿能忘记这段过去，走出这个阴影，阳光快乐的生活。我还想说不要想着犯罪，无论你有多高明，我们的人民警察一定能抓住你，只不过事时间问题。要记住，天网恢恢，疏而不漏，正义也许会迟到，但是永远不会缺席！</p>
+<p>比如我们查询 sh 这条 Shell 的命令，可以使用如下方式:</p>
+<pre><code>man 1 sh
+</code></pre>
+<p>然后关于 <code>sh</code>  这条命令的显示信息如下:</p>
+<figure data-type="image" tabindex="4"><img src="https://blog.qianqian.fun/post-images/1599555628348.png" alt="" loading="lazy"></figure>
+<p>按下 <code>q</code> 可以退出，按下 <code>CTRL+F</code> 可以翻页。</p>
+<h2 id="更换镜像源">更换镜像源</h2>
+<p>由于某种不能抗拒的原因，国内访问国外的网站、服务都特别的慢。当我们使用 Yum 去安装各种软件的时候，由于服务器都在国外，经常会安装失败或者速度慢到不能忍受。</p>
+<p>这时候，我们可以尝试更换成国内的镜像源。比如说阿里云、腾讯云等服务商会定时去同步国外 Yum 的官方服务器资源到国内自己的服务器上。当我们使用 Yum 去更新或安装的时候，就会比较快。</p>
+<pre><code>## 备份原有配置文件
+sudo mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+## 下载源配置文件
+sudo wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.cloud.tencent.com/repo/centos7_base.repo
+## 清理缓存并重建立
+sudo yum clean all
+sudo yum makecache
+</code></pre>
+<p>上面是 CentOS7 的实例，其他的发行版或不同的版本请访问腾讯官方：腾讯 CentOS 源帮助文档。</p>
 ]]></content>
     </entry>
     <entry>
@@ -1037,7 +512,7 @@ o -其他用户</li>
         <id>https://blog.qianqian.fun/post/linux-chang-yong-de-ming-ling-ji-chu/</id>
         <link href="https://blog.qianqian.fun/post/linux-chang-yong-de-ming-ling-ji-chu/">
         </link>
-        <updated>2020-07-06T07:21:57.000Z</updated>
+        <updated>2020-05-16T07:21:57.000Z</updated>
         <content type="html"><![CDATA[<p>这一篇文档记录了一些常用的命令，以备学习查询之用。并将这些命令进行分类整理，方便检索。</p>
 <h2 id="export-环境变量">export-环境变量</h2>
 <p>你知道什么是环境变量吗？如果你不知道，你应该运行这条命令：</p>
@@ -1158,6 +633,210 @@ php -i &gt;&gt; /dev/null  0.06s user 0.01s system 95% cpu 0.074 total
 可以按下 <code>F1</code> 来查看帮助，可以使用 <code>q</code> 或者 <code>F10</code> 退出程序。可以使用 <code>F4</code> 过滤进程， 使用 <code>F5</code> 排序，按下 <code>t</code> 可以查看进程的父子层级。按下 <code>u</code> 可以显示所有进程的用户列表，并根据用户列表来过滤进程信息。<br>
 更多的用户可以参考帮助信息:<br>
 <img src="https://blog.qianqian.fun/post-images/1599550091813.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[使用虚拟环境]]></title>
+        <id>https://blog.qianqian.fun/post/shi-yong-xu-ni-huan-jing/</id>
+        <link href="https://blog.qianqian.fun/post/shi-yong-xu-ni-huan-jing/">
+        </link>
+        <updated>2020-05-08T09:18:36.000Z</updated>
+        <content type="html"><![CDATA[<p>为什么需要使用虚拟环境呢？因为在不同的项目中，我们使用的环境会有差别。比如 A 项目使用 Flask1.0 版本，B 项目使用 Flask1.1 版本。在不使用虚拟环境的情况下，两个版本就不能共存。这时候，你总不能使用两台机器来开发两个项目吧？</p>
+<p>虚拟环境在 Python 的世界里应运而生，但这也成了大部分人学习它的一道门槛。总的来说，有两个问题，不知为何物，不知有何用？</p>
+<p>在 Python3 之前，社会提供了好多方案，这有时候会让人难以选择。在 Python3 之后，官方提供了 venv 模块，可以方便的使用。</p>
+<h2 id="为什么不使用虚拟机">为什么不使用虚拟机</h2>
+<p>我不知道有没有人和我有一样的困惑，但是官方对此是有说明的:</p>
+<pre><code>The `venv` module provides support for creating lightweight “virtual environments” with their own site directories, optionally isolated from system site directories.
+</code></pre>
+<p>关键词是 lightweight，意思是轻量级的。这大概也是 Python 社区选择这类解决方案的原因。但是随着 Docker 等虚拟化技术的发展、普及，我觉得这类基于系统目录的虚拟环境方案会被取代。</p>
+<h2 id="创建虚拟环境">创建虚拟环境</h2>
+<p>首先我们需要创建一个工作目录, 用于存放很多的项目:</p>
+<pre><code>mkdir workspace &amp;&amp; cd workspace
+</code></pre>
+<p>然后我们创建一个项目，名字叫做 venv_test：</p>
+<pre><code>mkdir venv_test &amp;&amp; cd venv_test
+</code></pre>
+<p>然后创建虚拟环境:</p>
+<pre><code>python -m venv .
+</code></pre>
+<p><code>venv</code> 是 python 官方提供的一个模块，要调用这个模块，需要使用 <code>python -m</code>。或者你也可以将 venv 理解成 python 内置的一条命令，它支持一个参数，指定创建虚拟环境的目录，在上面的示例中，<code>.</code> 表示的是当前目录。就是在当前目录创建一个虚拟环境。</p>
+<h2 id="激活虚拟环境">激活虚拟环境</h2>
+<p>接着，我们需要激活虚拟环境，使用如下命令:</p>
+<pre><code>source ./bin/activate
+</code></pre>
+<p>执行这条命令之后，我们可以看到在命令行在最前面出现了 <code>(venv_test)</code> 的提示，这个是我们的目录名称，提示我们已经进入了虚拟环境:</p>
+<pre><code>(venv_test) [dc2-user@10-255-0-106 venv_test]$
+</code></pre>
+<p>接下来，我们所有的操作都是在虚拟环境里操作的，不影响虚拟环境之外的内容。</p>
+<h2 id="在虚拟环境中安装依赖包">在虚拟环境中安装依赖包</h2>
+<p>然后我们就可以在虚拟环境中安装依赖包了, 比如 flask 框架:</p>
+<pre><code>pip install flask
+</code></pre>
+<p>比如我们可以升级 pip 的版本:</p>
+<pre><code>pip install --upgrade pip
+</code></pre>
+<p>这时候，我们查看一下虚拟环境中的包依赖:</p>
+<pre><code>$ pip list
+Package      Version
+------------ -------
+click        7.1.2
+Flask        1.1.2
+itsdangerous 1.1.0
+Jinja2       2.11.2
+MarkupSafe   1.1.1
+pip          20.1.1
+setuptools   39.2.0
+Werkzeug     1.0.1
+</code></pre>
+<h2 id="退出虚拟环境">退出虚拟环境</h2>
+<p>如果要退出虚拟环境，我们可以使用 <code>deactivate</code> 。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Python字符串详解]]></title>
+        <id>https://blog.qianqian.fun/post/python-zi-fu-chuan-xiang-jie/</id>
+        <link href="https://blog.qianqian.fun/post/python-zi-fu-chuan-xiang-jie/">
+        </link>
+        <updated>2020-04-25T09:54:56.000Z</updated>
+        <content type="html"><![CDATA[<p>什么是字符串？其实就是字符，区分于其他的类型，比如说数字。下面展示的都是一些字符串:</p>
+<pre><code>str1 = 'Hello World'
+str2 = '123'
+str3 = &quot;Let's go to moon&quot;
+str4 = &quot;&quot;&quot;
+   窗前明月光
+   怀是滴上霜
+&quot;&quot;&quot;
+str5 = '''
+   Left's go to moon
+'''
+</code></pre>
+<h2 id="多种引号之间的区别">多种引号之间的区别</h2>
+<p>在 Python 中，使用引号来包裹字符串内容。可以使用单引号、双引号以及像上面 <code>str4</code> 和 <code>str5</code> 那样使用连续的三个单引号或三个双引号来表示多行文本。</p>
+<p>注意：这些引号都应该在英文输入法下输入，都是英文的引号，而不是中文。</p>
+<p>那么单引号和双引号有什么区别呢？就如变量 <code>str3</code> 一样，双引号可以包含转义字符，比如 <code>'</code> 。如果在单引号中出现转义字符，则需要使用转移符号 <code>\</code> 进行转义，否则程序将出错:</p>
+<pre><code>str1 = 'Let's go to moon'   # 这样写是错误的
+str2 = 'Let\'s go to moon'  # 使用转义符号转义是正确的
+str3 = &quot;Let's go to moon'   # 双引号不需要明确使用转义符号进行转义
+</code></pre>
+<p>通常这种情况，推荐使用双引号，看起来比较舒服，也无需关系转义字符导致的程序异常。</p>
+<p>三引号又分为三个单引号和三个双引号，它们都是用来表示多行文本，并没有区别。也就是说，两种方式都可以使用。</p>
+<p>多行文本用在，单行文本太长的情况下，或者需要换行的情况。比如我需要用一个字符串变量来包含一段 Python 代码:</p>
+<pre><code>code = '''
+from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+def index():
+    return 'Hello World'
+'''
+# 引号并不要求单独写一行，但是习惯上单独写一行，较为直观。
+</code></pre>
+<p>这种情况下，就很适合使用多行文本。Python 会在每一行末尾加入 <code>\n</code> 转义字符，表示换行。</p>
+<h2 id="什么是转义字符">什么是转义字符</h2>
+<p>什么是转义字符？可以理解成是特殊的字符。那么它们特殊在哪里呢？</p>
+<p><strong>其中一部分的转义字符是为了表示看不见的字符</strong>。我们很自然的以为，在键盘上敲击的每一个键都可以在屏幕上显示出起对应的字符。但实际上有一些键同样输出了字符，但在屏幕上并没有显示。比如说我们上面中出现的 <code>\n</code> 换行符。虽然看不见，但必须使用一个字符告诉计算机，我回车了。</p>
+<p><strong>还有一类是在编程语言中，已经被语言本身使用并表示特殊含义的字符</strong>。比如说引号，在 Python 中使用一对引号来表示字符串。这时候如果在一对双引号中再次输入一个双引号，就会导致程序没有办法判断哪里是字符串的开始、哪里是字符串的结束。</p>
+<p>还有一些其他的作用，但是没有必要去死记硬背。记住几个常用的就好了，比如说 <code>\n</code> 表示换行、 <code>\r</code> 表示回车、 <code>\t</code> 表示制表符(Tab键)。</p>
+<p>转义符号 <code>\</code> 本身也是转义字符，如果我希望它能在字符串中输出，那么也应该对它进行转义，比如:</p>
+<pre><code>print('转义符号: \\')
+</code></pre>
+<p>另外，我们也可以通过原始字符串(Raw String)的方式来表达:</p>
+<pre><code>path = r'C:\Windows\system64\etc\derver\etc\hosts'
+print(path)
+</code></pre>
+<h2 id="字符串的运算">字符串的运算</h2>
+<p>我们在生活中，经常会对数值进行运算，那么什么叫做对字符串运算呢？我举一个例子：</p>
+<pre><code>老板: 这个东西今天能做完吗？
+我: 不能！
+老板: 把不字去掉！
+</code></pre>
+<p>对，这就是字符串的运算之一，对字符串内容的剪切。除此之外，我们还经常回对字符串内容进行拼接、替换等操作。</p>
+<h3 id="字符串的拼接">字符串的拼接:</h3>
+<pre><code>print('Hello' + ' ' + 'World')
+</code></pre>
+<p>上面是字符串的“加法运算”，表示对字符串进行拼接。那么如果是乘法呢？</p>
+<pre><code>print('Hello' * 3)  # HelloHelloHello
+print('Hello' * 'World') # 语法错误
+</code></pre>
+<p>字符串(String)本质上是一串字符(Char)，是 Char 的列表。所以，我们也可以使用列表的形式来访问字符串:</p>
+<pre><code>print('Hello'[0]) # H
+print('Hello'[-1])  # o
+print('Hello'[0:3]) # Hel
+print('Hello'[0:-1]) # Hell
+print('Hello'[1:])   # ello, 截取到末尾
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[近期学习的Linux命令]]></title>
+        <id>https://blog.qianqian.fun/post/jin-qi-xue-xi-de-linux-ming-ling/</id>
+        <link href="https://blog.qianqian.fun/post/jin-qi-xue-xi-de-linux-ming-ling/">
+        </link>
+        <updated>2020-04-13T08:18:36.000Z</updated>
+        <content type="html"><![CDATA[<ol>
+<li>mkdir 创建文件夹<br>
+<code>mkdir aa</code></li>
+<li>touch 创建文件<br>
+<code>touch a.txt</code></li>
+<li>cd 切换目录<br>
+<code>cd home</code><br>
+<code>cd /</code><br>
+<code>cd ~</code></li>
+<li>cat 查看文件内容<br>
+<code>cat a.txt</code></li>
+<li>登陆服务器<br>
+<code>ssh root@47.100.18.25</code></li>
+<li>tail 查看文件尾部内容<br>
+<code>tail -n1 /etc/passwd</code></li>
+<li>ls 显示指定工作目录下的内容及属性信息<br>
+<code>sudo ls -al /etc/skel</code><br>
+-a	显示所有文件及目录 (包括以“.”开头的隐藏文件)<br>
+-l	使用长格式列出文件及目录信息</li>
+<li>echo 输出字符串或提取Shell变量的值<br>
+<code>echo '' alias CD_TEST='cd ~/test' &quot; &gt;&gt; ~/.bashrc</code><br>
+追加内容  alias CD_TEST='cd ~/test'  到bashrc中</li>
+<li>alias 设置命令别名<br>
+<code>alias -p</code><br>
+查看系统已经设置的别名</li>
+<li>su 切换用户<br>
+<code>su - test</code><br>
+切换到 wq 用户，并改变 wq 用户的环境变量，- 表示切换用户的环境变量</li>
+<li>useradd 创建用户<br>
+<code>useradd -m test</code></li>
+<li><code>sudo passwd test</code><br>
+设置用户密码</li>
+<li>userdel 删除用户<br>
+<code>sudo userdel -r test</code><br>
+userdel 可删除etc/passwd 下的用户信息，但不会删除家目录<br>
+-r 可以删除相关的目录信息</li>
+<li>创建新用户并加入新创建的组<br>
+<code>sudo useradd test_user</code> 创建新用户<br>
+<code>sudo groupadd test_group</code> 创建新的用户组<br>
+<code>sudo usermod -G test_group test_user</code> 将新用户加入新的组<br>
+<code>sudo groupmod -n test_mod_group test_group</code>  将test_group 组名<br>
+改为test_mod_group</li>
+<li>查看文件权限<br>
+<code>ls -la test_file</code></li>
+<li>chmod 分配权限<br>
+<code>sudo chmod u-r test_file</code><br>
+u -文件所属者<br>
+g -文件的所属组<br>
+o -其他用户</li>
+<li>查看发行版的详细信息<br>
+<code>lsb_release -a</code></li>
+<li>查看系统发行版本<br>
+<code>less /etc/issue</code> q 退出<br>
+<code>cat /etc/issue</code></li>
+<li>查看软件版本信息<br>
+<code>python --version</code></li>
+<li>查看是否安装了某个软件包<br>
+<code>sudo rpm -qa python</code></li>
+<li>卸载已经安装的软件包<br>
+<code>sudo rpm -e python --nodeps</code>  --nodeps 避免去检查相关的依赖环境导致不能卸载</li>
+<li>安装软件<br>
+<code>sudo yum install python36 -y</code></li>
+<li>服务器重装后keys改了终端连接不上的方法<br>
+<code>ssh-keygen -R</code> 在本机执行此命令即可</li>
+</ol>
 ]]></content>
     </entry>
 </feed>
