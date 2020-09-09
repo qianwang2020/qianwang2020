@@ -2,26 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>GitHub 使用语法 | 汪小白的博客</title>
+<title>使用 Gridea 搭建 GitHub Pages | 汪小白的博客</title>
 <link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599636464008">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="GitHub 使用语法 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="使用 Gridea 搭建 GitHub Pages | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="一个 # 号表示一号标题，比如
-一号标题
-‘Ctrl + P’可以预览效果
-很自然的，##二号标题，###三号标题，####四号标题......一直到六号标题
-二号标题
-三号标题
-四号标题
-五号标题
-六号标题
-在文字的前后加上 两个 ‘ *..." />
-    <meta name="keywords" content="学习" />
+    <meta name="description" content="Github 是全球最大的软件开源社区，我们可以在这个上面去管理我们的代码仓库、和来自世界各地的人共同编程、学习、交流。
+而 Github Pages 是 Github 推出的一个功能，可以让我们使用 Github 的仓库为基础搭建个人主页..." />
+    <meta name="keywords" content="随笔,学习" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -83,15 +75,19 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              GitHub 使用语法
+              使用 Gridea 搭建 GitHub Pages
             </h2>
             <div class="post-info">
               <span>
-                2019-12-11
+                2019-01-12
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
+              
+                <a href="https://blog.qianqian.fun/tag/o3xdH1Qtb/" class="post-tag">
+                  # 随笔
+                </a>
               
                 <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
                   # 学习
@@ -101,60 +97,39 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>一个 # 号表示一号标题，比如</p>
-<h1 id="一号标题">一号标题</h1>
-<p>‘Ctrl + P’可以预览效果</p>
-<p>很自然的，##二号标题，###三号标题，####四号标题......一直到六号标题</p>
-<h2 id="二号标题">二号标题</h2>
-<h3 id="三号标题">三号标题</h3>
-<h4 id="四号标题">四号标题</h4>
-<h5 id="五号标题">五号标题</h5>
-<h6 id="六号标题">六号标题</h6>
-<p>在文字的前后加上 两个 ‘ ** ’表示加粗，一个 ‘  * ’表示斜体。比如：<strong>加粗</strong>，<em>斜体</em></p>
-<p>如果你要插入代码，分为两种，一种是行内代码，代码前后使用*‘*符号包裹，。</p>
-<p><code>print 'Hello World'</code></p>
-<p>如果你要插入多行代码，可以使用 如下：</p>
-<pre><code>def index():
-    print 'Hello World'
-</code></pre>
-<p>如果是列表：</p>
-<ul>
-<li>列表项一</li>
-<li>列表项二</li>
-<li>列表项N</li>
-</ul>
-<p>上面的是无序列表，有序列表如下：</p>
-<ol>
-<li>列表项一</li>
-<li>列表项二</li>
-<li>列表项三</li>
-<li>列表项N</li>
-</ol>
-<p><a href="%E7%BD%91%E5%9D%80%E9%93%BE%E6%8E%A5">参考文档</a></p>
-<p>掌握以上的这些基本就可以完成一篇比较漂亮的文章了。</p>
+                <p>Github 是全球最大的软件开源社区，我们可以在这个上面去管理我们的代码仓库、和来自世界各地的人共同编程、学习、交流。</p>
+<p>而 Github Pages 是 Github 推出的一个功能，可以让我们使用 Github 的仓库为基础搭建个人主页，发表文章，供人评论。</p>
+<p>Gride 是 Github 上的一个开源的项目，可以使用它来快速地创建 GitHub Pages，以及方便地书写文章并发布到主页上。</p>
+<h2 id="下载并安装-gride">下载并安装 Gride</h2>
+<p>Gride 在 GitHub 上地仓库 <a href="https://github.com/getgridea/gridea">getgridea/gridea</a> 地 README 中提供了下载的途径，我们可以根据不同的操作系统下载各自的安装包进行安装。</p>
+<p>具体地安装过程就不在此叙述了，和安装普通的软件也没有什么区别。</p>
+<h2 id="创建-github-的仓库">创建 GitHub 的仓库</h2>
+<p>首先在 GitHub 上创建一个仓库，仓库必须公开，而且名字必须和用户名一致:</p>
+<figure data-type="image" tabindex="1"><img src="https://blog.qianqian.fun/post-images/1599636097811.png" alt="" loading="lazy"></figure>
+<h2 id="生成接口访问的令牌">生成接口访问的令牌</h2>
+<p>Gridea 是会代替我们去 GitHub 上通过 GitHub 提供的接口帮我们配置 GitHub Pages。所以，我们需要在 GitHub 上创建一个供 Gridea 调用 GitHub 接口所需的令牌(你可以理解成是他进入我们 GitHub 去做事情的钥匙)。</p>
+<p>进入 GitHub 的 Setting:</p>
+<figure data-type="image" tabindex="2"><img src="https://blog.qianqian.fun/post-images/1599636158890.png" alt="" loading="lazy"></figure>
+<p>然后进入 Developer Setting：</p>
+<figure data-type="image" tabindex="3"><img src="https://blog.qianqian.fun/post-images/1599636178028.png" alt="" loading="lazy"></figure>
+<p>然后选择 Personal access tokens:</p>
+<figure data-type="image" tabindex="4"><img src="https://blog.qianqian.fun/post-images/1599636208973.png" alt="" loading="lazy"></figure>
+<p>然后 Geneerate new token：</p>
+<figure data-type="image" tabindex="5"><img src="https://blog.qianqian.fun/post-images/1599636234236.png" alt="" loading="lazy"></figure>
+<p>需要勾选 repo 赋予 Gridea 操作仓库的权限。</p>
+<figure data-type="image" tabindex="6"><img src="https://blog.qianqian.fun/post-images/1599636253431.png" alt="" loading="lazy"></figure>
+<p>到这一步，我们就已经得到了供 Gridea 使用的 Token。</p>
+<h2 id="gridea-远程配置">Gridea 远程配置</h2>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li><a href="#%E4%B8%80%E5%8F%B7%E6%A0%87%E9%A2%98">一号标题</a>
+<li>
 <ul>
-<li><a href="#%E4%BA%8C%E5%8F%B7%E6%A0%87%E9%A2%98">二号标题</a>
-<ul>
-<li><a href="#%E4%B8%89%E5%8F%B7%E6%A0%87%E9%A2%98">三号标题</a>
-<ul>
-<li><a href="#%E5%9B%9B%E5%8F%B7%E6%A0%87%E9%A2%98">四号标题</a>
-<ul>
-<li><a href="#%E4%BA%94%E5%8F%B7%E6%A0%87%E9%A2%98">五号标题</a>
-<ul>
-<li><a href="#%E5%85%AD%E5%8F%B7%E6%A0%87%E9%A2%98">六号标题</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85-gride">下载并安装 Gride</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA-github-%E7%9A%84%E4%BB%93%E5%BA%93">创建 GitHub 的仓库</a></li>
+<li><a href="#%E7%94%9F%E6%88%90%E6%8E%A5%E5%8F%A3%E8%AE%BF%E9%97%AE%E7%9A%84%E4%BB%A4%E7%89%8C">生成接口访问的令牌</a></li>
+<li><a href="#gridea-%E8%BF%9C%E7%A8%8B%E9%85%8D%E7%BD%AE">Gridea 远程配置</a></li>
 </ul>
 </li>
 </ul>
