@@ -2,26 +2,20 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Vagrant 的使用 | 汪小白的博客</title>
+<title>部署数据库服务 | 汪小白的博客</title>
 <link rel="shortcut icon" href="https://blog.qianqian.fun/favicon.ico?v=1599723183765">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://blog.qianqian.fun/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Vagrant 的使用 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="部署数据库服务 | 汪小白的博客 - Atom Feed" href="https://blog.qianqian.fun/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="添加一个镜像:
-vagrant box add centos/8 &lt;/path/name.box&gt;
-
-查看镜像列表:
-vagrant box list
-
-初始化一台虚拟机:
-# 初始化一台虚拟机
-vagrant init
-# 初..." />
-    <meta name="keywords" content="随笔,学习" />
+    <meta name="description" content="使用 Yum 安装 MySQL Server
+创建文件 /etc/yum.repos.d/mysql-community.repo ,写入文件如下:
+[mysql80-community]
+name=MySQL 8.0 Community ..." />
+    <meta name="keywords" content="MySQL,学习" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -83,18 +77,18 @@ vagrant init
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Vagrant 的使用
+              部署数据库服务
             </h2>
             <div class="post-info">
               <span>
-                2019-12-09
+                2020-09-10
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
-                <a href="https://blog.qianqian.fun/tag/o3xdH1Qtb/" class="post-tag">
-                  # 随笔
+                <a href="https://blog.qianqian.fun/tag/yTfoy5QxN/" class="post-tag">
+                  # MySQL
                 </a>
               
                 <a href="https://blog.qianqian.fun/tag/2mhTzXDJh/" class="post-tag">
@@ -105,31 +99,63 @@ vagrant init
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>添加一个镜像:</p>
-<pre><code>vagrant box add centos/8 &lt;/path/name.box&gt;
+                <h3 id="使用-yum-安装-mysql-server"><strong>使用 Yum 安装 MySQL Server</strong></h3>
+<p>创建文件 <code>/etc/yum.repos.d/mysql-community.repo</code> ,写入文件如下:</p>
+<pre><code>[mysql80-community]
+name=MySQL 8.0 Community Server
+baseurl=http://repo.mysql.com/yum/mysql-8.0-community/el/7/$basearch/
+enabled=1
+gpgcheck=0
 </code></pre>
-<p>查看镜像列表:</p>
-<pre><code>vagrant box list
+<p>然后安装 MySQL：</p>
+<pre><code>sudo yum install mysql-community-server -y
 </code></pre>
-<p>初始化一台虚拟机:</p>
-<pre><code># 初始化一台虚拟机
-vagrant init
-# 初始化一台虚拟机，并初始化虚拟机使用的盒子(镜像)
-vagrant init centos/8
+<p>在安装完之后，启动 MySQL 服务:</p>
+<pre><code>sudo systemctl start mysqld
 </code></pre>
-<p>查看虚拟机的状态:</p>
-<pre><code>vagrant status
+<p>在启动这个服务的时候，MySQL 会向日志中写入密码，读取 root 用户的密码: <code>/Am%dnr/I2bJ</code> :</p>
+<pre><code>$ sudo grep password /var/log/mysqld.log
+...A temporary password is generated for root@localhost: /Am%dnr/I2bJ
 </code></pre>
-<p>通过 ssh 登陆虚拟机:</p>
-<pre><code>vagrant ssh
+<p>在拿到了密码之后，我们就可以登录 MySQL 服务了:</p>
+<pre><code>$ mysql -uroot -p   ## 输入密码
 </code></pre>
-<p>重启虚拟机:</p>
-<pre><code>vagrant reload
+<p>到此，MySQL 就已经安装完成了。</p>
+<h3 id="修改-root-用户密码以及创建用户"><strong>修改 root 用户密码以及创建用户</strong></h3>
+<p>首次登录，必须修改 root 密码才能进行其他任何操作:</p>
+<pre><code>alter user 'root'@'localhost' identified by '&lt;password&gt;';
 </code></pre>
+<blockquote>
+<p>修改了密码之后，需要重新登录 MySQL。</p>
+</blockquote>
+<p>MySQL 的用户名分为两部分, <code>root</code> 是用户名，而 <code>localhost</code> 是其允许登录的主机名或者 IP。</p>
+<p><code>root@localhost</code> 就表示 root 用户只能再安装 MySQL 服务的本机上进行登录。</p>
+<p>如果希望用户可以从任意网络主机上发起登录，可以将用户名的后半部分设置为 <code>%</code> 符号。比如，我们创建一个名为 <code>test@%</code>  的用户:</p>
+<pre><code>create user 'test'@'%' identified by '&lt;password&gt;';
+</code></pre>
+<p>创建这个用户之后，还需要对用户进行授权，指定它允许哪些操作:</p>
+<pre><code>grant all on *.* to 'test'@'%';
+</code></pre>
+<p>最后还需要刷新权限才能生效:</p>
+<pre><code>flush privileges;
+</code></pre>
+<p>然后我们就可以使用这个新创建的用户再任意的网络主机上访问 MySQL 服务端了。</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8-yum-%E5%AE%89%E8%A3%85-mysql-server"><strong>使用 Yum 安装 MySQL Server</strong></a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9-root-%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E4%BB%A5%E5%8F%8A%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><strong>修改 root 用户密码以及创建用户</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -138,9 +164,9 @@ vagrant init centos/8
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://blog.qianqian.fun/post/shi-yong-markdown-bian-ji-wen-dang/">
+            <a href="https://blog.qianqian.fun/post/mo-er-si-dian-ma/">
               <h3 class="post-title">
-                使用 Markdown 编辑文档
+                摩尔斯电码
               </h3>
             </a>
           </div>
